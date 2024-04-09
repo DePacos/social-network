@@ -5,18 +5,25 @@ const Posts = styled.ul
     `
         display: grid;
         row-gap: 40px;
-        li{
+
+        li {
             display: grid;
             grid-template-columns: 100px 1fr;
             grid-template-rows: max-content 1fr;
             column-gap: 20px;
             row-gap: 10px;
         }
-        h2, p{
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        p {
             align-self: start;
             grid-column: 2 / 3;
         }
-        img{
+
+        img {
             grid-row: 1 / 3;
         }
     `

@@ -8,8 +8,9 @@ type PostsProps = {
 export const Posts = ({posts}: PostsProps) => {
     return (
         <S.Posts>
+            <h1>Posts</h1>
             {posts.map(post => {
-                return(
+                return (
                     <li key={post.id}>
                         <h2><a href="/#">{post.title}</a></h2>
                         <p>{post.body}</p>
