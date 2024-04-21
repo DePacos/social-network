@@ -13,11 +13,7 @@ const Posts = styled.ul
             column-gap: 20px;
             row-gap: 10px;
         }
-
-        h1 {
-            margin-bottom: 0;
-        }
-
+        
         p {
             align-self: start;
             grid-column: 2 / 3;
