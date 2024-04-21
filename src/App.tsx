@@ -11,6 +11,7 @@ import {Article} from "./layout/article/Article";
 import {Container} from "./components/container/Container";
 
 import {data} from './redux/data'
+import postImg from "./assets/images/post-def.webp";
 
 export type PostsType = {
     userId: number,
@@ -20,34 +21,46 @@ export type PostsType = {
     img: string
 }
 
-type DataType = {
-    posts: Array<PostsType>
-}
-
 type AppState ={
-    data: DataType
+    posts: Array<PostsType>
+    addPostInput: string
     themeMode: boolean
 }
 
-type AppProps ={
-    // posts: Array<PostsType>
-}
+type AppProps ={}
 
-
-// data = {posts: [{id:1}, {id:2}, {id:3}]}
 
 export class App extends React.Component<AppProps, AppState>  {
     constructor(props: AppProps) {
         super(props);
 
         this.state = {
-            data: data,
-            themeMode: false
+            posts: data.posts,
+            addPostInput: '',
+            themeMode: false,
         }
     }
     changeTheme = () => {
         this.setState({themeMode: !this.state.themeMode})
     }
+
+    changeAddPostInput = (value:string) =>{
+        this.setState({addPostInput: value})
+    }
+
+    addPost = () => {
+        const newPost = {
+            userId: 3,
+            id: 5,
+            title: "new post",
+            body: this.state.addPostInput,
+            img: postImg,
+        }
+
+        this.setState({posts: [...this.state.posts, newPost]})
+        this.setState({addPostInput: ''})
+    }
+
     render() {
         return (
             <div className="App">
@@ -57,7 +70,12 @@ export class App extends React.Component<AppProps, AppState>  {
                     <main>
                         <MainWrap>
                             <Sidebar/>
-                            <Article posts={data.posts}/>
+                            <Article
+                                posts={this.state.posts}
+                                changeAddPostInput={this.changeAddPostInput}
+                                addPost={this.addPost}
+                                addPostInput={this.state.addPostInput}
+                            />
                         </MainWrap>
                     </main>
                 </ThemeProvider>
