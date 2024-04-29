@@ -12,6 +12,18 @@ padding: 40px 20px 20px 0;
     ul {
         display: grid;
         gap: 20px;
+        .active:after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            background-color: currentColor;
+            height: 2px;
+            width: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
     }
     a{
         position: relative;

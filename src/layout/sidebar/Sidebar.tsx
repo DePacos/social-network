@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {S} from './Sidebar_Styles'
 
 export const Sidebar = () => {
@@ -7,11 +7,11 @@ export const Sidebar = () => {
         <S.Sidebar>
         <nav>
             <ul>
-                <li><Link to="/">Main</Link></li>
-                <li><Link to="/posts">Posts</Link></li>
-                <li><Link to="/messages">Message</Link></li>
-                <li><Link to="/profile">Profile</Link></li>
-                <li><Link to="/#">Setting</Link></li>
+                <li><NavLink to="/">Main</NavLink></li>
+                <li><NavLink to="/posts">Posts</NavLink></li>
+                <li><NavLink to="/messages">Message</NavLink></li>
+                <li><NavLink to="/profile">Profile</NavLink></li>
+                <li><NavLink to="/#">Setting</NavLink></li>
             </ul>
         </nav>
         </S.Sidebar>
