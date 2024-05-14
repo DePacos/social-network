@@ -24,8 +24,14 @@ const Contacts = styled.div
             display: flex;
             align-items: center;
             gap: 10px;
+            padding: 5px 10px;
             width: max-content;
             transition: transform .3s;
+        }
+        
+        .active{
+            background-color: #0c9bd4;
+            border-radius: 15px;
         }
 
         a:hover {
