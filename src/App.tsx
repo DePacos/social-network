@@ -4,38 +4,62 @@ import {GlobalStyles} from "./styles/GlobalStyles";
 import styled, {ThemeProvider} from "styled-components";
 import {socialThemeDark} from "./styles/ThemeDark";
 import {socialThemeLight} from "./styles/ThemeLight";
+import {Container} from "./components/container/Container";
+
+import postImg from "./assets/images/post-def.webp";
+import {data} from './redux/data'
 
 import {Header} from "./layout/header/Header";
 import {Sidebar} from "./layout/sidebar/Sidebar";
 import {Article} from "./layout/article/Article";
-import {Container} from "./components/container/Container";
 
-import {data} from './redux/data'
-import postImg from "./assets/images/post-def.webp";
+
+
 
 export type PostsType = {
-    userId: number,
-    id: number,
-    title: string,
-    body: string,
+    id: number
+    userId: number
+    title: string
+    body: string
     img: string
+}
+
+export type UsersType = {
+    id: number
+    massagesId: string
+    name: string
+    role: string
+    avatar: string
+}
+
+export type MessageType = {
+    id: string
+    userMassage: string
+    date: string
+}
+
+export type MessagesType = {
+    [key: string]:MessageType[]
 }
 
 type AppState ={
     posts: Array<PostsType>
+    users: Array<UsersType>
+    messages: MessagesType
     addPostInput: string
     themeMode: boolean
 }
 
 type AppProps ={}
 
-
 export class App extends React.Component<AppProps, AppState>  {
     constructor(props: AppProps) {
         super(props);
 
         this.state = {
+            users: data.users,
             posts: data.posts,
+            messages: data.messages,
             addPostInput: '',
             themeMode: false,
         }
@@ -72,6 +96,8 @@ export class App extends React.Component<AppProps, AppState>  {
                             <Sidebar/>
                             <Article
                                 posts={this.state.posts}
+                                users={this.state.users}
+                                messages={this.state.messages}
                                 changeAddPostInput={this.changeAddPostInput}
                                 addPost={this.addPost}
                                 addPostInput={this.state.addPostInput}
