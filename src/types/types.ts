@@ -1,4 +1,5 @@
 import {rootReducer} from "../redux/store";
+import {addPostAC} from "../redux/actions/actions";
 
 export type PostType = {
     id: number
@@ -43,3 +44,10 @@ export type PropsStateType ={
 }
 
 export type AppRootState = ReturnType<typeof rootReducer>
+
+export type AddPostActionType = {
+    type: 'ADD_POST'
+    postText: string
+}
+
+export type ActionsTypes = AddPostActionType
