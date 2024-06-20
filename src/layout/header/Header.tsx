@@ -23,11 +23,11 @@ export const Header = ({changeTheme}:HeaderProps) => {
                     </a>
                     <input type="search" name="search" id="searchId" placeholder="search"/>
                     <ul>
-                        <li><Button title="RU" callback={buttonHandler}/></li>
-                        <li><Button title="EN" callback={buttonHandler}/></li>
+                        <li><Button title="RU" onclick={buttonHandler}/></li>
+                        <li><Button title="EN" onclick={buttonHandler}/></li>
                     </ul>
-                    <Button title="" callback={changeTheme}><img src={themeColor} alt="Change color mode"/></Button>
-                    <Button title="LogIn" callback={buttonHandler}/>
+                    <Button title="" onclick={changeTheme}><img src={themeColor} alt="Change color mode"/></Button>
+                    <Button title="LogIn" onclick={buttonHandler}/>
                 </S.HeaderWrap>
             </Container>
         </S.Header>
