@@ -1,30 +1,43 @@
 import React from 'react';
-
 import {S} from './Messages_Styles'
-import {NavLink, Outlet} from "react-router-dom";
-import {UsersType} from "../../App";
+import {Button} from "../../components/button/Button";
+import {withRouter} from "react-router-dom";
+import {AppRootState, MessagesType} from "../../types/types";
+import {connect} from "react-redux";
+
 
 type MessagesProps = {
-    users: Array<UsersType>
+    messages: MessagesType
 }
 
+class Messages extends React.Component<MessagesProps> {
+    render() {
+        const {messages} = this.props
+        const id = useParams()
 
-export const Messages = ({users}: MessagesProps) => {
-    return (
-        <S.Messages>
-            <h1>Messages</h1>
-            <S.MessagesWrap>
-                <S.Contacts>
-                    <ul>
-                        {users.map(user => <li key={user.id}>
-                            <NavLink to={user.massagesId}><img
-                                src={user.avatar}
-                                alt="avatar"/>{user.name}
-                            </NavLink></li>)}
-                    </ul>
-                </S.Contacts>
-                <Outlet/>
-            </S.MessagesWrap>
-        </S.Messages>
-    );
-};
+        return (
+        <>
+            <S.MessagesView>
+                    {messages[String(id.id)].map(message =>
+                <S.MessagesCurrentUser>
+                        <span>{message.userMassage} | {message.date}</span>
+                </S.MessagesCurrentUser>
+                    )}
+                <S.MessagesContact className="messages_contact-user">
+                    A, autem ipsum iure ratione rem sit.
+                </S.MessagesContact>
+            </S.MessagesView>
+            <S.MessagesSend>
+                <textarea/>
+                <Button title={'Send'} onclick={() => {}}/>
+            </S.MessagesSend>
+        </>
+    )
+    }
+}
+
+const mapStateToProps = (state: AppRootState) => ({
+    messages: state.messages
+});
+
+export default connect(mapStateToProps)(Messages)
