@@ -1,5 +1,4 @@
 import {rootReducer} from "../redux/store";
-import {addPostAC} from "../redux/actions/actions";
 
 export type PostType = {
     id: number

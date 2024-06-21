@@ -7,7 +7,6 @@ import postImg from "../../assets/images/post-def.webp";
 const initialState = data.posts
 
 export const postReducer = (state: PostType[] = initialState, action: ActionsTypes) => {
-    console.log(action)
     switch (action.type){
         case "ADD_POST":
             return [...state, {
