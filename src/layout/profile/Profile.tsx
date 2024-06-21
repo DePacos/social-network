@@ -1,41 +1,71 @@
 import React, {ChangeEvent} from 'react';
 import {S} from './Profile_Styles'
 import {Button} from "../../components/button/Button";
-import {PostsType} from "../../App";
+import {AddPostActionType, AppRootState, PostType} from "../../types/types";
+import {connect} from "react-redux";
+import {addPostAC} from "../../redux/actions/actions";
+
+
 
 type ProfileProps = {
-    posts: Array<PostsType>
-    changeAddPostInput: (value: string) => void
-    addPostInput: string
-    addPost: () => void
+    posts: PostType[]
+    addPostAC?: (postText: string) => AddPostActionType
+
 }
 
-export const Profile = ({posts, changeAddPostInput, addPostInput, addPost}:ProfileProps) => {
+type ProfileState = {
+    inputValue: string
+}
 
-    const buttonHandler = () => {
-        addPost()
+class Profile extends React.Component<ProfileProps, ProfileState> {
+    constructor(props: ProfileProps) {
+        super(props);
+
+        this.state = {
+            inputValue: ''
+        }
     }
-    const textAriaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changeAddPostInput(e.currentTarget.value)
+
+    changeAriaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        this.setState({inputValue: e.currentTarget.value})
     }
 
-    const renderPost = posts.map(post =>
-            <li key={post.id}>
-                <h2><a href="/#">{post.title}</a></h2>
-                <p>{post.body}</p>
-                <img src={post.img} alt="post-img"/>
-            </li>
-    )
+    addPostHandler = () => {
+        if (this.props.addPostAC) {
+            this.props.addPostAC(this.state.inputValue)
+        }
+    }
 
-    return (
-        <S.Profile>
-            <h1>Profile</h1>
-            <S.Post>{renderPost}</S.Post>
-            <S.WrapAddPost>
-            <textarea value={addPostInput} onChange={(e) => textAriaHandler(e)}/>
-                <Button title="Add Post" callback={buttonHandler}/>
-            </S.WrapAddPost>
+    render() {
+        return (
+            <S.Profile>
+                <h1>Profile</h1>
+                <S.Post>
+                    {
+                        this.props.posts.map(post =>
+                            <li key={post.id}>
+                                <h2><a href="/#">{post.title}</a></h2>
+                                <p>{post.body}</p>
+                                <img src={post.img} alt="post-img"/>
+                            </li>
+                        )
+                    }
+                </S.Post>
+                <S.WrapAddPost>
+                    <textarea value={this.state.inputValue} onChange={(e) => this.changeAriaHandler(e)}/>
+                    <Button title="Add Post" onclick={this.addPostHandler}/>
+                </S.WrapAddPost>
+            </S.Profile>
+        )
+    }
+}
 
-        </S.Profile>
-    );
+const mapStateToProps = (state: AppRootState) => ({
+    posts: state.posts.filter(post => post.userId === 1)
+});
+
+const mapDispatchToProps = {
+    addPostAC
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
