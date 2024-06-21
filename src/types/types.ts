@@ -28,18 +28,6 @@ export type MessagesType = {
 }
 
 export type AppStateType ={
-    posts: Array<PostType>
-    users: Array<UserType>
-    messages: MessagesType
-    addPostInput: string
-    themeMode: boolean
-}
-
-export type PropsStateType ={
-    posts: Array<PostType>
-    users: Array<UserType>
-    messages: MessagesType
-    addPostInput: string
     themeMode: boolean
 }
 
