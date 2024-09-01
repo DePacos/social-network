@@ -8,11 +8,10 @@ import { Container } from "../shared/ui/Container/Container"
 import { Header } from "../widgets/Header/Header"
 import { Sidebar } from "../widgets/Sidebar/Sidebar"
 import { Article } from "../widgets/Article/Article"
-import { AppStateType } from "./types/types"
 
 type AppProps = {}
 
-export class App extends React.Component<AppProps, AppStateType> {
+export class App extends React.Component<AppProps, { themeMode: boolean }> {
   constructor(props: AppProps) {
     super(props)
 
