@@ -1,4 +1,9 @@
-import { setUsers } from "../../entities/users/usersReducer"
+import {
+  changePageItems,
+  changePagination,
+  setPage,
+  setUsers,
+} from "../../entities/users/usersReducer"
 import { rootReducer, store } from "../store"
 import { ThunkDispatch } from "redux-thunk"
 
@@ -24,7 +29,17 @@ export type UsersResponse = {
   error: string
 }
 
-export type Actions = ReturnType<typeof setUsers>
+export type Page = {
+  currentPage: number
+  pageItems: number
+  paginationData: number[]
+}
+
+export type UsersActions =
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof changePagination>
+  | ReturnType<typeof setPage>
+  | ReturnType<typeof changePageItems>
 
 export type AppRootState = ReturnType<typeof rootReducer>
-export type AppThunkDispatch = ThunkDispatch<AppRootState, any, Actions>
+export type AppThunkDispatch = ThunkDispatch<AppRootState, any, UsersActions>
