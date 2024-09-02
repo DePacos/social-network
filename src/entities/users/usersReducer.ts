@@ -1,4 +1,4 @@
-import { Actions, Page, User, UsersResponse } from "../../app/types/types"
+import { UsersActions, Page, User, UsersResponse } from "../../app/types/types"
 import { usersAPI } from "../../shared/api/usersAPI"
 import { Dispatch } from "react"
 
@@ -11,7 +11,7 @@ const initialState: UsersResponse & Page = {
   error: "",
 }
 
-export const usersReducer = (state = initialState, action: Actions) => {
+export const usersReducer = (state = initialState, action: UsersActions) => {
   switch (action.type) {
     case "SET_USERS":
       return {
@@ -67,7 +67,7 @@ export const changePageItems = (pageItems: number) =>
   }) as const
 
 export const fetchUsers =
-  (currentPage: number) => async (dispatch: Dispatch<Actions>) => {
+  (currentPage: number) => async (dispatch: Dispatch<UsersActions>) => {
     try {
       const res = await usersAPI.fetchUsers(currentPage)
       dispatch(setUsers(res.data))
