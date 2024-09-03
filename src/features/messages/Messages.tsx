@@ -2,7 +2,7 @@ import React from "react"
 import { S } from "./Messages_Styles"
 import { Button } from "../../shared/ui/Button/Button"
 import { useParams } from "react-router-dom"
-import { AppRootState, MessagesType } from "../../app/types/types"
+import { AppRootState } from "../../app/types/types"
 import { connect } from "react-redux"
 
 type RouteParams = {
@@ -12,11 +12,11 @@ type RouteParams = {
 type WithRouterProps<T> = T & { params?: RouteParams }
 
 type MessagesProps = {
-  messages: MessagesType
+  messages: any
   params?: RouteParams
 }
 
-class Messages_ extends React.Component<MessagesProps> {
+class Messages_ extends React.Component<any> {
   render() {
     const { messages, params } = this.props
     return (
@@ -24,7 +24,7 @@ class Messages_ extends React.Component<MessagesProps> {
         {params && params.id ? (
           <>
             <S.MessagesView>
-              {messages[params.id].map((message) => (
+              {messages[params.id].map((message: any) => (
                 <S.MessagesCurrentUser>
                   <span>
                     {message.userMassage} | {message.date}

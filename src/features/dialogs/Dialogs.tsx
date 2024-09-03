@@ -1,11 +1,11 @@
 import React from "react"
 import { S } from "./Dialogs_Styles"
 import { NavLink, Outlet } from "react-router-dom"
-import { AppRootState, UserType } from "../../app/types/types"
+import { AppRootState } from "../../app/types/types"
 import { connect } from "react-redux"
 
 type DialogsProps = {
-  users: UserType[]
+  users: any
 }
 
 class Dialogs extends React.Component<DialogsProps> {
@@ -18,7 +18,7 @@ class Dialogs extends React.Component<DialogsProps> {
         <S.DialogsWrap>
           <S.Contacts>
             <ul>
-              {users.map((user) => (
+              {users.map((user: any) => (
                 <li key={user.id}>
                   <NavLink to={user.massagesId}>
                     <img src={user.avatar} alt="avatar" />
