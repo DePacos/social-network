@@ -3,6 +3,8 @@ export const socialThemeDark = {
   colors: {
     body: "#3d3b3a",
     fontColor: "#fff",
+    fontPag: "#222",
+    bgPag: "#fff",
   },
   icons: {
     loginIcon: login,
