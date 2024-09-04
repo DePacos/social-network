@@ -5,9 +5,11 @@ import {
 } from "@reduxjs/toolkit"
 import { usersReducer } from "../entities/users/usersReducer"
 import { thunk } from "redux-thunk"
+import { profileReducer } from "../entities/users/profileReducer"
 
 export const rootReducer = combineReducers({
   users: usersReducer,
+  profile: profileReducer,
 })
 
 export const store = legacy_createStore(
