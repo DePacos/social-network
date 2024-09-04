@@ -18,7 +18,7 @@ class Users extends React.Component<Props> {
     }
 
     return (
-      <>
+      <S.Wrapper>
         <h1>Users</h1>
         <select onChange={selectHandler}>
           <option>10</option>
@@ -43,7 +43,7 @@ class Users extends React.Component<Props> {
             : "no users"}
         </S.Users>
         <Pagination pageItems={pageItems} />
-      </>
+      </S.Wrapper>
     )
   }
 }
