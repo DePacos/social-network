@@ -21,12 +21,12 @@ export const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
         path: "/messages",
         element: <Messages />,
+      },
+      {
+        path: "/profile/:id",
+        element: <Profile />,
       },
     ],
   },
