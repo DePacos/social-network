@@ -67,7 +67,8 @@ export const changePageItems = (pageItems: number) =>
   }) as const
 
 export const fetchUsers =
-  (currentPage: number) => async (dispatch: Dispatch<UsersActions>) => {
+  (currentPage: number) =>
+  async (dispatch: Dispatch<ReturnType<typeof setUsers>>) => {
     try {
       const res = await usersAPI.fetchUsers(currentPage)
       dispatch(setUsers(res.data))
