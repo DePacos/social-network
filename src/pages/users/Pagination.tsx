@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { generatePagination } from "../../app/utils/generatePagination"
 import { AppRootState, Page, UsersResponse } from "../../app/types/types"
+import { S } from "./Pagination_Styles"
 import {
   changePagination,
   fetchUsers,
@@ -15,12 +16,10 @@ class Pagination extends Component<Props> {
 
   render() {
     const { paginationData, currentPage, pageItems, totalCount } = this.props
-    console.log("pagination", this.props.pageItems)
-    console.log("pagination", paginationData)
 
     const paginationHandler = (num: number) => {
       const lengthPagination = Math.ceil(totalCount / pageItems)
-      // if (num === lengthPagination || num === 1) return
+      // TODO stop generation when first or last item is clicked
       this.props.fetchUsers(num)
       this.props.setPage(num)
       if (paginationData.at(-1) === num || paginationData.at(0) === num) {
@@ -30,12 +29,16 @@ class Pagination extends Component<Props> {
 
     const pagination = paginationData.map((item: number) => {
       return (
-        <button key={item} onClick={() => paginationHandler(item)}>
-          {item === currentPage ? <b>{item}</b> : item}
-        </button>
+        <S.Li currentPage={currentPage === item} key={item}>
+          <a onClick={() => paginationHandler(item)}>{item}</a>
+        </S.Li>
       )
     })
-    return <div>{pagination}</div>
+    return (
+      <nav>
+        <S.Ul>{pagination}</S.Ul>
+      </nav>
+    )
   }
 }
 
