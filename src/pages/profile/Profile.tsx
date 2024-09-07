@@ -1,71 +1,45 @@
-import React, { ChangeEvent } from "react"
+import React from "react"
 import { S } from "./Profile_Styles"
-import { Button } from "../../shared/ui/Button/Button"
-import { AppRootState } from "../../app/types/types"
+import { AppRootState, UserProfile } from "../../app/types/types"
 import { connect } from "react-redux"
+import { useParams } from "react-router-dom"
+import { fetchProfile } from "../../entities/users/profileReducer"
 
-type ProfileProps = {
-  // posts: PostType[]
-  // addPostAC?: (postText: string) => AddPostActionType
-}
-
-type ProfileState = {
-  // inputValue: string
-}
-
-class Profile extends React.Component<ProfileProps, ProfileState> {
-  constructor(props: ProfileProps) {
-    super(props)
-
-    this.state = {
-      inputValue: "",
-    }
-  }
-
-  changeAriaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.setState({ inputValue: e.currentTarget.value })
-  }
-
-  addPostHandler = () => {
-    // if (this.props.addPostAC) {
-    //   this.props.addPostAC(this.state.inputValue)
-    // }
+class Profile extends React.Component<Props> {
+  componentDidMount() {
+    const { params, fetchProfile } = this.props
+    fetchProfile(+params.id)
   }
 
   render() {
+    const { profile } = this.props
     return (
       <S.Profile>
         <h1>Profile</h1>
-        {/*<S.Post>*/}
-        {/*  {this.props.posts.map((post) => (*/}
-        {/*    <li key={post.id}>*/}
-        {/*      <h2>*/}
-        {/*        <a href="/public#">{post.title}</a>*/}
-        {/*      </h2>*/}
-        {/*      <p>{post.body}</p>*/}
-        {/*      <img src={post.img} alt="post-img" />*/}
-        {/*    </li>*/}
-        {/*  ))}*/}
-        {/*</S.Post>*/}
-        {/*<S.WrapAddPost>*/}
-        {/*  <textarea*/}
-        {/*    value={this.state.inputValue}*/}
-        {/*    onChange={(e) => this.changeAriaHandler(e)}*/}
-        {/*  />*/}
-        {/*  <Button title="Add Post" onclick={this.addPostHandler} />*/}
-        {/*</S.WrapAddPost>*/}
+        <div>{profile.userId}</div>
+        <div>{profile.fullName}</div>
       </S.Profile>
     )
   }
 }
 
-// const mapStateToProps = (state: AppRootState) => ({
-//   posts: state.posts.filter((post) => post.userId === 1),
-// })
+const mapStateToProps = (state: AppRootState) => ({
+  profile: state.profile,
+})
 
-// const mapDispatchToProps = {
-//   addPostAC,
-// }
+const mapDispatchToProps = {
+  fetchProfile: fetchProfile,
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Profile)
-export default connect()(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(WithParamsComponent)
+
+function WithParamsComponent(props: Omit<Props, "params">) {
+  const params = useParams<{ id: string | undefined }>()
+  return <Profile {...props} params={{ id: params.id ? params.id : "1" }} />
+}
+
+type Props = {
+  profile: UserProfile
+  fetchProfile: (userId: number) => void
+  params: { id: string }
+}
