@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { S } from "./Users_Styles"
 import { changePageItems, fetchUsers } from "../../entities/users/usersReducer"
 import Pagination from "./Pagination"
+import { Link } from "react-router-dom"
 
 class Users extends React.Component<Props> {
   componentDidMount() {
@@ -25,12 +26,15 @@ class Users extends React.Component<Props> {
         </select>
         <S.Users>
           {users
-            ? users.map((user: any) => {
+            ? users.map((user) => {
                 return (
                   <li key={user.id}>
+                    {user.id}
                     <img src={user.img} alt="user-img" />
                     <h2>
-                      <a href="/public#">{user.name}</a>
+                      <Link to={`/profile/${String(user.id)}`}>
+                        {user.name}
+                      </Link>
                     </h2>
                     <p>
                       {user.body
