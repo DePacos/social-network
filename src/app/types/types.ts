@@ -7,6 +7,7 @@ import {
 import { rootReducer, store } from "../store"
 import { ThunkDispatch } from "redux-thunk"
 import { setProfile } from "../../entities/users/profileReducer"
+import { changeAppStatus } from "../../entities/users/appReducer"
 
 export type Photos = {
   small: string
@@ -55,6 +56,8 @@ export type Page = {
   pageItems: number
   paginationData: number[]
 }
+
+export type AppActions = ReturnType<typeof changeAppStatus>
 
 export type ProfileActions = ReturnType<typeof setProfile>
 
