@@ -1,6 +1,13 @@
-import { UsersActions, Page, User, UsersResponse } from "../../app/types/types"
+import {
+  UsersActions,
+  Page,
+  User,
+  UsersResponse,
+  AppActions,
+} from "../../app/types/types"
 import { usersAPI } from "../../shared/api/usersAPI"
 import { Dispatch } from "react"
+import { changeAppStatus } from "./appReducer"
 
 const initialState: UsersResponse & Page = {
   items: [] as User[],
@@ -67,12 +74,17 @@ export const changePageItems = (pageItems: number) =>
   }) as const
 
 export const fetchUsers =
-  (currentPage: number) =>
-  async (dispatch: Dispatch<ReturnType<typeof setUsers>>) => {
+  (currentPage: number) => async (dispatch: Dispatch<UsersDispatch>) => {
+    dispatch(changeAppStatus(true))
     try {
       const res = await usersAPI.fetchUsers(currentPage)
       dispatch(setUsers(res.data))
+      dispatch(changeAppStatus(false))
     } catch (error) {
       console.log(error)
     }
   }
+
+type UsersDispatch =
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof changeAppStatus>
