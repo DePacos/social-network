@@ -12,7 +12,8 @@ const Wrapper = styled.div`
 
 const Users = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  column-gap: 15px;
   row-gap: 40px;
   margin-bottom: 40px;
 
