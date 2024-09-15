@@ -6,6 +6,7 @@ import {
 } from "../../app/types/types"
 import { usersAPI } from "../../shared/api/usersAPI"
 import { Dispatch } from "react"
+import { changeAppStatus } from "./appReducer"
 
 const initialState: UserProfile = {
   userId: 0,
@@ -32,12 +33,17 @@ export const setProfile = (profile: UserProfile) =>
   ({ type: "SET_USER", payload: profile }) as const
 
 export const fetchProfile =
-  (userId: number) =>
-  async (dispatch: Dispatch<ReturnType<typeof setProfile>>) => {
+  (userId: number) => async (dispatch: Dispatch<ProfileDispatch>) => {
+    dispatch(changeAppStatus(true))
     try {
       const res = await usersAPI.fetchProfile(userId)
       dispatch(setProfile(res.data))
+      dispatch(changeAppStatus(false))
     } catch (error) {
       console.log(error)
     }
   }
+
+type ProfileDispatch =
+  | ReturnType<typeof setProfile>
+  | ReturnType<typeof changeAppStatus>
