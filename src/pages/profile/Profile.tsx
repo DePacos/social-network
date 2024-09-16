@@ -4,6 +4,7 @@ import { AppRootState, UserProfile } from "../../app/types/types"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
 import { fetchProfile } from "../../entities/users/profileReducer"
+import { SkeletonStyled } from "../../app/styles/GlobalStyles"
 
 class Profile extends React.Component<Props> {
   componentDidMount() {
@@ -12,12 +13,18 @@ class Profile extends React.Component<Props> {
   }
 
   render() {
-    const { profile } = this.props
+    const { profile, isLoading } = this.props
     return (
       <S.Profile>
         <h1>Profile</h1>
-        <div>{profile.userId}</div>
-        <div>{profile.fullName}</div>
+        {isLoading ? (
+          <SkeletonStyled />
+        ) : (
+          <>
+            <div>{profile.userId}</div>
+            <div>{profile.fullName}</div>
+          </>
+        )}
       </S.Profile>
     )
   }
@@ -25,6 +32,7 @@ class Profile extends React.Component<Props> {
 
 const mapStateToProps = (state: AppRootState) => ({
   profile: state.profile,
+  isLoading: state.app.isLoading,
 })
 
 const mapDispatchToProps = {
@@ -42,4 +50,5 @@ type Props = {
   profile: UserProfile
   fetchProfile: (userId: number) => void
   params: { id: string }
+  isLoading: boolean
 }
