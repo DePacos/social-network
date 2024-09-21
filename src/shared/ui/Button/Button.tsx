@@ -1,14 +1,14 @@
-import React from 'react';
-import {S} from "./Button_Styles";
+import React, { ButtonHTMLAttributes } from "react"
+import { S } from "./Button_Styles"
 
 type ButtonProps = {
-    title: string
-    onclick: () => void
-    children?: React.ReactNode
-    disable?: boolean
+  variant?: "primary" | "secondary"
+} & ButtonHTMLAttributes<HTMLButtonElement>
+
+export const Button = ({ children, variant, ...props }: ButtonProps) => {
+  return (
+    <S.Button variant={variant} {...props}>
+      {children}
+    </S.Button>
+  )
 }
-export const Button = ({title, onclick, children, disable}:ButtonProps) => {
-    return (
-        <S.Button onClick={onclick}>{title || children}</S.Button>
-    );
-};
