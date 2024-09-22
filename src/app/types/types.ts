@@ -57,6 +57,25 @@ export type Page = {
   paginationData: number[]
 }
 
+export type MeData = {
+  id: number
+  email: string
+  login: string
+}
+
+export type AuthResponse<Data = {}> = {
+  resultCode: number
+  messages: []
+  data: Data
+}
+
+export type Login = {
+  email: string
+  password: string
+  rememberMe?: boolean
+  captcha?: string
+}
+
 export type AppActions = ReturnType<typeof changeAppStatus>
 
 export type ProfileActions = ReturnType<typeof setProfile>
