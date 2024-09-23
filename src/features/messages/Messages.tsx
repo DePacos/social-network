@@ -3,7 +3,6 @@ import { S } from "./Messages_Styles"
 import { Button } from "../../shared/ui/Button/Button"
 import { useParams } from "react-router-dom"
 import { AppRootState } from "../../app/types/types"
-import { connect } from "react-redux"
 
 type RouteParams = {
   id?: string
@@ -37,7 +36,7 @@ class Messages_ extends React.Component<any> {
             </S.MessagesView>
             <S.MessagesSend>
               <textarea />
-              <Button title={"Send"} onclick={() => {}} />
+              <Button title={"Send"} onClick={() => {}} />
             </S.MessagesSend>
           </>
         ) : (

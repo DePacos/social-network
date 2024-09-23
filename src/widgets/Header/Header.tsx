@@ -28,16 +28,16 @@ export const Header = ({ changeTheme }: HeaderProps) => {
           />
           <ul>
             <li>
-              <Button title="RU" onclick={buttonHandler} />
+              <Button children="RU" onClick={buttonHandler} />
             </li>
             <li>
-              <Button title="EN" onclick={buttonHandler} />
+              <Button children="EN" onClick={buttonHandler} />
             </li>
           </ul>
-          <Button title="" onclick={changeTheme}>
+          <Button onClick={changeTheme}>
             <img src={themeColor} alt="Change color mode" />
           </Button>
-          <Button title="LogIn" onclick={buttonHandler} />
+          <Button children="LogIn" onClick={buttonHandler} />
         </S.HeaderWrap>
       </Container>
     </S.Header>
