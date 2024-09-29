@@ -8,6 +8,7 @@ import { rootReducer, store } from "../store"
 import { ThunkDispatch } from "redux-thunk"
 import { setProfile } from "../../entities/users/profileReducer"
 import { changeAppStatus } from "../../entities/users/appReducer"
+import { changeIsLoggedInStatus } from "../../entities/users/authReducer"
 
 export type Photos = {
   small: string
@@ -69,7 +70,7 @@ export type AuthResponse<Data = {}> = {
   data: Data
 }
 
-export type Login = {
+export type LoginRequest = {
   email: string
   password: string
   rememberMe?: boolean
@@ -77,6 +78,7 @@ export type Login = {
 }
 
 export type AppActions = ReturnType<typeof changeAppStatus>
+export type AuthActions = ReturnType<typeof changeIsLoggedInStatus>
 
 export type ProfileActions = ReturnType<typeof setProfile>
 
