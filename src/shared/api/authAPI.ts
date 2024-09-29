@@ -1,12 +1,12 @@
 import { instance } from "./instance"
-import { AuthResponse, Login, MeData } from "../../app/types/types"
+import { AuthResponse, LoginRequest, MeData } from "../../app/types/types"
 
 export const authAPI = {
   me() {
     return instance.get<AuthResponse<MeData>>(`/auth/me`)
   },
 
-  login(data: Login) {
+  login(data: LoginRequest) {
     return instance.post<AuthResponse<{ userId: string }>>(`/auth/login`, data)
   },
 
