@@ -7,7 +7,7 @@ import {
 } from "../../app/types/types"
 import { usersAPI } from "../../shared/api/usersAPI"
 import { Dispatch } from "react"
-import { changeAppStatus } from "./appReducer"
+import { changeIsLoading } from "./appReducer"
 
 const initialState: UsersResponse & Page = {
   items: [] as User[],
@@ -75,11 +75,11 @@ export const changePageItems = (pageItems: number) =>
 
 export const fetchUsers =
   (currentPage: number) => async (dispatch: Dispatch<UsersDispatch>) => {
-    dispatch(changeAppStatus(true))
+    dispatch(changeIsLoading(true))
     try {
       const res = await usersAPI.fetchUsers(currentPage)
       dispatch(setUsers(res.data))
-      dispatch(changeAppStatus(false))
+      dispatch(changeIsLoading(false))
     } catch (error) {
       console.log(error)
     }
@@ -87,4 +87,4 @@ export const fetchUsers =
 
 type UsersDispatch =
   | ReturnType<typeof setUsers>
-  | ReturnType<typeof changeAppStatus>
+  | ReturnType<typeof changeIsLoading>
