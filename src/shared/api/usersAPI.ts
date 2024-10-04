@@ -1,5 +1,5 @@
 import { instance } from "./instance"
-import { UserProfile, User, UsersResponse } from "../../app/types/types"
+import { UserProfile, UsersResponse } from "../../app/types/types"
 
 export const usersAPI = {
   fetchUsers(pageNumber: number = 1) {
