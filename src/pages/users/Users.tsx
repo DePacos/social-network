@@ -15,7 +15,6 @@ class Users extends React.Component<Props> {
 
   render() {
     const { users, changePageItems, pageItems, isLoading } = this.props
-    console.log("isLoading", isLoading)
     const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
       changePageItems(+e.target.value)
     }
