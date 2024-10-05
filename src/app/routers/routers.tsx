@@ -1,6 +1,6 @@
 import React from "react"
 import { createBrowserRouter, Navigate } from "react-router-dom"
-import { App } from "../App"
+import App from "../App"
 import { ErrorPage } from "../../pages/errorPage/ErrorPage"
 import Profile from "../../pages/profile/Profile"
 import Messages from "../../features/messages/Messages"
@@ -28,10 +28,10 @@ export const router = createBrowserRouter([
         path: "/profile/:id",
         element: <Profile />,
       },
+      {
+        path: "404",
+        element: <ErrorPage />,
+      },
     ],
-  },
-  {
-    path: "404",
-    element: <ErrorPage />,
   },
 ])
