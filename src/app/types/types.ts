@@ -4,7 +4,7 @@ import {
   setPage,
   setUsers,
 } from "../../entities/users/usersReducer"
-import { rootReducer, store } from "../store"
+import { rootReducer } from "../store"
 import { ThunkDispatch } from "redux-thunk"
 import { setProfile } from "../../entities/users/profileReducer"
 import {
