@@ -6,7 +6,7 @@ import {
 } from "../../app/types/types"
 import { usersAPI } from "../../shared/api/usersAPI"
 import { Dispatch } from "react"
-import { changeAppStatus } from "./appReducer"
+import { changeIsLoading } from "./appReducer"
 
 const initialState: UserProfile = {
   userId: 0,
@@ -34,11 +34,11 @@ export const setProfile = (profile: UserProfile) =>
 
 export const fetchProfile =
   (userId: number) => async (dispatch: Dispatch<ProfileDispatch>) => {
-    dispatch(changeAppStatus(true))
+    dispatch(changeIsLoading(true))
     try {
       const res = await usersAPI.fetchProfile(userId)
       dispatch(setProfile(res.data))
-      dispatch(changeAppStatus(false))
+      dispatch(changeIsLoading(false))
     } catch (error) {
       console.log(error)
     }
@@ -46,4 +46,4 @@ export const fetchProfile =
 
 type ProfileDispatch =
   | ReturnType<typeof setProfile>
-  | ReturnType<typeof changeAppStatus>
+  | ReturnType<typeof changeIsLoading>
