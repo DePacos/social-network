@@ -7,14 +7,14 @@ import { Button } from "../../shared/ui/Button/Button"
 import { AppRootState } from "../../app/types/types"
 import { logout } from "../../entities/users/authReducer"
 import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 
 class Header extends React.Component<Props> {
   render() {
-    const { changeTheme, isLoggedIn } = this.props
+    const { changeTheme, isLoggedIn, currentUserId } = this.props
     const logoutHandler = () => {
       this.props.logout()
     }
-
     return (
       <S.Header>
         <Container>
@@ -40,7 +40,12 @@ class Header extends React.Component<Props> {
             <Button onClick={changeTheme}>
               <img src={themeColor} alt="Change color mode" />
             </Button>
-            {isLoggedIn && <Button children="LogOut" onClick={logoutHandler} />}
+            {isLoggedIn && (
+              <div>
+                <Link to={`/profile/${currentUserId}`}>Profile</Link>
+                <Button children="Logout" onClick={logoutHandler} />
+              </div>
+            )}
           </S.HeaderWrap>
         </Container>
       </S.Header>
@@ -50,6 +55,7 @@ class Header extends React.Component<Props> {
 
 const mapStateToProps = (state: AppRootState) => ({
   isLoggedIn: state.auth.isLoggedIn,
+  currentUserId: state.auth.currentUserId,
 })
 
 const mapDispatchToProps = {
@@ -60,7 +66,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Header)
 
 type Props = {
   changeTheme: () => void
-  logout: () => void
-  isLoading: boolean
+  logout: () => Promise<void>
   isLoggedIn: boolean
+  currentUserId: string
 }
