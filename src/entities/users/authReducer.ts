@@ -1,16 +1,20 @@
 import { AppActions, AuthActions, LoginRequest } from "../../app/types/types"
 import { Dispatch } from "react"
-import { changeAppStatus } from "./appReducer"
+import { changeIsInitialized, changeIsLoading, setError } from "./appReducer"
 import { authAPI } from "../../shared/api/authAPI"
+import { AxiosError } from "axios"
 
 const initialState = {
   isLoggedIn: false,
+  currentUserId: "",
 }
 
 export const authReducer = (state = initialState, action: AuthActions) => {
   switch (action.type) {
     case "SET_LOGGED_IN":
       return { ...state, isLoggedIn: action.payload.status }
+    case "SET_CURRENT_USER_ID":
+      return { ...state, currentUserId: action.payload.userId }
     default:
       return state
   }
@@ -19,29 +23,39 @@ export const authReducer = (state = initialState, action: AuthActions) => {
 export const changeIsLoggedInStatus = (status: boolean) =>
   ({ type: "SET_LOGGED_IN", payload: { status } }) as const
 
+export const setCurrentUserId = (userId: string) =>
+  ({ type: "SET_CURRENT_USER_ID", payload: { userId } }) as const
+
 export const login =
   (data: LoginRequest) =>
   async (dispatch: Dispatch<AppActions | AuthActions>) => {
-    dispatch(changeAppStatus(true))
+    dispatch(changeIsLoading(true))
     try {
       const res = await authAPI.login(data)
       if (res.data.resultCode === 0) {
         dispatch(changeIsLoggedInStatus(true))
-        dispatch(changeAppStatus(false))
+        dispatch(setCurrentUserId(res.data.data.userId))
+        dispatch(changeIsLoading(false))
+      } else {
+        dispatch(setError(res.data.messages[0]))
       }
-    } catch (error) {
-      console.log("login failed", error)
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        dispatch(setError(error.message))
+      } else {
+        dispatch(setError("unknown error"))
+      }
     }
   }
 
 export const logout =
   () => async (dispatch: Dispatch<AppActions | AuthActions>) => {
-    dispatch(changeAppStatus(true))
+    dispatch(changeIsLoading(true))
     try {
       const res = await authAPI.logout()
       if (res.data.resultCode === 0) {
         dispatch(changeIsLoggedInStatus(false))
-        dispatch(changeAppStatus(false))
+        dispatch(changeIsLoading(false))
       }
     } catch (error) {
       console.log("logout failed", error)
@@ -50,14 +64,18 @@ export const logout =
 
 export const me =
   () => async (dispatch: Dispatch<AppActions | AuthActions>) => {
-    dispatch(changeAppStatus(true))
+    dispatch(changeIsLoading(true))
+    const res = await authAPI.me()
     try {
-      const res = await authAPI.me()
       if (res.data.resultCode === 0) {
         dispatch(changeIsLoggedInStatus(true))
-        dispatch(changeAppStatus(false))
+        dispatch(setCurrentUserId(String(res.data.data.id)))
+        dispatch(changeIsLoading(false))
       }
+      return res
     } catch (error) {
       console.log("me failed", error)
+    } finally {
+      dispatch(changeIsInitialized(true))
     }
   }
