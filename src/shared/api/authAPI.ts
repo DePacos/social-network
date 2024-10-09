@@ -13,4 +13,7 @@ export const authAPI = {
   logout() {
     return instance.delete<AuthResponse<{ userId: string }>>(`/auth/login`)
   },
+  captcha() {
+    return instance.get<{url: string}>(`/security/get-captcha-url`)
+  },
 }
