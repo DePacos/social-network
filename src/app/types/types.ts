@@ -13,8 +13,8 @@ import {
   setError,
 } from "../../entities/users/appReducer"
 import {
-  changeIsLoggedInStatus,
-  setCurrentUserId,
+  changeIsLoggedInStatus, setCaptcha,
+  setCurrentUserId
 } from "../../entities/users/authReducer"
 
 export type Photos = {
@@ -92,6 +92,7 @@ export type AppActions =
 export type AuthActions =
   | ReturnType<typeof changeIsLoggedInStatus>
   | ReturnType<typeof setCurrentUserId>
+  | ReturnType<typeof setCaptcha>
 
 export type ProfileActions = ReturnType<typeof setProfile>
 
@@ -102,4 +103,4 @@ export type UsersActions =
   | ReturnType<typeof changePageItems>
 
 export type AppRootState = ReturnType<typeof rootReducer>
-export type AppThunkDispatch = ThunkDispatch<AppRootState, any, UsersActions>
+export type AppThunkDispatch = ThunkDispatch<AppRootState, void, AuthActions | AppActions>
