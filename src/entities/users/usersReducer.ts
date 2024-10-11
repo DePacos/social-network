@@ -8,6 +8,7 @@ import {
 import { usersAPI } from "../../shared/api/usersAPI"
 import { Dispatch } from "react"
 import { changeIsLoading } from "./appReducer"
+import { generatePagination } from "../../app/utils/generatePagination"
 
 const initialState: UsersResponse & Page = {
   items: [] as User[],
@@ -74,10 +75,10 @@ export const changePageItems = (pageItems: number) =>
   }) as const
 
 export const fetchUsers =
-  (currentPage: number) => async (dispatch: Dispatch<UsersDispatch>) => {
+  (currentPage?: number, userCount?: number) => async (dispatch: Dispatch<UsersDispatch>) => {
     dispatch(changeIsLoading(true))
     try {
-      const res = await usersAPI.fetchUsers(currentPage)
+      const res = await usersAPI.fetchUsers(currentPage, userCount)
       dispatch(setUsers(res.data))
       dispatch(changeIsLoading(false))
     } catch (error) {
