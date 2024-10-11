@@ -10,20 +10,26 @@ import { SkeletonStyled } from "../../app/styles/GlobalStyles"
 
 class Users extends React.Component<Props> {
   componentDidMount() {
-    this.props.fetchUsers(1)
+    this.props.fetchUsers()
   }
 
   render() {
-    const { users, changePageItems, pageItems, isLoading } = this.props
+    const { users, changePageItems, pageItems, isLoading, fetchUsers, currentPage } = this.props
+
     const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      changePageItems(+e.target.value)
+      const pageItems = +e.target.value
+      changePageItems(pageItems)
+      fetchUsers(currentPage, pageItems)
     }
 
     return (
       <S.Wrapper>
         <h1>Users</h1>
-        <select onChange={selectHandler}>
-          <option>10</option>
+        <select value={pageItems} onChange={selectHandler}>
+          <option>5</option>
+          <option selected>10</option>
+          <option>15</option>
+          <option>20</option>
         </select>
         {isLoading ? (
           <S.Users>
@@ -63,6 +69,7 @@ class Users extends React.Component<Props> {
 const mapStateToProps = (state: AppRootState) => ({
   users: state.users.items,
   pageItems: state.users.pageItems,
+  currentPage: state.users.currentPage,
   isLoading: state.app.isLoading,
 })
 
@@ -75,8 +82,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Users)
 
 type Props = {
   users: User[]
-  fetchUsers: (currentPage: number) => void
+  fetchUsers: (pageNumber?: number, countUsersInPage?: number) => Promise<void>
+  currentPage: number
   pageItems: number
-  changePageItems: (pageItems: number) => ReturnType<typeof changePageItems>
+  changePageItems: (pageItems: number) => void
   isLoading: boolean
 }
