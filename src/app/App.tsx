@@ -10,6 +10,9 @@ import { Article } from "../widgets/Article/Article"
 import Login from "../features/auth/Login"
 import { AppRootState } from "./types/types"
 import { connect } from "react-redux"
+import { me } from "../entities/users/authReducer"
+import { changeIsLoading } from "../entities/users/appReducer"
+import Skeleton from "react-loading-skeleton"
 
 export class App extends React.Component<Props, { themeMode: boolean }> {
   constructor(props: Props) {
@@ -24,7 +27,15 @@ export class App extends React.Component<Props, { themeMode: boolean }> {
     this.setState({ themeMode: !this.state.themeMode })
   }
 
+  componentDidMount() {
+    this.props.me()
+  }
+
   render() {
+    if (!this.props.isInitialized) {
+      return <Skeleton />
+    }
+
     return (
       <div className="App">
         <ThemeProvider
@@ -57,10 +68,19 @@ const MainWrap = styled(Container)`
 
 const mapStateToProps = (state: AppRootState) => ({
   isLoggedIn: state.auth.isLoggedIn,
+  isInitialized: state.app.isInitialized,
 })
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = {
+  me: me,
+  changeAppStatus: changeIsLoading,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 type Props = {
   isLoggedIn: boolean
+  isInitialized: boolean
+  me: () => void
+  changeAppStatus: (status: boolean) => void
 }
