@@ -21,8 +21,8 @@ class Profile extends React.Component<Props> {
           <SkeletonStyled />
         ) : (
           <>
-            <div>{profile.userId}</div>
-            <div>{profile.fullName}</div>
+            <div>User ID: {profile.userId}</div>
+            <div>User name: {profile.fullName}</div>
           </>
         )}
       </S.Profile>
