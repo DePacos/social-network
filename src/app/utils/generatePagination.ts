@@ -1,17 +1,24 @@
-export const generatePagination = (lenPagination: number, num: number = 1) => {
+export const generatePagination = (totalCount: number, pageItems: number, currentPage: number) => {
+  const lenPagination = Math.ceil(totalCount / pageItems)
   let numArr: number[] = []
-  if (num < 6) {
-    for (let i = 1; i <= 10; i++) {
-      numArr.push(i)
-    }
-  } else if (lenPagination - num > 5) {
-    for (let i = num - 5; i <= num + 5; i++) {
-      numArr.push(i)
-    }
-  } else {
-    for (let i = lenPagination - 10; i <= lenPagination; i++) {
-      numArr.push(i)
-    }
+
+  const rangeToShow = 5
+  const startPage = Math.max(1, currentPage - Math.floor(rangeToShow / 2))
+  const endPage = Math.min(lenPagination, startPage + rangeToShow - 1)
+
+  if (startPage > 1) {
+    numArr.push(1)
+    if (startPage > 2) numArr.push(-1)
   }
+
+  for (let i = startPage; i <= endPage; i++) {
+    numArr.push(i)
+  }
+
+  if (endPage < lenPagination) {
+    if (endPage < lenPagination - 1) numArr.push(-1)
+    numArr.push(lenPagination)
+  }
+
   return numArr
 }
