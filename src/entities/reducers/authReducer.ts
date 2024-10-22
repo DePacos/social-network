@@ -52,7 +52,7 @@ export const login =
       if (error instanceof AxiosError) {
         dispatch(setError(error.message))
       } else {
-        dispatch(setError("unknown error"))
+        dispatch(setError("unknown appError"))
       }
     }
   }
@@ -67,7 +67,10 @@ export const logout =
         dispatch(changeIsLoading(false))
       }
     } catch (error) {
-      console.log("logout failed", error)
+      console.log('logout', error)
+      dispatch(setError('network error'))
+    }finally {
+      // dispatch(setError(''))
     }
   }
 
