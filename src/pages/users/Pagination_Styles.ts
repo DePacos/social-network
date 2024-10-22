@@ -9,8 +9,8 @@ const Ul = styled.ul`
   a {
     display: block;
     text-align: center;
-    width: 30px;
-    padding: 5px;
+    width: 45px;
+    padding: 12px 4px;
     cursor: pointer;
     color: ${({ theme }) => theme.colors.fontPag};
     background-color: ${({ theme }) => theme.colors.bgPag};
