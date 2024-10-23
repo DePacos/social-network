@@ -3,7 +3,7 @@ import { S } from "./Profile_Styles"
 import { AppRootState, UserProfile } from "../../app/types/types"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
-import { fetchProfile } from "../../entities/users/profileReducer"
+import { fetchProfile } from "../../entities/reducers/profileReducer"
 import { SkeletonStyled } from "../../app/styles/GlobalStyles"
 
 class Profile extends React.Component<Props> {

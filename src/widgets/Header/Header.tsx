@@ -5,7 +5,7 @@ import logo from "../../shared/assets/images/logo.webp"
 import themeColor from "../../shared/assets/icons/theme-color.svg"
 import { Button } from "../../shared/ui/Button/Button"
 import { AppRootState } from "../../app/types/types"
-import { logout } from "../../entities/users/authReducer"
+import { logout } from "../../entities/reducers/authReducer"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 

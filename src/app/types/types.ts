@@ -3,19 +3,19 @@ import {
   changePagination,
   setPage,
   setUsers,
-} from "../../entities/users/usersReducer"
+} from "../../entities/reducers/usersReducer"
 import { rootReducer } from "../store"
 import { ThunkDispatch } from "redux-thunk"
-import { setProfile } from "../../entities/users/profileReducer"
+import { setProfile } from "../../entities/reducers/profileReducer"
 import {
   changeIsInitialized,
   changeIsLoading,
   setError,
-} from "../../entities/users/appReducer"
+} from "../../entities/reducers/appReducer"
 import {
   changeIsLoggedInStatus, setCaptcha,
   setCurrentUserId
-} from "../../entities/users/authReducer"
+} from "../../entities/reducers/authReducer"
 
 export type Photos = {
   small: string
