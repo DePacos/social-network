@@ -6,7 +6,7 @@ export const ErrorPage = () => {
   return (
     <S.Wrapper>
       <h1>Sorry, page no found</h1>
-      <img src={page404}></img>
+      <img alt='appError-page' src={page404}></img>
     </S.Wrapper>
   )
 }
