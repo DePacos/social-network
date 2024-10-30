@@ -20,7 +20,7 @@ const Ul = styled.ul`
     }
   }
 `
-const Li = styled.li<props>`
+const Li = styled.li<Props>`
   a {
     background-color: ${(props) => props.currentPage && "#17b1d7"};
   }
@@ -31,6 +31,6 @@ export const S = {
   Li,
 }
 
-type props = {
+type Props = {
   currentPage: boolean
 }
