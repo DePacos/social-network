@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components"
 
 const Header = styled.header
     `
@@ -9,6 +9,7 @@ const HeaderWrap = styled.div
         display: grid;
         grid-template-columns: 190px 1fr 70px 20px 150px;
         align-items: center;
+        justify-items: center;
         gap: 30px;
         padding: 20px 0;
 
@@ -58,7 +59,47 @@ const HeaderWrap = styled.div
         }
     `
 
+const HeaderSearch = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+`
+
+const HeaderSearchResWrap = styled.div`
+    position: relative;
+    margin: 0 10px;
+`
+const HeaderSearchRes = styled.div<Props>`
+    position: absolute;
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+    overflow-y: auto;
+    padding: 10px 15px;
+    border-radius: 10px;
+    opacity: 1;
+    transform: translateY(0px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    background-color: ${({ theme }) => theme.colors.bgSecondary};
+    
+    ${props => !props.searchValue && css <Props>`
+        opacity: 0;
+        transform: translateY(-10px);
+    `}
+    
+`
+
 export const S = {
     Header,
-    HeaderWrap
+    HeaderWrap,
+    HeaderSearch,
+    HeaderSearchRes,
+    HeaderSearchResWrap
+}
+
+type Props = {
+    searchValue: string
 }

@@ -4,7 +4,8 @@ export const socialThemeDark = {
     body: "#3d3b3a",
     fontColor: "#fff",
     fontPag: "#222",
-    bgPag: "#fff",
+    bgPrimary: "#fff",
+    bgSecondary: "#353535",
   },
   icons: {
     loginIcon: login,

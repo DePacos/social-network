@@ -5,7 +5,8 @@ export const socialThemeLight = {
     body: "#e7e7e7",
     fontColor: "#222",
     fontPag: "#fff",
-    bgPag: "#6d6c6c",
+    bgPrimary: "#6d6c6c",
+    bgSecondary: "#b7b7b7",
   },
   icons: {
     loginIcon: login,

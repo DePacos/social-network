@@ -13,7 +13,7 @@ const Ul = styled.ul`
     padding: 12px 4px;
     cursor: pointer;
     color: ${({ theme }) => theme.colors.fontPag};
-    background-color: ${({ theme }) => theme.colors.bgPag};
+    background-color: ${({ theme }) => theme.colors.bgPrimary};
     border-radius: 50%;
     &:hover {
       background-color: #17b1d7;
