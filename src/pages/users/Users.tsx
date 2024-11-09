@@ -1,12 +1,12 @@
 import React from "react"
-import { AppRootState, User } from "../../app/types/types"
+import { AppRootState, User } from "@/app/types/types"
 import { connect } from "react-redux"
-import { S } from "./Users_Styles"
-import { changePageItems, fetchUsers } from "../../entities/reducers/usersReducer"
+import { S } from "./users.styles"
+import { changePageItems, fetchUsers } from "@/entities/reducers/usersReducer"
 import Pagination from "./Pagination"
 import { Link } from "react-router-dom"
 import "react-loading-skeleton/dist/skeleton.css"
-import { SkeletonStyled } from "../../app/styles/GlobalStyles"
+import { SkeletonStyled } from "@/app/styles/global.styles"
 
 class Users extends React.Component<Props> {
   componentDidMount() {
@@ -73,18 +73,16 @@ const mapStateToProps = (state: AppRootState) => ({
   isLoading: state.app.isLoading,
 })
 
-const mapDispatchToProps = {
-  fetchUsers: fetchUsers,
-  changePageItems: changePageItems,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
-
 type Props = {
   users: User[]
-  fetchUsers: (pageNumber?: number, countUsersInPage?: number) => Promise<void>
+  fetchUsers: (pageNumber?: number, countUsersInPage?: number) => void
   currentPage: number
   pageItems: number
   changePageItems: (pageItems: number) => void
   isLoading: boolean
 }
+
+export default connect(mapStateToProps, {
+  fetchUsers,
+  changePageItems
+})(Users)
