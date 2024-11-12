@@ -1,5 +1,5 @@
 import React from "react"
-import { S } from "./Article_Styles"
+import { S } from "./article.styles"
 import { Outlet } from "react-router-dom"
 
 export const Article = () => {

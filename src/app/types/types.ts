@@ -1,21 +1,21 @@
 import {
   changePageItems,
-  changePagination,
-  setPage,
-  setUsers,
-} from "../../entities/reducers/usersReducer"
+  changePagination, clearSearchUsers,
+  setPage, setSearchUsers,
+  setUsers
+} from "@/entities/reducers/usersReducer"
 import { rootReducer } from "../store"
 import { ThunkDispatch } from "redux-thunk"
-import { setProfile } from "../../entities/reducers/profileReducer"
+import { setProfile } from "@/entities/reducers/profileReducer"
 import {
   changeIsInitialized,
   changeIsLoading,
   setError,
-} from "../../entities/reducers/appReducer"
+} from "@/entities/reducers/appReducer"
 import {
   changeIsLoggedInStatus, setCaptcha,
   setCurrentUserId
-} from "../../entities/reducers/authReducer"
+} from "@/entities/reducers/authReducer"
 
 export type Photos = {
   small: string
@@ -101,6 +101,8 @@ export type UsersActions =
   | ReturnType<typeof changePagination>
   | ReturnType<typeof setPage>
   | ReturnType<typeof changePageItems>
+  | ReturnType<typeof setSearchUsers>
+  | ReturnType<typeof clearSearchUsers>
 
 export type AppRootState = ReturnType<typeof rootReducer>
 export type AppThunkDispatch = ThunkDispatch<AppRootState, void, AuthActions | AppActions>

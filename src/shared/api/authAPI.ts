@@ -1,5 +1,5 @@
 import { instance } from "./instance"
-import { AuthResponse, LoginRequest, MeData } from "../../app/types/types"
+import { AuthResponse, LoginRequest, MeData } from "@/app/types/types"
 
 export const authAPI = {
   me() {

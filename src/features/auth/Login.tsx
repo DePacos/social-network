@@ -1,17 +1,20 @@
 import React from "react"
 import { S } from "./login.styles"
-import { Button } from "../../shared/ui/Button/Button"
-import { AppRootState, LoginRequest, User } from "../../app/types/types"
-import { login } from "../../entities/reducers/authReducer"
+import { Button } from "@/shared/ui/Button/Button"
+import { AppRootState, LoginRequest, User } from "@/app/types/types"
+import { login } from "@/entities/reducers/authReducer"
 import { connect } from "react-redux"
-import logo from "../../shared/assets/images/logo.webp"
+import logo from "@/shared/assets/images/logo.webp"
 
 class Login extends React.Component<Props> {
   render() {
     const { login, appError, captcha } = this.props
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
       e.preventDefault()
+
       const data = new FormData(e.target as any)
+
       login({
         email: data.get("email") as string,
         password: data.get("password") as string,
@@ -61,12 +64,6 @@ const mapStateToProps = (state: AppRootState) => ({
   appError: state.app.error,
 })
 
-const mapDispatchToProps = {
-  login: login,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
-
 type Props = {
   login: (data: LoginRequest) => void
   isLoading: boolean
@@ -74,3 +71,5 @@ type Props = {
   appError: string
   captcha: string
 }
+
+export default connect(mapStateToProps, {login})(Login)

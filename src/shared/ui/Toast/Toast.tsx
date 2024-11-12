@@ -1,6 +1,6 @@
 import React from "react"
 import { S } from "./toast.styles"
-import { setError } from "../../../entities/reducers/appReducer"
+import { setError } from "@/entities/reducers/appReducer"
 import { connect } from "react-redux"
 
 

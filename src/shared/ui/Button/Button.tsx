@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react"
-import { S } from "./Button_Styles"
+import { S } from "./button.styles"
 
 type ButtonProps = {
   variant?: "primary" | "secondary"
