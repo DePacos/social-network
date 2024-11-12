@@ -13,7 +13,7 @@ const HeaderWrap = styled.div
         gap: 30px;
         padding: 20px 0;
 
-        a:first-child {
+        a {
             display: flex;
             gap: 15px;
             align-items: center;
@@ -34,7 +34,7 @@ const HeaderWrap = styled.div
             }
         }
 
-        ul {
+        & > ul {
             display: flex;
             gap: 10px;
             justify-content: space-between;
@@ -75,7 +75,7 @@ const HeaderSearchResWrap = styled.div`
 const HeaderSearchRes = styled.div<Props>`
     position: absolute;
     width: 100%;
-    max-height: 300px;
+    max-height: 350px;
     overflow: hidden;
     overflow-y: auto;
     padding: 10px 15px;
@@ -89,7 +89,22 @@ const HeaderSearchRes = styled.div<Props>`
         opacity: 0;
         transform: translateY(-10px);
     `}
-    
+`
+
+const HeaderSearchResItem = styled.ul`
+    display: flex;
+    flex-direction: column;
+
+    li a {
+        font-size: 14px;
+        padding: 6px;
+    }
+   li + li {
+        border-top: 1px solid #444;
+    }
+    & li:hover{
+        box-shadow: 0 1px 3px 1px;
+    }
 `
 
 export const S = {
@@ -97,7 +112,8 @@ export const S = {
     HeaderWrap,
     HeaderSearch,
     HeaderSearchRes,
-    HeaderSearchResWrap
+    HeaderSearchResWrap,
+    HeaderSearchResItem,
 }
 
 type Props = {
