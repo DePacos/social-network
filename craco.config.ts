@@ -1,11 +1,11 @@
 export {}
+const path = require('path');
 
 module.exports = {
     "devDependencies": {
         "babel-plugin-styled-components": "^2.1.4"
     },
-
-"babel": {
+    "babel": {
         "plugins": [
         [
             "babel-plugin-styled-components",
@@ -18,6 +18,11 @@ module.exports = {
             }
         ]
     ]
-},
+  },
+  webpack: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+      }
+  }
 }
 
