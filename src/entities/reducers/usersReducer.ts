@@ -1,17 +1,11 @@
-import {
-  UsersActions,
-  Page,
-  User,
-  UsersResponse,
-  AppActions,
-} from "../../app/types/types"
-import { usersAPI } from "../../shared/api/usersAPI"
+import { Page, User, UsersActions, UsersResponse } from "@/app/types/types"
+import { usersAPI } from "@/shared/api/usersAPI"
 import { Dispatch } from "react"
 import { changeIsLoading } from "./appReducer"
-import { generatePagination } from "../../app/utils/generatePagination"
 
-const initialState: UsersResponse & Page = {
+const initialState: UsersResponse & Page & {searchUsers: User[]} = {
   items: [] as User[],
+  searchUsers: [] as User[],
   totalCount: 0,
   currentPage: 1,
   pageItems: 10,
@@ -41,6 +35,16 @@ export const usersReducer = (state = initialState, action: UsersActions) => {
       return {
         ...state,
         pageItems: action.payload.pageItems,
+      }
+      case "SEARCH_USERS":
+      return {
+        ...state,
+        searchUsers: action.payload.users
+      }
+      case "CLEAR_SEARCH_USERS":
+      return {
+        ...state,
+        searchUsers: []
       }
     default:
       return state
@@ -74,6 +78,19 @@ export const changePageItems = (pageItems: number) =>
     payload: { pageItems },
   }) as const
 
+export const setSearchUsers = (usersData: UsersResponse) =>
+  ({
+    type: "SEARCH_USERS",
+    payload: { users: usersData.items },
+  }) as const
+
+export const clearSearchUsers = () => {
+  console.log('clearSearchUsers')
+  return ({
+    type: "CLEAR_SEARCH_USERS",
+  }) as const
+}
+
 export const fetchUsers =
   (currentPage?: number, userCount?: number) => async (dispatch: Dispatch<UsersDispatch>) => {
     dispatch(changeIsLoading(true))
@@ -86,6 +103,19 @@ export const fetchUsers =
     }
   }
 
+export const fetchSearchUsers =
+  (filter: string) => async (dispatch: Dispatch<UsersDispatch>) => {
+    // dispatch(changeIsLoading(true))
+    try {
+      const res = await usersAPI.searchUsers(filter)
+      dispatch(setSearchUsers(res.data))
+      // dispatch(changeIsLoading(false))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 type UsersDispatch =
   | ReturnType<typeof setUsers>
   | ReturnType<typeof changeIsLoading>
+  | ReturnType<typeof setSearchUsers>
