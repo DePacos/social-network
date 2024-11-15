@@ -1,4 +1,4 @@
-import { AppActions } from "../../app/types/types"
+import { AppActions } from "@/app/types/types"
 
 const initialState = {
   isInitialized: false,

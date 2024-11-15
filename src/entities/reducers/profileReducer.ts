@@ -3,8 +3,8 @@ import {
   Photos,
   UserProfile,
   ProfileActions,
-} from "../../app/types/types"
-import { usersAPI } from "../../shared/api/usersAPI"
+} from "@/app/types/types"
+import { usersAPI } from "@/shared/api/usersAPI"
 import { Dispatch } from "react"
 import { changeIsLoading } from "./appReducer"
 
