@@ -1,8 +1,7 @@
-import { AppActions, AppThunkDispatch, AuthActions, LoginRequest } from "../../app/types/types"
+import { AppActions, AppThunkDispatch, AuthActions, LoginRequest } from "@/app/types/types"
 import { Dispatch } from "react"
 import { changeIsInitialized, changeIsLoading, setError } from "./appReducer"
-import { authAPI } from "../../shared/api/authAPI"
-import { AxiosError } from "axios"
+import { authAPI } from "@/shared/api/authAPI"
 
 const initialState = {
   isLoggedIn: false,
@@ -42,18 +41,17 @@ export const login =
         dispatch(changeIsLoggedInStatus(true))
         dispatch(setCurrentUserId(res.data.data.userId))
         dispatch(changeIsLoading(false))
-      } else if(res.data.resultCode === 10) {
+      }
+      if (res.data.resultCode === 10) {
         await dispatch(captcha())
         dispatch(setError(res.data.messages[0]))
-      }else {
+      }
+      if (res.data.resultCode === 1) {
         dispatch(setError(res.data.messages[0]))
       }
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        dispatch(setError(error.message))
-      } else {
-        dispatch(setError("unknown appError"))
-      }
+    } catch (error) {
+      dispatch(setError('network error'))
+      console.log('login', error)
     }
   }
 
@@ -67,10 +65,8 @@ export const logout =
         dispatch(changeIsLoading(false))
       }
     } catch (error) {
-      console.log('logout', error)
       dispatch(setError('network error'))
-    }finally {
-      // dispatch(setError(''))
+      console.log('logout', error)
     }
   }
 
@@ -80,23 +76,27 @@ export const logout =
       const res = await authAPI.captcha()
       dispatch(setCaptcha(res.data.url))
     } catch (error) {
-      console.log("captcha failed", error)
+      dispatch(setError('network error'))
+      console.log('captcha', error)
     }
   }
 
 export const me =
   () => async (dispatch: Dispatch<AppActions | AuthActions>) => {
     dispatch(changeIsLoading(true))
-    const res = await authAPI.me()
     try {
+    const res = await authAPI.me()
       if (res.data.resultCode === 0) {
         dispatch(changeIsLoggedInStatus(true))
         dispatch(setCurrentUserId(String(res.data.data.id)))
         dispatch(changeIsLoading(false))
       }
-      return res
+      if (res.data.resultCode === 1) {
+        dispatch(setError(res.data.messages[0]))
+      }
     } catch (error) {
-      console.log("me failed", error)
+      dispatch(setError('network error'))
+      console.log('me', error)
     } finally {
       dispatch(changeIsInitialized(true))
     }
