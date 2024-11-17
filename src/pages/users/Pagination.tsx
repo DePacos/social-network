@@ -1,15 +1,16 @@
 import React, { Component } from "react"
-import { generatePagination } from "../../app/utils/generatePagination"
-import { AppRootState, Page, UsersResponse } from "../../app/types/types"
-import { S } from "./Pagination_Styles"
+import { generatePagination } from "@/app/utils/generatePagination"
+import { AppRootState, Page, UsersResponse } from "@/app/types/types"
+import { S } from "./pagination.styles"
 import {
   changePagination,
   fetchUsers,
   setPage,
-} from "../../entities/reducers/usersReducer"
+} from "@/entities/reducers/usersReducer"
 import { connect } from "react-redux"
 
 class Pagination extends Component<Props> {
+
   componentDidUpdate(prevProps: Props) {
     if (prevProps.totalCount !== this.props.totalCount && this.props.totalCount > 0) {
       this.props.changePagination(generatePagination(this.props.totalCount, this.props.pageItems, this.props.currentPage))
@@ -57,20 +58,18 @@ const mapStateToProps = (state: AppRootState) => ({
   totalCount: state.users.totalCount,
 })
 
-const mapDispatchToProps = {
-  fetchUsers: fetchUsers,
-  changePagination: changePagination,
-  setPage: setPage,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Pagination)
-
-type Actions = {
+type Props = {
   fetchUsers: (currentPage: number, userCount: number) => void
-  changePagination: (
-    pagination: number[],
-  ) => ReturnType<typeof changePagination>
+  changePagination: (pagination: number[]) => ReturnType<typeof changePagination>
   setPage: (pagination: number) => ReturnType<typeof setPage>
+  paginationData: number[]
+  currentPage: number
+  totalCount: number
+  pageItems: number
 }
 
-type Props = Omit<UsersResponse, "items" | "error"> & Page & Actions
+export default connect(mapStateToProps, {
+  fetchUsers,
+  changePagination,
+  setPage,
+})(Pagination)
