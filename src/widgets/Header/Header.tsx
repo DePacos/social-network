@@ -1,40 +1,45 @@
 import React from "react"
-import { S } from "./Header_Styles"
-import { Container } from "../../shared/ui/Container/Container"
-import logo from "../../shared/assets/images/logo.webp"
-import themeColor from "../../shared/assets/icons/theme-color.svg"
-import { Button } from "../../shared/ui/Button/Button"
-import { AppRootState } from "../../app/types/types"
-import { logout } from "../../entities/reducers/authReducer"
+import { S } from "./header.styles"
+import { ContainerStyles } from "@/shared/ui/Container/container.styles"
+import logo from "@/shared/assets/images/logo.webp"
+import themeColor from "@/shared/assets/icons/theme-color.svg"
+import { Button } from "@/shared/ui/Button/Button"
+import { AppRootState } from "@/app/types/types"
+import { logout } from "@/entities/reducers/authReducer"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import HeaderSearch from "@/widgets/Header/HeaderSearch"
 
 class Header extends React.Component<Props> {
+
   render() {
-    const { changeTheme, isLoggedIn, currentUserId } = this.props
+    const {
+      changeTheme,
+      isLoggedIn,
+      currentUserId,
+      logout,
+    } = this.props
     const logoutHandler = () => {
-      this.props.logout()
+      logout()
     }
+
     return (
       <S.Header>
-        <Container>
+        <ContainerStyles>
           <S.HeaderWrap>
             <a href="/public#">
               <img src={logo} alt="logo" />
               <span>SocialNetwork</span>
             </a>
-            <input
-              type="search"
-              name="search"
-              id="searchId"
-              placeholder="search"
-            />
+              <HeaderSearch/>
             <ul>
               <li>
-                <Button children="RU" onClick={() => {}} />
+                <Button children="RU" onClick={() => {
+                }} />
               </li>
               <li>
-                <Button children="EN" onClick={() => {}} />
+                <Button children="EN" onClick={() => {
+                }} />
               </li>
             </ul>
             <Button onClick={changeTheme}>
@@ -47,7 +52,7 @@ class Header extends React.Component<Props> {
               </div>
             )}
           </S.HeaderWrap>
-        </Container>
+        </ContainerStyles>
       </S.Header>
     )
   }
@@ -58,11 +63,6 @@ const mapStateToProps = (state: AppRootState) => ({
   currentUserId: state.auth.currentUserId,
 })
 
-const mapDispatchToProps = {
-  logout: logout,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
 
 type Props = {
   changeTheme: () => void
@@ -70,3 +70,5 @@ type Props = {
   isLoggedIn: boolean
   currentUserId: string
 }
+
+export default connect(mapStateToProps, { logout })(Header)
