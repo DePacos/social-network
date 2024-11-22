@@ -7,7 +7,7 @@ import Pagination from "./Pagination"
 import { Link } from "react-router-dom"
 import "react-loading-skeleton/dist/skeleton.css"
 import { SkeletonStyled } from "@/app/styles/global.styles"
-
+import userCap from "@/shared/assets/images/user-cap.webp"
 class Users extends React.Component<Props> {
   componentDidMount() {
     this.props.fetchUsers()
@@ -43,17 +43,14 @@ class Users extends React.Component<Props> {
               ? users.map((user) => {
                   return (
                     <li key={user.id}>
-                      <img src={user.img} alt="user-img" />
+                      <img src={user.photos.small ? user.photos.small : userCap} alt="user-img" />
                       <h2>
                         <Link to={`/profile/${String(user.id)}`}>
                           {user.name}
                         </Link>
                       </h2>
-                      <p>
-                        {user.body
-                          ? user.body
-                          : "Lorem ipsum dolor sit amet, consectetur adipisicing elit."}
-                      </p>
+                      <p>{user.followed ? 'followed' : 'no followed'}</p>
+                      <p>{user.status ? user.status : ''}</p>
                     </li>
                   )
                 })
