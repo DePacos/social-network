@@ -1,12 +1,13 @@
 import React from "react"
-import { S } from "./Profile_Styles"
-import { AppRootState, UserProfile } from "../../app/types/types"
+import { S } from "./profile.styles"
+import { AppRootState, UserProfile } from "@/app/types/types"
 import { connect } from "react-redux"
 import { useParams } from "react-router-dom"
-import { fetchProfile } from "../../entities/reducers/profileReducer"
-import { SkeletonStyled } from "../../app/styles/GlobalStyles"
+import { fetchProfile } from "@/entities/reducers/profileReducer"
+import { SkeletonStyled } from "@/app/styles/global.styles"
 
 class Profile extends React.Component<Props> {
+
   componentDidMount() {
     const { params, fetchProfile } = this.props
     fetchProfile(+params.id)
@@ -14,6 +15,7 @@ class Profile extends React.Component<Props> {
 
   render() {
     const { profile, isLoading } = this.props
+
     return (
       <S.Profile>
         <h1>Profile</h1>
@@ -23,6 +25,10 @@ class Profile extends React.Component<Props> {
           <>
             <div>User ID: {profile.userId}</div>
             <div>User name: {profile.fullName}</div>
+            <div>Photos: {profile.photos.small}</div>
+            <div>Job: {profile.lookingForAJob}</div>
+            <div>Job Description: {profile.lookingForAJobDescription}</div>
+            <div>JContacts: {profile.contacts.vk}</div>
           </>
         )}
       </S.Profile>
@@ -35,12 +41,6 @@ const mapStateToProps = (state: AppRootState) => ({
   isLoading: state.app.isLoading,
 })
 
-const mapDispatchToProps = {
-  fetchProfile: fetchProfile,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WithParamsComponent)
-
 function WithParamsComponent(props: Omit<Props, "params">) {
   const params = useParams<{ id: string | undefined }>()
   return <Profile {...props} params={{ id: params.id ? params.id : "1" }} />
@@ -52,3 +52,5 @@ type Props = {
   params: { id: string }
   isLoading: boolean
 }
+
+export default connect(mapStateToProps, { fetchProfile })(WithParamsComponent)
