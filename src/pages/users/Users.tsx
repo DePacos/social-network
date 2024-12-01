@@ -26,10 +26,10 @@ class Users extends React.Component<Props> {
       <S.Wrapper>
         <h1>Users</h1>
         <select value={pageItems} onChange={selectHandler}>
-          <option>5</option>
-          <option selected>10</option>
-          <option>15</option>
-          <option>20</option>
+          <option value={5}>5</option>
+          <option value={10} selected>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
         </select>
         {isLoading ? (
           <S.Users>
