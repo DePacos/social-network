@@ -6,16 +6,23 @@ import {
 } from "@/entities/reducers/usersReducer"
 import { rootReducer } from "../store"
 import { ThunkDispatch } from "redux-thunk"
-import { setProfile } from "@/entities/reducers/profileReducer"
+import { editProfile, setProfile, setProfileStatus } from "@/entities/reducers/profileReducer"
 import {
   changeIsInitialized,
   changeIsLoading,
-  setError,
+  setError, setThemeMode
 } from "@/entities/reducers/appReducer"
 import {
   changeIsLoggedInStatus, setCaptcha,
   setCurrentUserId
 } from "@/entities/reducers/authReducer"
+
+export type AppInitialState = {
+  isInitialized: boolean
+  isLoading: boolean
+  themeMode: 'dark' | 'light',
+  appNotifications: string
+}
 
 export type Photos = {
   small: string
@@ -35,11 +42,16 @@ export type Contacts = {
 
 export type UserProfile = {
   userId: number
-  lookingForAJob: boolean
+  lookingForAJob?: boolean
   lookingForAJobDescription: string
-  fullName: string
-  contacts: Contacts
-  photos: Photos
+  fullName?: string
+  contacts?: Contacts
+  photos?: Photos
+  aboutMe: string
+}
+
+export type UserStatus = {
+  status?: string
 }
 
 export type User = {
@@ -48,8 +60,6 @@ export type User = {
   photos: Photos
   status: string
   followed: boolean
-  body: string
-  img: string
   uniqueUrlName: string
 }
 
@@ -88,13 +98,17 @@ export type AppActions =
   | ReturnType<typeof changeIsLoading>
   | ReturnType<typeof changeIsInitialized>
   | ReturnType<typeof setError>
+  | ReturnType<typeof setThemeMode>
 
 export type AuthActions =
   | ReturnType<typeof changeIsLoggedInStatus>
   | ReturnType<typeof setCurrentUserId>
   | ReturnType<typeof setCaptcha>
 
-export type ProfileActions = ReturnType<typeof setProfile>
+export type ProfileActions =
+  | ReturnType<typeof setProfile>
+  | ReturnType<typeof setProfileStatus>
+  | ReturnType<typeof editProfile>
 
 export type UsersActions =
   | ReturnType<typeof setUsers>
