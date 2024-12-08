@@ -4,24 +4,24 @@ import { ContainerStyles } from "@/shared/ui/Container/container.styles"
 import logo from "@/shared/assets/images/logo.webp"
 import themeColor from "@/shared/assets/icons/theme-color.svg"
 import { Button } from "@/shared/ui/Button/Button"
-import { AppRootState } from "@/app/types/types"
+import { AppRootState, ThemeModeContext } from "@/app/types/types"
 import { logout } from "@/entities/reducers/authReducer"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import HeaderSearch from "@/widgets/Header/HeaderSearch"
+import { ThemeContext } from "@/app//providers/ThemeContext"
 
 class Header extends React.Component<Props> {
+  static contextType = ThemeContext
+  context!: ThemeModeContext
 
   render() {
     const {
-      changeTheme,
       isLoggedIn,
       currentUserId,
       logout,
     } = this.props
-    const logoutHandler = () => {
-      logout()
-    }
+    const logoutHandler = () => logout()
 
     return (
       <S.Header>
@@ -42,7 +42,7 @@ class Header extends React.Component<Props> {
                 }} />
               </li>
             </ul>
-            <Button onClick={changeTheme}>
+            <Button onClick={this.context.changeTheme}>
               <img src={themeColor} alt="Change color mode" />
             </Button>
             {isLoggedIn && (
@@ -63,9 +63,7 @@ const mapStateToProps = (state: AppRootState) => ({
   currentUserId: state.auth.currentUserId,
 })
 
-
 type Props = {
-  changeTheme: () => void
   logout: () => Promise<void>
   isLoggedIn: boolean
   currentUserId: string
