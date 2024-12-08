@@ -10,7 +10,7 @@ import { editProfile, setProfile, setProfileStatus } from "@/entities/reducers/p
 import {
   changeIsInitialized,
   changeIsLoading,
-  setError, setThemeMode
+  setError,
 } from "@/entities/reducers/appReducer"
 import {
   changeIsLoggedInStatus, setCaptcha,
@@ -20,7 +20,6 @@ import {
 export type AppInitialState = {
   isInitialized: boolean
   isLoading: boolean
-  themeMode: 'dark' | 'light',
   appNotifications: string
 }
 
@@ -94,11 +93,15 @@ export type LoginRequest = {
   captcha?: string
 }
 
+export type ThemeModeContext = {
+  themeMode: string
+  changeTheme: () => void
+}
+
 export type AppActions =
   | ReturnType<typeof changeIsLoading>
   | ReturnType<typeof changeIsInitialized>
   | ReturnType<typeof setError>
-  | ReturnType<typeof setThemeMode>
 
 export type AuthActions =
   | ReturnType<typeof changeIsLoggedInStatus>
