@@ -1,12 +1,23 @@
-import { AppActions, AppThunkDispatch, AuthActions, LoginRequest } from "@/app/types/types"
+import {
+  AuthActions,
+  AuthInitialState,
+  DispatchActions,
+  LoginRequest,
+  MeData,
+  Response,
+  UserProfile
+} from "@/app/types/types"
 import { Dispatch } from "react"
-import { changeIsInitialized, changeIsLoading, setError } from "./appReducer"
 import { authAPI } from "@/shared/api/authAPI"
+import { handlerAuthRequests } from "@/app/utils/handlerAuthRequests"
+import { handlerRequests } from "@/app/utils/handlerRequests"
+import { profileAPI } from "@/shared/api/profileAPI"
 
-const initialState = {
+const initialState: AuthInitialState = {
   isLoggedIn: false,
-  captcha: '',
-  currentUserId: "",
+  captcha: "",
+  currentUserId: 0,
+  currentUserAvatar: ''
 }
 
 export const authReducer = (state = initialState, action: AuthActions) => {
@@ -17,6 +28,8 @@ export const authReducer = (state = initialState, action: AuthActions) => {
       return { ...state, currentUserId: action.payload.userId }
     case "SET_CAPTCHA":
       return { ...state, captcha: action.payload.url }
+    case "SET_CURRENT_USER_AVATAR":
+      return { ...state, currentUserAvatar: action.payload.url }
     default:
       return state
   }
@@ -25,79 +38,32 @@ export const authReducer = (state = initialState, action: AuthActions) => {
 export const changeIsLoggedInStatus = (status: boolean) =>
   ({ type: "SET_LOGGED_IN", payload: { status } }) as const
 
-export const setCurrentUserId = (userId: string) =>
+export const setCurrentUserId = (userId: number) =>
   ({ type: "SET_CURRENT_USER_ID", payload: { userId } }) as const
 
 export const setCaptcha = (url: string) =>
   ({ type: "SET_CAPTCHA", payload: { url } }) as const
 
+export const setCurrentUserAvatar = (url: string) =>
+  ({ type: "SET_CURRENT_USER_AVATAR", payload: { url } }) as const
+
 export const login =
   (data: LoginRequest) =>
-  async (dispatch: AppThunkDispatch) => {
-    dispatch(changeIsLoading(true))
-    try {
-      const res = await authAPI.login(data)
-      if (res.data.resultCode === 0) {
-        dispatch(changeIsLoggedInStatus(true))
-        dispatch(setCurrentUserId(res.data.data.userId))
-        dispatch(changeIsLoading(false))
-      }
-      if (res.data.resultCode === 10) {
-        await dispatch(captcha())
-        dispatch(setError(res.data.messages[0]))
-      }
-      if (res.data.resultCode === 1) {
-        dispatch(setError(res.data.messages[0]))
-      }
-    } catch (error) {
-      dispatch(setError('network error'))
-      console.log('login', error)
-    }
-  }
+    async (dispatch: Dispatch<DispatchActions>) => {
+      await handlerAuthRequests<Response<{ userId: number }>>(() => authAPI.login(data), dispatch, res => setCurrentUserId(res.data.userId))
+}
 
 export const logout =
-  () => async (dispatch: Dispatch<AppActions | AuthActions>) => {
-    dispatch(changeIsLoading(true))
-    try {
-      const res = await authAPI.logout()
-      if (res.data.resultCode === 0) {
-        dispatch(changeIsLoggedInStatus(false))
-        dispatch(changeIsLoading(false))
-      }
-    } catch (error) {
-      dispatch(setError('network error'))
-      console.log('logout', error)
-    }
-  }
-
-  export const captcha =
-  () => async (dispatch: Dispatch<AppActions | AuthActions>) => {
-    try {
-      const res = await authAPI.captcha()
-      dispatch(setCaptcha(res.data.url))
-    } catch (error) {
-      dispatch(setError('network error'))
-      console.log('captcha', error)
-    }
+  () => async (dispatch: Dispatch<DispatchActions>) => {
+    await handlerAuthRequests(() => authAPI.logout(), dispatch)
   }
 
 export const me =
-  () => async (dispatch: Dispatch<AppActions | AuthActions>) => {
-    dispatch(changeIsLoading(true))
-    try {
-    const res = await authAPI.me()
-      if (res.data.resultCode === 0) {
-        dispatch(changeIsLoggedInStatus(true))
-        dispatch(setCurrentUserId(String(res.data.data.id)))
-        dispatch(changeIsLoading(false))
-      }
-      if (res.data.resultCode === 1) {
-        dispatch(setError(res.data.messages[0]))
-      }
-    } catch (error) {
-      dispatch(setError('network error'))
-      console.log('me', error)
-    } finally {
-      dispatch(changeIsInitialized(true))
-    }
+  () => async (dispatch: Dispatch<DispatchActions>) => {
+   await handlerAuthRequests<Response<MeData>>(() => authAPI.me(), dispatch, res => setCurrentUserId(res.data.id))
+  }
+
+export const fetchAvatar =
+  (userId: number) => async (dispatch: Dispatch<DispatchActions>) => {
+    await handlerRequests<UserProfile>(() => profileAPI.fetchProfile(userId), dispatch, res => setCurrentUserAvatar(res.photos!.small))
   }
