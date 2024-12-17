@@ -1,25 +1,37 @@
 import styled, { css } from "styled-components"
 
-const Button_Styles = styled.button<{ variant?: "primary" | "secondary" }>`
+const Button = styled.button<{ variant?: "primary" | "secondary" }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fontColor};
   background-color: transparent;
 
+  span {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
   ${({ variant }) =>
     variant === "primary" &&
     css`
-      padding: 10px 30px;
+      padding: 15px 20px;
       border-radius: 10px;
-      background-color: #17b1d7;
+      background-color: #cb5b0f;
+      transition: 0.3s;
 
       &:hover {
-        background-color: #0d97bb;
-        transition: 0.3s;
+        box-shadow: 0 0 1px 1px;
+      }
+
+      &:active {
+        box-shadow: 0 0 1px 2px;
       }
     `}
 `
 
 export const S = {
-  Button: Button_Styles,
+  Button,
 }
