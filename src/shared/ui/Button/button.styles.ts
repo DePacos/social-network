@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components"
+import styled, { css } from 'styled-components'
 
-const Button = styled.button<{ variant?: "primary" | "secondary" }>`
+const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,8 +14,8 @@ const Button = styled.button<{ variant?: "primary" | "secondary" }>`
     margin: 0 10px;
   }
 
-  ${({ variant }) =>
-    variant === "primary" &&
+  ${({ disabled, variant }) => css`
+    ${variant === 'primary' &&
     css`
       padding: 15px 20px;
       border-radius: 10px;
@@ -30,6 +30,19 @@ const Button = styled.button<{ variant?: "primary" | "secondary" }>`
         box-shadow: 0 0 1px 2px;
       }
     `}
+    ${disabled &&
+    css`
+      opacity: 0.7;
+      cursor: default;
+      &:hover {
+        box-shadow: none;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    `}
+  `}
 `
 
 export const S = {

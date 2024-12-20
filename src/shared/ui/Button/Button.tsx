@@ -1,17 +1,18 @@
-import React, { ButtonHTMLAttributes, ReactNode } from "react"
-import { S } from "./button.styles"
+import React, { ButtonHTMLAttributes, ReactNode } from 'react'
+
+import { S } from './button.styles'
 
 type ButtonProps = {
-  variant?: "primary" | "secondary"
+  variant?: 'primary' | 'secondary'
   startIcon?: ReactNode
   endIcon?: ReactNode
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = ({
   children,
-  variant,
-  startIcon,
   endIcon,
+  startIcon,
+  variant,
   ...props
 }: ButtonProps) => {
   return (
