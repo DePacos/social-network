@@ -1,32 +1,35 @@
-import {
+import { Eye, EyeOff, Search } from 'lucide-react'
+import React, {
+  ComponentProps,
   forwardRef,
-  InputHTMLAttributes,
   ReactNode,
   useEffect,
   useState,
-} from "react"
-import { S } from "./input.styles"
-import { Eye, EyeOff, Search } from "lucide-react"
+} from 'react'
+
+import { InputTypes } from '@/app/types/types'
+
+import { S } from './input.styles'
 
 type Props = {
-  type?: "text" | "number" | "password" | "email" | "search" | undefined
+  type?: InputTypes
   error?: string | undefined
   label?: string | undefined
   iconPadding?: string | undefined
   iconStart?: ReactNode | undefined
   iconEnd?: ReactNode | undefined
-} & InputHTMLAttributes<HTMLInputElement>
+} & ComponentProps<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
   (
     {
-      label,
-      id,
-      iconStart,
-      iconEnd,
-      iconPadding = "45",
-      type = "text",
       error,
+      iconEnd,
+      iconPadding = '45',
+      iconStart,
+      id,
+      label,
+      type = 'text',
       ...props
     },
     ref,
@@ -36,38 +39,40 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     const [iconAfter, setIconAfter] = useState(iconEnd)
 
     useEffect(() => {
-      if (inputType === "password") {
+      if (inputType === 'password') {
         setIconAfter(
           <Eye
-            style={{ cursor: "pointer" }}
-            color="black"
+            style={{ cursor: 'pointer' }}
+            color={'black'}
             onClick={handlerChangeType}
           />,
         )
       }
-      if (inputType === "search") {
-        setIconBefore(<Search size={20} color="black" />)
+      if (inputType === 'search') {
+        setIconBefore(<Search size={20} color={'black'} />)
       }
     }, [])
 
     const handlerChangeType = () => {
-      setInputType((prevInputType) => {
-        const newType = prevInputType === "password" ? "text" : "password"
+      setInputType(prevInputType => {
+        const newType = prevInputType === 'password' ? 'text' : 'password'
+
         setIconAfter(
-          newType === "password" ? (
+          newType === 'password' ? (
             <Eye
-              style={{ cursor: "pointer" }}
-              color="black"
+              style={{ cursor: 'pointer' }}
+              color={'black'}
               onClick={handlerChangeType}
             />
           ) : (
             <EyeOff
-              style={{ cursor: "pointer" }}
-              color="black"
+              style={{ cursor: 'pointer' }}
+              color={'black'}
               onClick={handlerChangeType}
             />
           ),
         )
+
         return newType
       })
     }
@@ -82,11 +87,13 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           error={!!error}
         >
           {iconBefore}
-          <input ref={ref} id={label ? id : ""} type={inputType} {...props} />
+          <input ref={ref} id={label ? id : ''} type={inputType} {...props} />
           {iconAfter}
         </S.InputWrap>
-        <span className={"error"}>{error}</span>
+        {!!error && <span className={'error'}>{error}</span>}
       </S.LabelWrap>
     )
   },
 )
+
+Input.displayName = 'Input'

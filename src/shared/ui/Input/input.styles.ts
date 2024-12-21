@@ -1,5 +1,6 @@
-import styled, { css } from "styled-components"
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
+
+import styled, { css } from 'styled-components'
 
 const LabelWrap = styled.div<{ label?: string | undefined }>`
   .error {
@@ -51,7 +52,7 @@ const InputWrap = styled.div<{
     border-radius: 15px;
   }
 
-  ${({ iconStart, iconEnd, iconPadding }) => css`
+  ${({ iconEnd, iconPadding, iconStart }) => css`
     ${iconStart &&
     css`
       input {
