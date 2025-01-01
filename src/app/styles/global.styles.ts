@@ -1,6 +1,9 @@
-import styled, { createGlobalStyle } from "styled-components"
-import Skeleton from "react-loading-skeleton"
-import "react-loading-skeleton/dist/skeleton.css"
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+import styled, { createGlobalStyle } from 'styled-components'
+
+import './shared/assets/fonts/fonts.css'
 
 export const GlobalStyles = createGlobalStyle`
     *,
