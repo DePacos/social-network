@@ -1,28 +1,30 @@
-import { Component, ReactNode } from "react"
-import { ThemeContext } from "./ThemeContext"
-import { manageThemeMode } from "@/app/utils/manageThemeMode"
+import { ReactNode, useContext, useEffect, useState } from 'react'
 
-export class AppThemeProvider extends Component<{children: ReactNode}, {themeMode: string}>{
-  state = {
-    themeMode: '',
+import { manageThemeMode } from '@/app/utils/manageThemeMode'
+
+import { ThemeContext } from './ThemeContext'
+
+export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
+  const themeContext: { themeMode: string } = useContext(ThemeContext)
+
+  const [themeMode, setThemeMode] = useState(themeContext.themeMode)
+
+  useEffect(() => {
+    const themeModeLocal = manageThemeMode.get()
+
+    setThemeMode(themeModeLocal)
+  }, [])
+
+  const changeTheme = () => {
+    const themeModeLocal = themeMode === 'dark' ? 'light' : 'dark'
+
+    setThemeMode(themeModeLocal)
+    manageThemeMode.set(themeModeLocal)
   }
 
-  componentDidMount() {
-    const themeMode = manageThemeMode.get()
-    this.setState({ themeMode })
-  }
-
-  changeTheme = () => {
-    const themeMode = this.state.themeMode === 'dark' ? 'light' : 'dark'
-    this.setState({ themeMode })
-    manageThemeMode.set(themeMode)
-  }
-
-  render() {
-    return (
-      <ThemeContext.Provider value={{ themeMode: this.state.themeMode, changeTheme:this.changeTheme }}>
-        {this.props.children}
-      </ThemeContext.Provider>
-    )
-  }
+  return (
+    <ThemeContext.Provider value={{ changeTheme, themeMode }}>
+      {children}
+    </ThemeContext.Provider>
+  )
 }

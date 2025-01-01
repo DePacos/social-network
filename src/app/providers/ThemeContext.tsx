@@ -1,4 +1,8 @@
-import { createContext } from "react"
-import { ThemeModeContext } from "@/app/types/types"
+import { createContext } from 'react'
 
-export const ThemeContext = createContext<ThemeModeContext>({themeMode: 'dark', changeTheme: () => null})
+import { ThemeModeContext } from '@/app/types/types'
+
+export const ThemeContext = createContext<ThemeModeContext>({
+  changeTheme: () => null,
+  themeMode: 'dark',
+})
