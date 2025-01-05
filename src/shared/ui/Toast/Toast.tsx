@@ -1,51 +1,26 @@
-import React from "react"
-import { S } from "./toast.styles"
-import { setError } from "@/entities/reducers/appReducer"
-import { connect } from "react-redux"
+import React, { useEffect } from 'react'
 
+import { useAppDispatch } from '@/app/hooks/appHooks'
+import { setNotifications } from '@/entities/reducers/appSlice'
 
-class Toast extends React.Component<Props, {viewToast: boolean}> {
-  timer: NodeJS.Timeout | null = null
+import { S } from './toast.styles'
 
-  constructor(props: Props) {
-    super(props)
+export const Toast = ({ notification }: { notification: string | null }) => {
+  const dispatch = useAppDispatch()
 
-    this.state = {
-      viewToast: false
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(setNotifications({ type: null, value: null }))
+    }, 3000)
+
+    return () => {
+      clearTimeout(timer)
     }
-  }
+  }, [notification])
 
-  componentDidUpdate(prevProps: { error: string }) {
-    if (this.props.error !== "" && this.props.error !== prevProps.error) {
-      this.setState({ viewToast: true })
-
-      if (this.timer) clearTimeout(this.timer)
-
-      this.timer = setTimeout(() => {
-        this.setState(
-          { viewToast: false }
-        )
-        this.props.setError('')
-      }, 5000)
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.timer) clearTimeout(this.timer)
-  }
-
-  render() {
-    return (
-        <S.Wrapper $view={this.state.viewToast}>
-          <S.Toast>{this.props.error}</S.Toast>
-        </S.Wrapper>
-    )
-  }
-}
-
-export default connect( null, { setError })(Toast)
-
-type Props = {
-  error: string
-  setError: (error: string) => void
+  return (
+    <S.Wrapper>
+      <S.Toast>{notification}</S.Toast>
+    </S.Wrapper>
+  )
 }

@@ -3,8 +3,8 @@ import { ComponentProps, forwardRef, ReactNode } from 'react'
 import { S } from './checkbox.styles'
 
 type Props = {
-  error?: string | undefined
-  label?: ReactNode | undefined
+  error?: string
+  label?: ReactNode
 } & ComponentProps<'input'>
 
 export const CheckBox = forwardRef<HTMLInputElement, Props>(

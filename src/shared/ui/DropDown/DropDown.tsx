@@ -7,10 +7,10 @@ import { S } from './dropDown.styles'
 type Props = {
   type?: 'primary' | 'secondary' | 'icon'
   trigger: ReactNode | string
-  content: ReactNode | string
+  children: ReactNode | string
 }
 
-export const DropDown = ({ content, trigger, type = 'primary' }: Props) => {
+export const DropDown = ({ children, trigger, type = 'primary' }: Props) => {
   const [open, setOpen] = useState(false)
   const dropDownRef = useRef<HTMLDivElement>(null)
 
@@ -40,7 +40,7 @@ export const DropDown = ({ content, trigger, type = 'primary' }: Props) => {
       <Button variant={type} onClick={handlerOpen}>
         {trigger}
       </Button>
-      {open && <S.DropDownContent>{content}</S.DropDownContent>}
+      {open && <S.DropDownContent>{children}</S.DropDownContent>}
     </S.DropDownWrap>
   )
 }

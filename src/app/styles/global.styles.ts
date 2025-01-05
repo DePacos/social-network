@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import styled, { createGlobalStyle } from 'styled-components'
 
-import './shared/assets/fonts/fonts.css'
+import '@/shared/assets/fonts/fonts.css'
 
 export const GlobalStyles = createGlobalStyle`
     *,
@@ -14,11 +14,17 @@ export const GlobalStyles = createGlobalStyle`
     body{
         font-family: Roboto, 
         sans-serif; font-weight: 400; 
-        color: ${({ theme }) => theme.colors.fontColor};
+        color: ${({ theme }) => theme.colors.fontPrimary};
         background-color: ${({ theme }) => theme.colors.body}}
-    a {text-decoration: none; color: ${({ theme }) => theme.colors.fontColor};}
+    a {text-decoration: none; color: ${({ theme }) => theme.colors.fontPrimary};}
     ul {list-style: none;}
-    
+    main{
+        padding: 30px 20px;
+    }
+    section {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
 `
 
 export const SkeletonStyled = styled(Skeleton)`

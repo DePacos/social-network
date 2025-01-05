@@ -2,6 +2,10 @@ import styled from 'styled-components'
 
 const DropDownWrap = styled.div`
   position: relative;
+  img {
+    max-width: 55px;
+    border-radius: 50%;
+  }
 `
 const DropDownContent = styled.div`
   position: absolute;

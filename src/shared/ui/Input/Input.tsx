@@ -3,7 +3,7 @@ import React, {
   ComponentProps,
   forwardRef,
   ReactNode,
-  useEffect,
+  useCallback,
   useState,
 } from 'react'
 
@@ -13,11 +13,11 @@ import { S } from './input.styles'
 
 type Props = {
   type?: InputTypes
-  error?: string | undefined
-  label?: string | undefined
-  iconPadding?: string | undefined
-  iconStart?: ReactNode | undefined
-  iconEnd?: ReactNode | undefined
+  error?: string
+  label?: string
+  iconPadding?: string
+  iconStart?: ReactNode
+  iconEnd?: ReactNode
 } & ComponentProps<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -35,60 +35,56 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     ref,
   ) => {
     const [inputType, setInputType] = useState(type)
-    const [iconBefore, setIconBefore] = useState(iconStart)
-    const [iconAfter, setIconAfter] = useState(iconEnd)
 
-    useEffect(() => {
-      if (inputType === 'password') {
-        setIconAfter(
+    const handlerChangeType = useCallback(() => {
+      setInputType(prev => (prev === 'password' ? 'text' : 'password'))
+    }, [])
+
+    const getIconAfter = () => {
+      if (type === 'password') {
+        return inputType === 'password' ? (
+          <EyeOff
+            style={{ cursor: 'pointer' }}
+            color={'black'}
+            onClick={handlerChangeType}
+          />
+        ) : (
           <Eye
             style={{ cursor: 'pointer' }}
             color={'black'}
             onClick={handlerChangeType}
-          />,
+          />
         )
       }
-      if (inputType === 'search') {
-        setIconBefore(<Search size={20} color={'black'} />)
-      }
-    }, [])
 
-    const handlerChangeType = () => {
-      setInputType(prevInputType => {
-        const newType = prevInputType === 'password' ? 'text' : 'password'
+      return iconEnd
+    }
 
-        setIconAfter(
-          newType === 'password' ? (
-            <Eye
-              style={{ cursor: 'pointer' }}
-              color={'black'}
-              onClick={handlerChangeType}
-            />
-          ) : (
-            <EyeOff
-              style={{ cursor: 'pointer' }}
-              color={'black'}
-              onClick={handlerChangeType}
-            />
-          ),
-        )
-
-        return newType
-      })
+    const getIconBefore = () => {
+      return type === 'search' ? (
+        <Search size={20} color={'black'} />
+      ) : (
+        iconStart
+      )
     }
 
     return (
       <S.LabelWrap label={label}>
         {label ? <label htmlFor={id}>{label}</label> : null}
         <S.InputWrap
-          iconStart={iconBefore}
-          iconEnd={iconAfter}
+          iconStart={getIconBefore()}
+          iconEnd={getIconAfter()}
           iconPadding={iconPadding}
           error={!!error}
         >
-          {iconBefore}
-          <input ref={ref} id={label ? id : ''} type={inputType} {...props} />
-          {iconAfter}
+          {getIconBefore()}
+          <input
+            ref={ref}
+            id={label ? id : undefined}
+            type={inputType}
+            {...props}
+          />
+          {getIconAfter()}
         </S.InputWrap>
         {!!error && <span className={'error'}>{error}</span>}
       </S.LabelWrap>
