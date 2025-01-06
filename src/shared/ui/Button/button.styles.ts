@@ -37,7 +37,7 @@ const Button = styled.button<{ variant?: 'primary' | 'secondary' | 'icon' }>`
         margin: 0;
       }
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.1);
       }
     `}
     ${disabled &&

@@ -31,7 +31,7 @@ const CheckboxWrap = styled.div<{
     top: 0;
     width: 18px;
     height: 18px;
-    border: 1px solid #fff;
+    border: 1px solid currentColor;
     border-radius: 5px;
   }
 
