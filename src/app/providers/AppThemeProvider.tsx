@@ -1,11 +1,14 @@
 import { ReactNode, useContext, useEffect, useState } from 'react'
 
+import { socialThemeDark } from '@/app/styles/themeDark.styles'
+import { socialThemeLight } from '@/app/styles/themeLight.styles'
 import { manageThemeMode } from '@/app/utils/manageThemeMode'
+import { ThemeProvider } from 'styled-components'
 
 import { ThemeContext } from './ThemeContext'
 
 export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
-  const themeContext: { themeMode: string } = useContext(ThemeContext)
+  const themeContext = useContext(ThemeContext)
 
   const [themeMode, setThemeMode] = useState(themeContext.themeMode)
 
@@ -22,9 +25,11 @@ export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
     manageThemeMode.set(themeModeLocal)
   }
 
+  const theme = themeMode === 'dark' ? socialThemeDark : socialThemeLight
+
   return (
     <ThemeContext.Provider value={{ changeTheme, themeMode }}>
-      {children}
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ThemeContext.Provider>
   )
 }
