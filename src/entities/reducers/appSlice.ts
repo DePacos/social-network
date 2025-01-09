@@ -43,9 +43,6 @@ const appSlice = createSlice({
   initialState,
   name: 'app',
   reducers: {
-    setInitialized: (state, action: PayloadAction<boolean>) => {
-      state.isInitialized = action.payload
-    },
     setNotifications: (state, action: PayloadAction<AppNotification>) => {
       state.notifications = action.payload
     },
@@ -57,7 +54,7 @@ const appSlice = createSlice({
   },
 })
 
-export const { setInitialized, setNotifications } = appSlice.actions
+export const { setNotifications } = appSlice.actions
 
 export const {
   selectAppIsInitialized,
