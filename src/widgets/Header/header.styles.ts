@@ -1,121 +1,141 @@
-import styled, { css } from "styled-components"
+import styled from 'styled-components'
 
-const Header = styled.header
-    `
-        border-bottom: 1px solid ;
-    `
-const HeaderWrap = styled.div
-    `
-        display: grid;
-        grid-template-columns: 190px 1fr 70px 20px 150px;
-        align-items: center;
-        justify-items: center;
-        gap: 30px;
-        padding: 20px 0;
+const Header = styled.header`
+  border-bottom: 1px solid;
+  padding: 20px;
+`
+const HeaderWrap = styled.div`
+  display: grid;
+  grid-template-columns: 180px 1fr 65px 55px;
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: 30px;
+  align-items: center;
 
-        a {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            font-size: 18px;
-        }
+  @media (max-width: 767px) {
+    gap: 15px;
+  }
 
-        input {
-            max-width: 600px;
-            width: 100%;
-            height: 40px;
-            justify-self: end;
-            padding: 10px;
-            border: none;
-            border-radius: 10px;
-
-            &:focus-visible {
-                outline: 2px solid #0c9bd4;
-            }
-        }
-
-        & > ul {
-            display: flex;
-            gap: 10px;
-            justify-content: space-between;
-            position: relative;
-
-            :first-child::after {
-                content: '|';
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            button{
-                font-size: 16px;
-            }
-        }
-        button ~ :last-child{
-            height: 40px;
-            font-size: 18px;
-            justify-self: end;
-            padding-left: 50px;
-            background: url("${({theme}) => theme.icons.loginIcon}") no-repeat;
-        }
-    `
-
-const HeaderSearch = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `
 
-const HeaderSearchResWrap = styled.div`
+const HeaderLogo = styled.div`
+  font-size: 18px;
+  a {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  @media (max-width: 480px) {
+    grid-column: 1;
+  }
+`
+const HeaderNav = styled.nav`
+  ul {
+    display: flex;
+    gap: 25px;
+    font-size: 18px;
+    justify-content: center;
+  }
+
+  a {
     position: relative;
-    margin: 0 10px;
-`
-const HeaderSearchRes = styled.div<Props>`
+  }
+
+  a:after {
+    content: '';
+    display: inline-block;
     position: absolute;
-    width: 100%;
-    max-height: 350px;
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 15px;
+    bottom: -5px;
+    left: 0;
+    background-color: currentColor;
+    height: 2px;
+    width: 0;
     border-radius: 10px;
-    opacity: 1;
-    transform: translateY(0px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    background-color: ${({ theme }) => theme.colors.bgSecondary};
-    
-    ${props => !props.searchValue && css <Props>`
-        opacity: 0;
-        transform: translateY(-10px);
-    `}
+    transition: width 0.3s;
+  }
+
+  a:hover:after {
+    width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    ul {
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    grid-column: 1/3;
+    grid-row: 3;
+  }
 `
 
-const HeaderSearchResItem = styled.ul`
-    display: flex;
-    flex-direction: column;
+const HeaderBtn = styled.div`
+  display: flex;
+  gap: 15px;
 
-    li a {
-        font-size: 14px;
-        padding: 6px;
-    }
-   li + li {
-        border-top: 1px solid #444;
-    }
-    & li:hover{
-        box-shadow: 0 1px 3px 1px;
-    }
+  @media (max-width: 480px) {
+    grid-column: 1/3;
+    justify-content: center;
+  }
+`
+
+const HeaderProfile = styled.div`
+  @media (max-width: 480px) {
+    justify-items: end;
+    grid-column: 2/3;
+    grid-row: 1;
+  }
+`
+const HeaderDropDown = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: max-content;
+  margin: 0 auto;
+  font-size: 18px;
+  button {
+    font-size: 18px;
+    position: relative;
+  }
+
+  a {
+    display: flex;
+    gap: 10px;
+    position: relative;
+  }
+
+  a:after,
+  button:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    background-color: currentColor;
+    height: 2px;
+    width: 0;
+    border-radius: 10px;
+    transition: width 0.3s;
+  }
+
+  a:hover:after,
+  button:hover:after {
+    width: 100%;
+  }
 `
 
 export const S = {
-    Header,
-    HeaderWrap,
-    HeaderSearch,
-    HeaderSearchRes,
-    HeaderSearchResWrap,
-    HeaderSearchResItem,
-}
-
-type Props = {
-    searchValue: string
+  Header,
+  HeaderBtn,
+  HeaderDropDown,
+  HeaderLogo,
+  HeaderNav,
+  HeaderProfile,
+  HeaderWrap,
 }
