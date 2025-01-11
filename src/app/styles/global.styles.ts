@@ -19,7 +19,7 @@ export const GlobalStyles = createGlobalStyle`
     a {text-decoration: none; color: ${({ theme }) => theme.colors.fontPrimary};}
     ul {list-style: none;}
     main{
-        padding: 30px 20px;
+        padding: 50px 20px;
     }
     section {
         max-width: 1440px;
@@ -28,5 +28,5 @@ export const GlobalStyles = createGlobalStyle`
 `
 
 export const SkeletonStyled = styled(Skeleton)`
-  background-color: #6aaebf;
+  background: #6aaebf;
 `

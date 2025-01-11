@@ -33,7 +33,7 @@ export const DropDown = ({ children, trigger, type = 'primary' }: Props) => {
     return () => {
       document.removeEventListener('click', handleClickOutside)
     }
-  })
+  }, [open])
 
   return (
     <S.DropDownWrap ref={dropDownRef}>

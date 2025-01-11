@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components'
 
-const Button = styled.button<{ variant?: 'primary' | 'secondary' | 'icon' }>`
+const Button = styled.button<{
+  variant?: 'primary' | 'secondary' | 'icon'
+  buttonStyles?: { [key: string]: string | number }
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,6 +55,10 @@ const Button = styled.button<{ variant?: 'primary' | 'secondary' | 'icon' }>`
         box-shadow: none;
       }
     `}
+  `}
+
+  ${({ buttonStyles }) => css`
+    ${{ ...buttonStyles }}
   `}
 `
 

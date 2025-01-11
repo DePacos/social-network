@@ -12,6 +12,7 @@ const DropDownWrap = styled.div`
 `
 const DropDownContent = styled.div`
   position: absolute;
+  z-index: 2;
   margin-top: 5px;
   padding: 15px;
   right: 0;
