@@ -1,68 +1,65 @@
-import React from "react"
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
-import App from "../App"
-import { ErrorPage } from "@/pages/errorPage/ErrorPage"
-import Profile from "@/pages/profile/Profile"
-import Messages from "@/features/messages/Messages"
-import Users from "@/pages/users/Users"
-import EditProfile from "@/pages/profile/EditProfile"
-import Login from "@/features/auth/Login"
-import { ThemeProvider } from "styled-components"
-import { GlobalStyles } from "@/app/styles/global.styles"
-import { socialThemeDark } from "@/app/styles/themeDark.styles"
-import { socialThemeLight } from "@/app/styles/themeLight.styles"
-import { ThemeContext } from "@/app/providers/ThemeContext"
-import { ThemeModeContext } from "@/app/types/types"
+import React from 'react'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 
-export class AppRouter extends React.Component {
-  static contextType = ThemeContext
-  context!: ThemeModeContext
+import { SignIn } from '@/features/auth/ui/SignIn'
+import { Chat } from '@/pages/chat/Chat'
+import { Dialog } from '@/pages/dialogs/Dialog'
+import { Dialogs } from '@/pages/dialogs/Dialogs'
+import { Error } from '@/pages/error/Error'
+import { EditProfile } from '@/pages/profile/EditProfile'
+import { Profile } from '@/pages/profile/Profile'
+import { Members } from '@/pages/users/Members'
 
-  render() {
-    const { themeMode } = this.context
+import { App } from '../App'
 
-    const router = createBrowserRouter([
-      { path: "/login",
-        element:(
-          <ThemeProvider theme={themeMode === "dark" ? socialThemeDark : socialThemeLight}>
-            <GlobalStyles/>
-            <Login />
-          </ThemeProvider>
-        )
+export const router = createBrowserRouter([
+  {
+    element: <SignIn />,
+    path: '/signin',
+  },
+  {
+    children: [
+      {
+        element: <Navigate to={'/members'} />,
+        index: true,
       },
       {
-        path: "/",
-        element: <App />,
-        errorElement: <Navigate to="/404" />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="/" />,
-          },
-          {
-            path: "/users",
-            element: <Users />,
-          },
-          {
-            path: "/messages",
-            element: <Messages />,
-          },
-          {
-            path: "/profile/:id",
-            element: <Profile />,
-          },
-          {
-            path: "/editprofile/:id",
-            element: <EditProfile />,
-          },
-          {
-            path: "404",
-            element: <ErrorPage />,
-          },
-        ],
+        element: <Members />,
+        path: 'members',
       },
-    ])
-    return <RouterProvider router={router}/>
-  }
-}
-
+      {
+        element: <Chat />,
+        path: 'chat',
+      },
+      {
+        // children: [
+        //   {
+        //     element: <Dialog />,
+        //     path: ':id',
+        //   },
+        // ],
+        element: <Dialogs />,
+        path: 'dialogs',
+      },
+      {
+        element: <Dialog />,
+        path: 'dialogs/:id',
+      },
+      {
+        element: <Profile />,
+        path: 'profile/:id',
+      },
+      {
+        element: <EditProfile />,
+        path: 'editprofile/:id',
+      },
+      {
+        element: <Error />,
+        path: '404',
+      },
+    ],
+    element: <App />,
+    errorElement: <Navigate to={'/404'} />,
+    path: '/',
+  },
+])
