@@ -26,9 +26,10 @@ const CheckboxWrap = styled.div<{
   input ~ label::after {
     content: '';
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     left: 0;
-    top: 0;
     width: 18px;
     height: 18px;
     border: 1px solid currentColor;

@@ -47,9 +47,9 @@ const InputWrap = styled.div<{
 
   input {
     width: 100%;
-    height: 40px;
+    height: 35px;
     padding: 0 15px;
-    border-radius: 15px;
+    border-radius: 10px;
   }
 
   ${({ iconEnd, iconPadding, iconStart }) => css`

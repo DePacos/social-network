@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 import { FieldValues, useController } from 'react-hook-form'
 
 import { FormField } from '@/app/types/types'
@@ -6,7 +6,7 @@ import { CheckBox } from '@/shared/ui/Checkbox/Checkbox'
 
 export type Props<T extends FieldValues> = {
   error?: string | undefined
-  label?: ReactNode | undefined
+  label: string | undefined
 } & ComponentPropsWithoutRef<'input'> &
   FormField<T>
 
