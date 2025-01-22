@@ -57,23 +57,8 @@ const WrapCheckbox = styled.div`
   align-items: center;
   font-size: 14px;
 `
-const Animation = styled.div`
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  animation: spin 3s linear infinite;
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-`
 
 export const S = {
-  Animation,
   Container,
   Error,
   Form,

@@ -79,9 +79,9 @@ export const SignIn = () => {
             style={{ height: '46px' }}
             endIcon={
               isLoading ? (
-                <S.Animation>
+                <div className={'loader'}>
                   <Loader size={18} />
-                </S.Animation>
+                </div>
               ) : null
             }
             variant={'primary'}

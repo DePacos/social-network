@@ -19,11 +19,25 @@ export const GlobalStyles = createGlobalStyle`
     a {text-decoration: none; color: ${({ theme }) => theme.colors.fontPrimary};}
     ul {list-style: none;}
     main{
-        padding: 50px 20px;
+        padding: 40px 20px;
     }
     section {
         max-width: 1440px;
         margin: 0 auto;
+    }
+    .loader{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        animation: spin 3s linear infinite;
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
     }
 `
 
