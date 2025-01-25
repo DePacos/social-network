@@ -1,20 +1,26 @@
-import { instance } from "./instance"
-import { AuthResponse, Photos, UserProfile, UserStatus } from "@/app/types/types"
+import {
+  Photos,
+  Response,
+  UserProfileRequest,
+  UserProfileResponse,
+} from '@/app/types/types'
+
+import { instance } from './instance'
 
 export const profileAPI = {
-  fetchProfile(userId: number) {
-    return instance.get<UserProfile>(`profile/${userId}`)
+  editUserPhoto(data: FormData) {
+    return instance.put<Response<{ photos: Photos }>>(`profile/photo`, data)
   },
-  editProfile(data: UserProfile) {
-    return instance.put<AuthResponse>(`profile/`, data)
+  editUserProfile(data: UserProfileRequest) {
+    return instance.put<Response<UserProfileResponse>>(`profile/`, data)
   },
-  setProfilePhoto(data: Photos) {
-    return instance.put<AuthResponse<Photos>>(`profile/photo`, data)
+  editUserStatus(data: { status: string }) {
+    return instance.put<Response<{ status: string }>>(`profile/status/`, data)
   },
-  fetchProfileStatus(userId: number) {
-    return instance.get(`profile/status/${userId}`)
+  fetchUserProfile(userId: number) {
+    return instance.get<UserProfileResponse>(`profile/${userId}`)
   },
-  setProfileStatus(data: UserStatus) {
-    return instance.put(`profile/status`, data)
+  fetchUserStatus(userId: number) {
+    return instance.get<Response<string>>(`profile/status/${userId}`)
   },
 }
