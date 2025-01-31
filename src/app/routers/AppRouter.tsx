@@ -32,12 +32,12 @@ export const router = createBrowserRouter([
         path: 'chat',
       },
       {
-        // children: [
-        //   {
-        //     element: <Dialog />,
-        //     path: ':id',
-        //   },
-        // ],
+        children: [
+          {
+            element: <Dialog />,
+            path: ':id',
+          },
+        ],
         element: <Dialogs />,
         path: 'dialogs',
       },

@@ -12,18 +12,17 @@ type Props = {
 
 export const DropDown = ({ children, trigger, type = 'primary' }: Props) => {
   const [open, setOpen] = useState(false)
-  const dropDownRef = useRef<HTMLDivElement>(null)
+  const dropDownBtnRef = useRef<HTMLButtonElement>(null)
 
   const handlerOpen = () => {
     setOpen(prev => !prev)
   }
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropDownRef.current &&
-      !dropDownRef.current.contains(event.target as Node)
-    ) {
-      setOpen(false)
+    if (dropDownBtnRef.current) {
+      if (!dropDownBtnRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
     }
   }
 
@@ -36,8 +35,8 @@ export const DropDown = ({ children, trigger, type = 'primary' }: Props) => {
   }, [open])
 
   return (
-    <S.DropDownWrap ref={dropDownRef}>
-      <Button variant={type} onClick={handlerOpen}>
+    <S.DropDownWrap>
+      <Button ref={dropDownBtnRef} variant={type} onClick={handlerOpen}>
         {trigger}
       </Button>
       {open && <S.DropDownContent>{children}</S.DropDownContent>}

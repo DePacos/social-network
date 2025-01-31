@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   ReactNode,
   useCallback,
+  useId,
   useState,
 } from 'react'
 
@@ -35,6 +36,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     ref,
   ) => {
     const [inputType, setInputType] = useState(type)
+    const inputId = useId()
 
     const handlerChangeType = useCallback(() => {
       setInputType(prev => (prev === 'password' ? 'text' : 'password'))
@@ -70,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
 
     return (
       <S.LabelWrap label={label}>
-        {label ? <label htmlFor={id}>{label}</label> : null}
+        {label ? <label htmlFor={id || inputId}>{label}</label> : null}
         <S.InputWrap
           iconStart={getIconBefore()}
           iconEnd={getIconAfter()}
@@ -78,12 +80,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           error={!!error}
         >
           {getIconBefore()}
-          <input
-            ref={ref}
-            id={label ? id : undefined}
-            type={inputType}
-            {...props}
-          />
+          <input type={inputType} ref={ref} id={id || inputId} {...props} />
           {getIconAfter()}
         </S.InputWrap>
         {!!error && <span className={'error'}>{error}</span>}
