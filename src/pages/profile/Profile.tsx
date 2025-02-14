@@ -1,138 +1,288 @@
-import React from "react"
-import { S } from "./profile.styles"
-import { AppRootState, User, UserProfile } from "@/app/types/types"
-import { connect } from "react-redux"
-import { Link, useParams } from "react-router-dom"
-import { fetchProfile, fetchProfileStatus} from "@/entities/reducers/profileReducer"
-import { SkeletonStyled } from "@/app/styles/global.styles"
-import { Button } from "@/shared/ui/Button/Button"
-import userCap from "@/shared/assets/images/user-cap.webp"
-import { fetchFollow, removeFollow, setFollow } from "@/entities/reducers/followReducer"
-import { Toast } from "@/shared/ui/Toast/Toast"
+import {
+  CircleX,
+  Loader,
+  Settings,
+  SquareCheckBig,
+  SquareUserRound,
+  UserRoundPen,
+} from 'lucide-react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-class Profile extends React.Component<Props> {
+import { useAppDispatch, useAppSelector } from '@/app/hooks/stateHook'
+import { PageLayout } from '@/app/PageLayout/PageLayout'
+import {
+  selectAppIsLoading,
+  selectAppNotifications,
+} from '@/entities/reducers/appSlice'
+import { editUserPhoto, selectProfile } from '@/entities/reducers/profileSlice'
+import { useEditProfile } from '@/pages/profile/useEditProfile'
+import facebook from '@/shared/assets/icons/social/facebook.svg'
+import github from '@/shared/assets/icons/social/github.svg'
+import instagram from '@/shared/assets/icons/social/instagram.svg'
+import website from '@/shared/assets/icons/social/site.svg'
+import twitter from '@/shared/assets/icons/social/twitter.svg'
+import vk from '@/shared/assets/icons/social/vk.svg'
+import youtube from '@/shared/assets/icons/social/youtube.svg'
+import dialogsBg from '@/shared/assets/images/profile-bg.webp'
+import { Button } from '@/shared/ui/Button/Button'
+import { FormCheckbox } from '@/shared/ui/Checkbox/FormCheckbox'
+import { FormInput } from '@/shared/ui/Input/FormInput'
+import { FormTextArea } from '@/shared/ui/TextArea/FormTextArea'
+import { Toast } from '@/shared/ui/Toast/Toast'
+import { Upload } from '@/shared/ui/Upload/Upload'
 
-  state = {
-    error: null
+import { S } from './profile.styles'
+
+export const Profile = () => {
+  const dispatch = useAppDispatch()
+
+  const profile = useAppSelector(selectProfile)
+  const notifications = useAppSelector(selectAppNotifications)
+  const isLoading = useAppSelector(selectAppIsLoading)
+  const [editMode, setEditMode] = useState(false)
+
+  const handlerEditMode = () => {
+    setEditMode(prevState => !prevState)
   }
 
-  componentDidMount() {
-    const { params, fetchProfile, fetchFollow, currentUserId, fetchProfileStatus} = this.props
-    fetchProfile(+params.id)
-    fetchProfileStatus(+params.id)
+  const handlerSetPhoto = (file: File) => {
+    const data = new FormData()
 
-    if (currentUserId !== params.id) {
-      fetchFollow(+params.id)
-    }
+    data.append('photo', file)
+
+    dispatch(editUserPhoto(data))
   }
 
-  componentDidUpdate(prevProps: Props) {
-    const { params, fetchProfile } = this.props
-    if (prevProps.params.id !== this.props.params.id) {
-      fetchProfile(+params.id);
-    }
-  }
+  console.log('profile', profile)
 
-  handleFollow = () => {
-    const { setFollow, isFollowing, removeFollow, params } = this.props
-    if (isFollowing) {
-      removeFollow(+params.id)
-    }else {
-      setFollow(+params.id)
-    }
-  }
+  const { control, handleSubmit, isValid, onSubmit } = useEditProfile(profile)
 
-  render() {
-    const { profile, isLoading, currentUserId, isFollowing } = this.props
-    const { error } = this.state
-
-    const contactLinks = [
-      { name: "VK", url: profile.contacts?.vk },
-      { name: "Facebook", url: profile.contacts?.facebook },
-      { name: "Instagram", url: profile.contacts?.instagram },
-      { name: "Youtube", url: profile.contacts?.youtube },
-      { name: "X", url: profile.contacts?.twitter },
-      { name: "Github", url: profile.contacts?.github },
-      { name: "Website", url: profile.contacts?.website },
-      { name: "MainLink", url: profile.contacts?.mainLink }
-    ];
-
-    return (
-      <S.Profile>
-        <h1>Profile</h1>
-        {isLoading ? (
-          <SkeletonStyled />
-        ) : (
-          <>
-            <S.ProfileHeader>
-              <div>
-                <img src={profile.photos?.small ? profile.photos.small : userCap} alt="profile-img" />
-                <div>ID: {profile.userId}</div>
-                <div>Name: {profile.fullName}</div>
-                <div>Status: {profile.status}</div>
-                <div>Job Looking: {profile.lookingForAJob ? 'Looking for a job' : "I'm working"}</div>
-              </div>
-              <div>
-                <div>Job
-                  Description: {profile.lookingForAJobDescription ? profile.lookingForAJobDescription : "-"}</div>
-                <div>About Me: {profile.aboutMe ? profile.aboutMe : "-"}</div>
-              </div>
-              {profile.userId === +currentUserId
-                ? <Button variant={"primary"}><Link to={`/editprofile/${currentUserId}`}>profile setting</Link></Button>
-                : <Button variant={"primary"} onClick={this.handleFollow}>{isFollowing ? 'unfollow' : 'follow'}</Button>
+  return (
+    <PageLayout
+      title={'Profile'}
+      image={dialogsBg}
+      button={
+        <S.ProfileBtnSetting>
+          <Button
+            onClick={handlerEditMode}
+            variant={'primary'}
+            endIcon={<Settings />}
+          >
+            Edit Profile
+          </Button>
+        </S.ProfileBtnSetting>
+      }
+    >
+      <S.Profile onSubmit={handleSubmit(onSubmit)}>
+        <S.ProfileSocial>
+          <h2>Contacts</h2>
+          <div>
+            {!editMode ? (
+              <Link to={profile.contacts.vk || '/'}>
+                <img src={vk} alt={'vk-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={vk} alt={'vk-img'} />
+                <FormInput
+                  control={control}
+                  name={'vk'}
+                  defaultValue={profile.contacts.vk}
+                />
+              </S.ProfileInputWrap>
+            )}
+            {!editMode ? (
+              <Link to={profile.contacts.facebook || '/'}>
+                <img src={facebook} alt={'facebook-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={facebook} alt={'facebook-img'} />
+                <FormInput
+                  control={control}
+                  name={'facebook'}
+                  defaultValue={profile.contacts.facebook}
+                />
+              </S.ProfileInputWrap>
+            )}
+            {!editMode ? (
+              <Link to={profile.contacts.instagram || '/'}>
+                <img src={instagram} alt={'instagram-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={instagram} alt={'instagram-img'} />
+                <FormInput
+                  control={control}
+                  name={'instagram'}
+                  defaultValue={profile.contacts.instagram}
+                />
+              </S.ProfileInputWrap>
+            )}
+            {!editMode ? (
+              <Link to={profile.contacts.youtube || '/'}>
+                <img src={youtube} alt={'youtube-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={youtube} alt={'youtube-img'} />
+                <FormInput
+                  control={control}
+                  name={'youtube'}
+                  defaultValue={profile.contacts.youtube}
+                />
+              </S.ProfileInputWrap>
+            )}
+            {!editMode ? (
+              <Link to={profile.contacts.twitter || '/'}>
+                <img src={twitter} alt={'x-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={twitter} alt={'x-img'} />
+                <FormInput
+                  control={control}
+                  name={'twitter'}
+                  defaultValue={profile.contacts.twitter}
+                />
+              </S.ProfileInputWrap>
+            )}
+            {!editMode ? (
+              <Link to={profile.contacts.github || '/'}>
+                <img src={github} alt={'github-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={github} alt={'github-img'} />
+                <FormInput
+                  control={control}
+                  name={'github'}
+                  defaultValue={profile.contacts.github}
+                />
+              </S.ProfileInputWrap>
+            )}
+            {!editMode ? (
+              <Link title={'My Site'} to={profile.contacts.website || '/'}>
+                <img src={website} alt={'website-img'} />
+              </Link>
+            ) : (
+              <S.ProfileInputWrap>
+                <img src={website} alt={'website-img'} />
+                <FormInput
+                  control={control}
+                  name={'website'}
+                  defaultValue={profile.contacts.website}
+                />
+              </S.ProfileInputWrap>
+            )}
+          </div>
+          <S.ProfileJobDesc>
+            <h2>Job Description</h2>
+            {!editMode ? (
+              <p>
+                {profile.lookingForAJobDescription !== ''
+                  ? profile.lookingForAJobDescription
+                  : 'Fill in the profile'}
+              </p>
+            ) : (
+              <FormInput
+                control={control}
+                defaultValue={profile.lookingForAJobDescription}
+                name={'lookingForAJobDescription'}
+              />
+            )}
+          </S.ProfileJobDesc>
+        </S.ProfileSocial>
+        <S.ProfileInfo>
+          {profile.photos.large ? (
+            <img src={profile.photos.large} alt={'avatar'} />
+          ) : (
+            <S.ProfileAvatarSvg>
+              <SquareUserRound
+                strokeWidth={1}
+                size={180}
+                viewBox={'2 2 20 20'}
+              />
+            </S.ProfileAvatarSvg>
+          )}
+          {!editMode ? (
+            <>
+              <p>{profile.fullName}</p>
+              <p>
+                Looking for a job{' '}
+                {profile.lookingForAJob ? (
+                  <SquareCheckBig size={28} color={'mediumspringgreen'} />
+                ) : (
+                  <CircleX size={28} color={'darkorange'} />
+                )}
+              </p>
+              <p>{profile.status || 'Set your status'}</p>
+            </>
+          ) : (
+            <>
+              <S.ProfileUploadImg>
+                <Upload
+                  children={<UserRoundPen size={20} />}
+                  variant={'icon'}
+                  onChange={handlerSetPhoto}
+                />
+              </S.ProfileUploadImg>
+              <FormInput
+                label={'Name'}
+                control={control}
+                name={'fullName'}
+                defaultValue={profile.fullName}
+              />
+              <FormInput
+                label={'Status'}
+                control={control}
+                name={'status'}
+                defaultValue={profile.status}
+              />
+              <FormCheckbox
+                label={'Looking for a job'}
+                name={'lookingForAJob'}
+                control={control}
+                defaultChecked={profile.lookingForAJob}
+              />
+            </>
+          )}
+        </S.ProfileInfo>
+        <S.ProfileAbout>
+          <h2>About Me</h2>
+          {!editMode ? (
+            <p>
+              {profile.aboutMe !== '' ? profile.aboutMe : 'Fill in the profile'}
+            </p>
+          ) : (
+            <FormTextArea
+              maxLength={300}
+              control={control}
+              name={'aboutMe'}
+              defaultValue={profile.aboutMe}
+              disabled={isLoading}
+            />
+          )}
+          {editMode ? (
+            <Button
+              disabled={!isValid}
+              type={'submit'}
+              variant={'primary'}
+              endIcon={
+                isLoading ? (
+                  <div className={'loader'}>
+                    <Loader size={18} />
+                  </div>
+                ) : null
               }
-            </S.ProfileHeader>
-            <S.ProfileContact>
-              <h2>Contacts</h2>
-              <div>
-                {contactLinks.map(contact => (
-                  contact.url && (<a href={contact.url} key={contact.name}>{contact.name}</a>)
-                ))}
-              </div>
-            </S.ProfileContact>
-            <div>
-              {profile.photos?.large
-                ? <img src={profile.photos.large} alt="profile-img" />
-                : "no-profile-image"
-              }
-            </div>
-          </>
-        )}
-        {error && <Toast notifications={error} />}
+            >
+              Saving
+            </Button>
+          ) : null}
+        </S.ProfileAbout>
       </S.Profile>
-    )
-  }
+      <Toast notification={notifications.value} />
+    </PageLayout>
+  )
 }
-
-const mapStateToProps = (state: AppRootState) => ({
-  profile: state.profile,
-  isLoading: state.app.isLoading,
-  currentUserId: state.auth.currentUserId,
-  isFollowing: state.follow.isFollow,
-})
-
-function WithParamsComponent(props: Omit<Props, "params">) {
-  const params = useParams<{ id: string | undefined }>()
-  return <Profile {...props} params={{ id: params.id ? params.id : "1" }} />
-}
-
-type Props = {
-  profile: UserProfile
-  fetchProfile: (userId: number) => void
-  fetchProfileStatus: (userId: number) => void
-  fetchFollow: (userId: number) => Promise<void>
-  setFollow: (userId: number) => Promise<void>
-  removeFollow: (userId: number) => Promise<void>
-  isFollowing: boolean
-  params: { id: string }
-  isLoading: boolean
-  currentUserId: string
-}
-
-export default connect(mapStateToProps, {
-  fetchProfile,
-  fetchProfileStatus,
-  fetchFollow,
-  setFollow,
-  removeFollow
-})(WithParamsComponent)
