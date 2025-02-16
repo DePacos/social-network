@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/hooks/stateHook'
 import { UserProfileResponse } from '@/app/types/types'
 import {
+  editUserPhoto,
   editUserProfile,
   editUserStatus,
 } from '@/entities/reducers/profileSlice'
@@ -13,9 +14,10 @@ import {
 } from '@/pages/profile/schemas/editProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-export const useEditProfile = (
+export const useProfile = (
   profile: UserProfileResponse & { status: string },
 ) => {
+  const [editMode, setEditMode] = useState(false)
   const dispatch = useAppDispatch()
 
   const {
@@ -27,6 +29,18 @@ export const useEditProfile = (
     mode: 'onChange',
     resolver: zodResolver(createEditProfileSchema()),
   })
+
+  const handleEditMode = () => {
+    setEditMode(prevState => !prevState)
+  }
+
+  const handleSetPhoto = (file: File) => {
+    const data = new FormData()
+
+    data.append('photo', file)
+
+    dispatch(editUserPhoto(data))
+  }
 
   useEffect(() => {
     reset({
@@ -80,11 +94,13 @@ export const useEditProfile = (
     }
 
     dispatch(editUserProfile(dataRequest))
-    console.log('useEditProfile', data)
   }
 
   return {
     control,
+    editMode,
+    handleEditMode,
+    handleSetPhoto,
     handleSubmit,
     isValid,
     onSubmit,
