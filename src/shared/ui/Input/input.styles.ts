@@ -20,7 +20,13 @@ const LabelWrap = styled.div<{ label?: string | undefined }>`
     `}
 `
 
-const InputWrap = styled.div<{
+const InputWrap = styled.div.withConfig({
+  shouldForwardProp: prop =>
+    prop !== 'error' &&
+    prop !== 'iconStart' &&
+    prop !== 'iconEnd' &&
+    prop !== 'iconPadding',
+})<{
   error?: boolean | undefined
   iconStart?: ReactNode | undefined
   iconEnd?: ReactNode | undefined

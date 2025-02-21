@@ -4,7 +4,9 @@ const PageLayoutSection = styled.section`
   margin-bottom: -90px;
 `
 
-const PageLayoutTitle = styled.div<{ imageBg: string }>`
+const PageLayoutTitle = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'imageBg',
+})<{ imageBg: string }>`
   position: relative;
   height: 400px;
   overflow: hidden;

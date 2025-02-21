@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components'
 
-const Button = styled.button<{
+const Button = styled.button.withConfig({
+  shouldForwardProp: prop => prop !== 'variant' && prop !== 'buttonStyles',
+})<{
   variant?: 'primary' | 'secondary' | 'icon'
   buttonStyles?: { [key: string]: string | number }
 }>`
@@ -12,6 +14,8 @@ const Button = styled.button<{
   color: ${({ theme }) => theme.colors.fontPrimary};
   background-color: transparent;
   transition: transform 0.3s;
+  padding: 15px 20px;
+  border-radius: 10px;
 
   span {
     display: inline-block;
@@ -19,13 +23,8 @@ const Button = styled.button<{
   }
 
   ${({ disabled, variant }) => css`
-    ${variant === 'primary' &&
+    ${['primary', 'secondary'].includes(variant || '') &&
     css`
-      padding: 15px 20px;
-      border-radius: 10px;
-      background-color: #cb5b0f;
-      transition: 0.3s;
-
       &:hover {
         box-shadow: 0 0 1px 1px;
       }
@@ -34,8 +33,17 @@ const Button = styled.button<{
         box-shadow: 0 0 1px 2px;
       }
     `}
+    ${variant === 'primary' &&
+    css`
+      background-color: #cb5b0f;
+    `}
+    ${variant === 'secondary' &&
+    css`
+      background-color: #0b566c;
+    `}
     ${variant === 'icon' &&
     css`
+      padding: 0;
       span {
         margin: 0;
       }
