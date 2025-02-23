@@ -11,7 +11,7 @@ import {
   selectAuthCaptcha,
   selectAuthIsLoggedIn,
 } from '@/entities/reducers/authSlice'
-import { useSignIn } from '@/features/auth/modal/useSignIn'
+import { useSignIn } from '@/features/auth/model/useSignIn'
 import logo from '@/shared/assets/images/logo.webp'
 import { Button } from '@/shared/ui/Button/Button'
 import { FormCheckbox } from '@/shared/ui/Checkbox/FormCheckbox'

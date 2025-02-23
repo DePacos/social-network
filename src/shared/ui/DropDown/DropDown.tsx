@@ -1,45 +1,29 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode } from 'react'
 
 import { Button } from '@/shared/ui/Button/Button'
+import { useDropDown } from '@/shared/ui/DropDown/model/useDropDown'
 
 import { S } from './dropDown.styles'
 
 type Props = {
   type?: 'primary' | 'secondary' | 'icon'
-  trigger: ReactNode | string
+  childrenBtn: ReactNode | string
   children: ReactNode | string
 }
 
-export const DropDown = ({ children, trigger, type = 'primary' }: Props) => {
-  const [open, setOpen] = useState(false)
-  const dropDownBtnRef = useRef<HTMLButtonElement>(null)
-
-  const handlerOpen = () => {
-    setOpen(prev => !prev)
-  }
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropDownBtnRef.current) {
-      if (!dropDownBtnRef.current.contains(event.target as Node)) {
-        setOpen(false)
-      }
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [open])
+export const DropDown = ({
+  children,
+  childrenBtn,
+  type = 'primary',
+}: Props) => {
+  const { dropDownBtnRef, handlerOpen, isOpen } = useDropDown()
 
   return (
     <S.DropDownWrap>
       <Button ref={dropDownBtnRef} variant={type} onClick={handlerOpen}>
-        {trigger}
+        {childrenBtn}
       </Button>
-      {open && <S.DropDownContent>{children}</S.DropDownContent>}
+      {isOpen && <S.DropDownContent>{children}</S.DropDownContent>}
     </S.DropDownWrap>
   )
 }

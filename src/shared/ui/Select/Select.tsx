@@ -1,5 +1,7 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import React, { ComponentProps, MouseEvent, useState } from 'react'
+import React, { ComponentProps } from 'react'
+
+import { useSelect } from '@/shared/ui/Select/model/useSelect'
 
 import { S } from './select.styles'
 
@@ -17,32 +19,21 @@ export const Select = ({
   value,
   ...props
 }: Props) => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handlerTrigger = () => {
-    setIsOpen(prevState => !prevState)
-  }
-
-  const handlerOption = (e: MouseEvent<HTMLDivElement>) => {
-    setIsOpen(false)
-    const target = e.target as HTMLOptionElement
-
-    onChange?.(target.value)
-  }
+  const { handleOption, handleTrigger, isOpen } = useSelect(onChange)
 
   return (
     <S.SelectWrap>
       <S.SelectButton
         error={!!error}
         type={'button'}
-        onClick={handlerTrigger}
+        onClick={handleTrigger}
         {...props}
       >
         {value || 'Select value'}
         {isOpen ? <ChevronUp /> : <ChevronDown />}
       </S.SelectButton>
       {isOpen && (
-        <S.OptionWrap onClick={handlerOption}>
+        <S.OptionWrap onClick={handleOption}>
           {options.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}

@@ -1,14 +1,8 @@
 import { Eye, EyeOff, Search } from 'lucide-react'
-import React, {
-  ComponentProps,
-  forwardRef,
-  ReactNode,
-  useCallback,
-  useId,
-  useState,
-} from 'react'
+import React, { ComponentProps, forwardRef, ReactNode } from 'react'
 
 import { InputTypes } from '@/app/types/types'
+import { useInput } from '@/shared/ui/Input/model/useInput'
 
 import { S } from './input.styles'
 
@@ -35,26 +29,20 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     },
     ref,
   ) => {
-    const [inputType, setInputType] = useState(type)
-    const inputId = useId()
-
-    const handlerChangeType = useCallback(() => {
-      setInputType(prev => (prev === 'password' ? 'text' : 'password'))
-    }, [])
-
+    const { handleChangeType, inputId, inputType } = useInput(type)
     const getIconAfter = () => {
       if (type === 'password') {
         return inputType === 'password' ? (
           <EyeOff
             style={{ cursor: 'pointer' }}
             color={'black'}
-            onClick={handlerChangeType}
+            onClick={handleChangeType}
           />
         ) : (
           <Eye
             style={{ cursor: 'pointer' }}
             color={'black'}
-            onClick={handlerChangeType}
+            onClick={handleChangeType}
           />
         )
       }
