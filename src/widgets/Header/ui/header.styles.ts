@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const Header = styled.header`
   border-bottom: 1px solid;
@@ -75,9 +75,32 @@ const HeaderNav = styled.nav`
   }
 `
 
-const HeaderBtn = styled.div`
+const HeaderBtn = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== 'countMessages',
+})<{ countMessages: number }>`
   display: flex;
   gap: 15px;
+
+  button:last-child {
+    position: relative;
+  }
+
+  ${({ countMessages }) =>
+    countMessages &&
+    css`
+      button:last-child:before {
+        position: absolute;
+        top: -8px;
+        right: -5px;
+        content: '${countMessages}';
+        width: 18px;
+        height: 18px;
+        padding: 2px 0;
+        border-radius: 50%;
+        background-color: brown;
+        color: #fff;
+      }
+    `};
 
   @media (max-width: 480px) {
     grid-column: 1/3;
@@ -85,9 +108,10 @@ const HeaderBtn = styled.div`
   }
 `
 
-const HeaderProfile = styled.div`
+const HeaderProfileMenu = styled.div`
   @media (max-width: 480px) {
-    justify-items: end;
+    display: flex;
+    justify-content: end;
     grid-column: 2/3;
     grid-row: 1;
   }
@@ -136,6 +160,6 @@ export const S = {
   HeaderDropDown,
   HeaderLogo,
   HeaderNav,
-  HeaderProfile,
+  HeaderProfileMenu,
   HeaderWrap,
 }
