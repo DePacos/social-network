@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { useAppDispatch } from '@/app/hooks/stateHook'
+import { useAppDispatch } from '@/app/hooks/useStateHook'
 import { UserProfileResponse } from '@/app/types/types'
 import {
   editUserPhoto,

@@ -1,14 +1,14 @@
 import { Settings } from 'lucide-react'
 import React from 'react'
 
-import { useAppSelector } from '@/app/hooks/stateHook'
+import { useAppSelector } from '@/app/hooks/useStateHook'
 import { PageLayout } from '@/app/PageLayout/PageLayout'
 import {
   selectAppIsLoading,
   selectAppNotifications,
 } from '@/entities/reducers/appSlice'
 import { selectProfile } from '@/entities/reducers/profileSlice'
-import { useProfile } from '@/pages/profile/modal/useProfile'
+import { useProfile } from '@/pages/profile/model/useProfile'
 import { ProfileAbout } from '@/pages/profile/ui/ProfileAbout'
 import { ProfileInfo } from '@/pages/profile/ui/ProfileInfo'
 import { ProfileSocial } from '@/pages/profile/ui/ProfileSocial'

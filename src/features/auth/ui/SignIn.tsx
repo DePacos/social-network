@@ -2,7 +2,7 @@ import { Loader, Mail } from 'lucide-react'
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '@/app/hooks/stateHook'
+import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
 import {
   selectAppIsLoading,
   selectAppNotifications,

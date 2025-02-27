@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '@/app/hooks/stateHook'
+import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
 import { SkeletonStyled } from '@/app/styles/global.styles'
 import { selectAppIsInitialized } from '@/entities/reducers/appSlice'
 import { me, selectAuthIsLoggedIn } from '@/entities/reducers/authSlice'
-import { Header } from '@/widgets/Header/Header'
+import { Header } from '@/widgets/Header/ui/Header'
 
 export const App = () => {
   const dispatch = useAppDispatch()
