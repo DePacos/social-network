@@ -3,11 +3,13 @@ import styled from 'styled-components'
 const DialogsWrap = styled.div`
   display: flex;
   gap: 60px;
+  min-height: 520px;
   @media (max-width: 1200px) {
     gap: 20px;
   }
   @media (max-width: 640px) {
     gap: 10px;
+    min-height: 330px;
   }
 `
 
@@ -71,7 +73,6 @@ const ContactList = styled.ul`
       grid-column: 2/4;
     }
     li:last-child {
-      //grid-column: 1/2;
       grid-row: 2/3;
       text-align: left;
     }
@@ -134,6 +135,16 @@ const NoDialogMessage = styled.p`
     font-size: 18px;
   }
 `
+const SearchSeparator = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 0;
+  &:hover {
+    box-shadow: none !important;
+  }
+`
 
 export const S = {
   ContactList,
@@ -142,4 +153,5 @@ export const S = {
   LastActivity,
   NewMessages,
   NoDialogMessage,
+  SearchSeparator,
 }

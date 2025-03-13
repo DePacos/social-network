@@ -1,4 +1,4 @@
-import { DialogsResponse, Message, User } from '@/app/types/types'
+import { DialogsResponse, Message, Photos, User } from '@/app/types/types'
 import {
   getMessagesByRecipient,
   removeRemovedMessage,
@@ -17,7 +17,7 @@ const initialState = {
   dialogs: [] as DialogsResponse[],
   messages: [] as Message[],
   newMessages: 0,
-  userDialog: {} as User,
+  userDialog: { id: 0, name: '', photos: {} as Photos },
 }
 
 const createSlice = buildCreateSlice({
@@ -254,15 +254,20 @@ const dialogsSlice = createSlice({
           },
         },
       ),
-      setUserDialog: creators.reducer((state, action: PayloadAction<User>) => {
-        state.userDialog = action.payload
-      }),
+      setUserDialog: creators.reducer(
+        (
+          state,
+          action: PayloadAction<{ id: number; name: string; photos: Photos }>,
+        ) => {
+          state.userDialog = action.payload
+        },
+      ),
     }
   },
   selectors: {
+    selectDialogMessages: state => state.messages,
     selectDialogs: state => state.dialogs,
-    selectMessages: state => state.messages,
-    selectNewMessages: state => state.newMessages,
+    selectDialogsNewMessages: state => state.newMessages,
     selectUserDialog: state => state.userDialog,
   },
 })
@@ -282,8 +287,8 @@ export const {
 } = dialogsSlice.actions
 
 export const {
+  selectDialogMessages,
   selectDialogs,
-  selectMessages,
-  selectNewMessages,
+  selectDialogsNewMessages,
   selectUserDialog,
 } = dialogsSlice.selectors
