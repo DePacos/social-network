@@ -5,21 +5,12 @@ import { Link } from 'react-router-dom'
 import { SkeletonStyled } from '@/app/styles/global.styles'
 import { Button } from '@/shared/ui/Button/Button'
 import { DropDown } from '@/shared/ui/DropDown/DropDown'
+import { useHeader } from '@/widgets/Header/model/useHeader'
 import { S } from '@/widgets/Header/ui/header.styles'
 
-type Props = {
-  isLoading: boolean
-  userAvatar: string
-  currentUserId: number
-  handlerLogout: () => void
-}
+export const HeaderProfileMenu = () => {
+  const { currentUserId, handlerLogout, isLoading, userAvatar } = useHeader()
 
-export const HeaderProfileMenu = ({
-  currentUserId,
-  handlerLogout,
-  isLoading,
-  userAvatar,
-}: Props) => {
   return (
     <S.HeaderProfileMenu>
       {isLoading ? (

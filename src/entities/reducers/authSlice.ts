@@ -1,10 +1,12 @@
 import { AuthInitialState, LoginRequest } from '@/app/types/types'
 import { createAppAsyncThunk } from '@/app/utils/createAppAsyncThunk'
 import { authAPI } from '@/shared/api/authAPI'
+import { profileAPI } from '@/shared/api/profileAPI'
 import { createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
 const initialState: AuthInitialState = {
+  avatar: '',
   captcha: '',
   isLoggedIn: true,
   userId: 0,
@@ -15,6 +17,9 @@ export const authSlice = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       state.userId = action.payload.data.userId
       state.isLoggedIn = true
+    })
+    builder.addCase(getAvatar.fulfilled, (state, action) => {
+      state.avatar = action.payload.data.photos.small
     })
     builder.addCase(me.fulfilled, (state, action) => {
       state.isLoggedIn = true
@@ -34,6 +39,7 @@ export const authSlice = createSlice({
   name: 'auth',
   reducers: {},
   selectors: {
+    selectAuthAvatar: state => state.avatar,
     selectAuthCaptcha: state => state.captcha,
     selectAuthIsLoggedIn: state => state.isLoggedIn,
     selectAuthUserId: state => state.userId,
@@ -71,7 +77,7 @@ export const signIn = createAppAsyncThunk(
 
 export const me = createAppAsyncThunk(
   'auth/me',
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const res = await authAPI.me()
 
@@ -81,6 +87,8 @@ export const me = createAppAsyncThunk(
           type: 'appError',
         })
       }
+
+      dispatch(getAvatar(res.data.data.id))
 
       return res.data
     } catch (error) {
@@ -120,7 +128,22 @@ export const getCaptcha = createAppAsyncThunk(
   },
 )
 
-export const { selectAuthCaptcha, selectAuthIsLoggedIn, selectAuthUserId } =
-  authSlice.selectors
+export const getAvatar = createAppAsyncThunk(
+  'auth/avatar',
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      return await profileAPI.fetchUserProfile(userId)
+    } catch (error) {
+      return rejectWithValue({ error: error as AxiosError, type: 'catchError' })
+    }
+  },
+)
+
+export const {
+  selectAuthAvatar,
+  selectAuthCaptcha,
+  selectAuthIsLoggedIn,
+  selectAuthUserId,
+} = authSlice.selectors
 
 export default authSlice.reducer

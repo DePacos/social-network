@@ -1,40 +1,33 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
-import { ThemeContext } from '@/app/providers/ThemeContext'
 import { selectAppIsLoading } from '@/entities/reducers/appSlice'
-import { logout, selectAuthUserId } from '@/entities/reducers/authSlice'
 import {
-  getNewMessages,
-  selectNewMessages,
-} from '@/entities/reducers/dialogSlice'
-import { getUserProfile, selectProfile } from '@/entities/reducers/profileSlice'
+  logout,
+  selectAuthAvatar,
+  selectAuthUserId,
+} from '@/entities/reducers/authSlice'
+import { getNewMessages } from '@/entities/reducers/dialogSlice'
 
 export const useHeader = () => {
-  const { changeTheme } = useContext(ThemeContext)
-  const currentUserId = useAppSelector(selectAuthUserId)
-  const userAvatar = useAppSelector(selectProfile).photos.small
-  const isLoading = useAppSelector(selectAppIsLoading)
-  const newMessages = useAppSelector(selectNewMessages)
   const dispatch = useAppDispatch()
 
+  const currentUserId = useAppSelector(selectAuthUserId)
+  const userAvatar = useAppSelector(selectAuthAvatar)
+  const isLoading = useAppSelector(selectAppIsLoading)
+
   useEffect(() => {
-    if (currentUserId !== 0) {
-      dispatch(getUserProfile(currentUserId))
-      dispatch(getNewMessages())
-    }
-  }, [currentUserId, dispatch])
+    dispatch(getNewMessages())
+  }, [])
 
   const handlerLogout = () => {
     dispatch(logout())
   }
 
   return {
-    changeTheme,
     currentUserId,
     handlerLogout,
     isLoading,
-    newMessages,
     userAvatar,
   }
 }

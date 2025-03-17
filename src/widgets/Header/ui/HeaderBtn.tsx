@@ -1,15 +1,16 @@
 import { Bell, Lightbulb } from 'lucide-react'
-import React from 'react'
+import React, { useContext } from 'react'
 
+import { useAppSelector } from '@/app/hooks/useStateHook'
+import { ThemeContext } from '@/app/providers/ThemeContext'
+import { selectDialogsNewMessages } from '@/entities/reducers/dialogSlice'
 import { Button } from '@/shared/ui/Button/Button'
 import { S } from '@/widgets/Header/ui/header.styles'
 
-type Props = {
-  changeTheme: () => void
-  newMessages: number
-}
+export const HeaderBtn = () => {
+  const { changeTheme } = useContext(ThemeContext)
+  const newMessages = useAppSelector(selectDialogsNewMessages)
 
-export const HeaderBtn = ({ changeTheme, newMessages }: Props) => {
   return (
     <S.HeaderBtn countMessages={newMessages}>
       <Button onClick={() => changeTheme()} variant={'icon'}>
