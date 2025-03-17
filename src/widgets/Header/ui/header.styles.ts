@@ -134,6 +134,10 @@ const HeaderDropDown = styled.div`
     position: relative;
   }
 
+  button {
+    padding: 0;
+  }
+
   a:after,
   button:after {
     content: '';

@@ -7,10 +7,10 @@ import { Dialog } from '@/pages/dialogs/ui/Dialog'
 import { Dialogs } from '@/pages/dialogs/ui/Dialogs'
 import { Error } from '@/pages/error/Error'
 import { Profile } from '@/pages/profile/ui/Profile'
-import { Members } from '@/pages/users/Members'
+import { Users } from '@/pages/users/ui/Users'
 
 import { App } from '../App'
-
+//TODO fix dialog/s
 export const router = createBrowserRouter([
   {
     element: <SignIn />,
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         index: true,
       },
       {
-        element: <Members />,
+        element: <Users />,
         path: 'members',
       },
       {
@@ -39,10 +39,6 @@ export const router = createBrowserRouter([
         ],
         element: <Dialogs />,
         path: 'dialogs',
-      },
-      {
-        element: <Dialog />,
-        path: 'dialogs/:id',
       },
       {
         element: <Profile />,
