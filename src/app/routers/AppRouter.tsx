@@ -10,7 +10,6 @@ import { Profile } from '@/pages/profile/ui/Profile'
 import { Users } from '@/pages/users/ui/Users'
 
 import { App } from '../App'
-//TODO fix dialog/s
 export const router = createBrowserRouter([
   {
     element: <SignIn />,
