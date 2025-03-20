@@ -1,24 +1,18 @@
-import {
-  applyMiddleware,
-  combineReducers,
-  legacy_createStore,
-} from "@reduxjs/toolkit"
-import { usersReducer } from "@/entities/reducers/usersReducer"
-import { thunk } from "redux-thunk"
-import { profileReducer } from "@/entities/reducers/profileReducer"
-import { appReducer } from "@/entities/reducers/appReducer"
-import { authReducer } from "@/entities/reducers/authReducer"
-import { followReducer } from "@/entities/reducers/followReducer"
+import appReducer from '@/entities/reducers/appSlice'
+import authReducer from '@/entities/reducers/authSlice'
+import dialogsReducer from '@/entities/reducers/dialogSlice'
+import followReducer from '@/entities/reducers/followSlice'
+import profileReducer from '@/entities/reducers/profileSlice'
+import usersReducer from '@/entities/reducers/usersSlice'
+import { configureStore } from '@reduxjs/toolkit'
 
-export const rootReducer = combineReducers({
-  users: usersReducer,
-  profile: profileReducer,
-  app: appReducer,
-  auth: authReducer,
-  follow: followReducer,
+export const store = configureStore({
+  reducer: {
+    app: appReducer,
+    auth: authReducer,
+    dialogs: dialogsReducer,
+    follow: followReducer,
+    profile: profileReducer,
+    users: usersReducer,
+  },
 })
-
-export const store = legacy_createStore(
-  rootReducer,
-  applyMiddleware(thunk) as any,
-)
