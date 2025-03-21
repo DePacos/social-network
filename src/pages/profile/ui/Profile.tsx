@@ -1,13 +1,7 @@
 import { Settings } from 'lucide-react'
 import React from 'react'
 
-import { useAppSelector } from '@/app/hooks/useStateHook'
 import { PageLayout } from '@/app/PageLayout/PageLayout'
-import {
-  selectAppIsLoading,
-  selectAppNotifications,
-} from '@/entities/reducers/appSlice'
-import { selectProfile } from '@/entities/reducers/profileSlice'
 import { useProfile } from '@/pages/profile/model/useProfile'
 import { ProfileAbout } from '@/pages/profile/ui/ProfileAbout'
 import { ProfileInfo } from '@/pages/profile/ui/ProfileInfo'
@@ -19,19 +13,21 @@ import { Toast } from '@/shared/ui/Toast/Toast'
 import { S } from './profile.styles'
 
 export const Profile = () => {
-  const profile = useAppSelector(selectProfile)
-  const notifications = useAppSelector(selectAppNotifications)
-  const isLoading = useAppSelector(selectAppIsLoading)
-
   const {
     control,
     editMode,
     handleEditMode,
+    handleFollow,
     handleSetPhoto,
     handleSubmit,
+    isCurrentUser,
+    isFollow,
+    isLoading,
     isValid,
+    notifications,
     onSubmit,
-  } = useProfile(profile)
+    profile,
+  } = useProfile()
 
   return (
     <PageLayout
@@ -39,18 +35,25 @@ export const Profile = () => {
       image={dialogsBg}
       button={
         <S.ProfileBtnSetting>
-          <Button
-            onClick={handleEditMode}
-            variant={'primary'}
-            endIcon={<Settings />}
-          >
-            Edit Profile
-          </Button>
+          {isCurrentUser ? (
+            <Button
+              onClick={handleEditMode}
+              variant={'primary'}
+              endIcon={<Settings />}
+            >
+              Edit Profile
+            </Button>
+          ) : (
+            <Button variant={'primary'} onClick={handleFollow}>
+              {isFollow ? 'Unfollow' : 'Follow'}
+            </Button>
+          )}
         </S.ProfileBtnSetting>
       }
     >
       <S.Profile onSubmit={handleSubmit(onSubmit)}>
         <ProfileSocial
+          isLoading={isLoading}
           editMode={editMode}
           profile={profile}
           control={control}
@@ -58,6 +61,7 @@ export const Profile = () => {
         <ProfileInfo
           editMode={editMode}
           profile={profile}
+          isLoading={isLoading}
           control={control}
           handleSetPhoto={handleSetPhoto}
         />
