@@ -1,12 +1,25 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 
-import { useAppDispatch } from '@/app/hooks/useStateHook'
-import { UserProfileResponse } from '@/app/types/types'
+import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
+import {
+  selectAppIsLoading,
+  selectAppNotifications,
+} from '@/entities/reducers/appSlice'
+import { selectAuthUserId } from '@/entities/reducers/authSlice'
+import {
+  follow,
+  getFollow,
+  removeFollow,
+  selectFollow,
+} from '@/entities/reducers/followSlice'
 import {
   editUserPhoto,
   editUserProfile,
   editUserStatus,
+  getUserProfile,
+  selectProfile,
 } from '@/entities/reducers/profileSlice'
 import {
   createEditProfileSchema,
@@ -14,11 +27,17 @@ import {
 } from '@/pages/profile/schemas/editProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-export const useProfile = (
-  profile: UserProfileResponse & { status: string },
-) => {
+export const useProfile = () => {
   const [editMode, setEditMode] = useState(false)
   const dispatch = useAppDispatch()
+  const isFollow = useAppSelector(selectFollow)
+  const profile = useAppSelector(selectProfile)
+  const notifications = useAppSelector(selectAppNotifications)
+  const isLoading = useAppSelector(selectAppIsLoading)
+  const currentUserId = useAppSelector(selectAuthUserId)
+
+  const { id } = useParams()
+  const isCurrentUser = currentUserId === Number(id)
 
   const {
     control,
@@ -30,6 +49,14 @@ export const useProfile = (
     resolver: zodResolver(createEditProfileSchema()),
   })
 
+  const handleFollow = () => {
+    if (isFollow) {
+      dispatch(removeFollow(Number(id)))
+    } else {
+      dispatch(follow(Number(id)))
+    }
+  }
+
   const handleEditMode = () => {
     setEditMode(prevState => !prevState)
   }
@@ -38,11 +65,10 @@ export const useProfile = (
     const data = new FormData()
 
     data.append('photo', file)
-
     dispatch(editUserPhoto(data))
   }
 
-  useEffect(() => {
+  const resetForm = () => {
     reset({
       aboutMe: profile.aboutMe,
       facebook: profile.contacts.facebook || '',
@@ -57,7 +83,18 @@ export const useProfile = (
       website: profile.contacts.website || '',
       youtube: profile.contacts.youtube || '',
     })
-  }, [profile])
+  }
+
+  useEffect(() => {
+    if (id && profile.userId !== +id) {
+      dispatch(getUserProfile(Number(id)))
+      dispatch(getFollow(Number(id)))
+    }
+    if (!isCurrentUser) {
+      setEditMode(false)
+    }
+    resetForm()
+  }, [id, profile])
 
   const onSubmit = (data: EditProfileFormData) => {
     const contacts = [
@@ -100,9 +137,15 @@ export const useProfile = (
     control,
     editMode,
     handleEditMode,
+    handleFollow,
     handleSetPhoto,
     handleSubmit,
+    isCurrentUser,
+    isFollow,
+    isLoading,
     isValid,
+    notifications,
     onSubmit,
+    profile,
   }
 }
