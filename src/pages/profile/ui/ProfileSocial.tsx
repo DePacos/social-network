@@ -18,9 +18,15 @@ type Props = {
   editMode: boolean
   profile: UserProfileResponse
   control: Control<EditProfileFormData>
+  isLoading: boolean
 }
 
-export const ProfileSocial = ({ control, editMode, profile }: Props) => {
+export const ProfileSocial = ({
+  control,
+  editMode,
+  isLoading,
+  profile,
+}: Props) => {
   return (
     <S.ProfileSocial>
       <h2>Contacts</h2>
@@ -32,11 +38,7 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={vk} alt={'vk-img'} />
-            <FormInput
-              control={control}
-              name={'vk'}
-              defaultValue={profile.contacts.vk}
-            />
+            <FormInput control={control} name={'vk'} />
           </S.ProfileInputWrap>
         )}
         {!editMode ? (
@@ -46,11 +48,7 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={facebook} alt={'facebook-img'} />
-            <FormInput
-              control={control}
-              name={'facebook'}
-              defaultValue={profile.contacts.facebook}
-            />
+            <FormInput control={control} name={'facebook'} />
           </S.ProfileInputWrap>
         )}
         {!editMode ? (
@@ -60,11 +58,7 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={instagram} alt={'instagram-img'} />
-            <FormInput
-              control={control}
-              name={'instagram'}
-              defaultValue={profile.contacts.instagram}
-            />
+            <FormInput control={control} name={'instagram'} />
           </S.ProfileInputWrap>
         )}
         {!editMode ? (
@@ -74,11 +68,7 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={youtube} alt={'youtube-img'} />
-            <FormInput
-              control={control}
-              name={'youtube'}
-              defaultValue={profile.contacts.youtube}
-            />
+            <FormInput control={control} name={'youtube'} />
           </S.ProfileInputWrap>
         )}
         {!editMode ? (
@@ -88,11 +78,7 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={twitter} alt={'x-img'} />
-            <FormInput
-              control={control}
-              name={'twitter'}
-              defaultValue={profile.contacts.twitter}
-            />
+            <FormInput control={control} name={'twitter'} />
           </S.ProfileInputWrap>
         )}
         {!editMode ? (
@@ -102,11 +88,7 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={github} alt={'github-img'} />
-            <FormInput
-              control={control}
-              name={'github'}
-              defaultValue={profile.contacts.github}
-            />
+            <FormInput control={control} name={'github'} />
           </S.ProfileInputWrap>
         )}
         {!editMode ? (
@@ -116,22 +98,22 @@ export const ProfileSocial = ({ control, editMode, profile }: Props) => {
         ) : (
           <S.ProfileInputWrap>
             <img src={website} alt={'website-img'} />
-            <FormInput
-              control={control}
-              name={'website'}
-              defaultValue={profile.contacts.website}
-            />
+            <FormInput control={control} name={'website'} />
           </S.ProfileInputWrap>
         )}
       </div>
       <S.ProfileJobDesc>
         <h2>Job Description</h2>
         {!editMode ? (
-          <p>
-            {profile.lookingForAJobDescription !== ''
-              ? profile.lookingForAJobDescription
-              : 'Fill in the profile'}
-          </p>
+          isLoading ? (
+            <S.SkeletonName />
+          ) : (
+            <p>
+              {profile.lookingForAJobDescription
+                ? profile.lookingForAJobDescription
+                : 'Fill in the profile'}
+            </p>
+          )
         ) : (
           <FormInput
             control={control}

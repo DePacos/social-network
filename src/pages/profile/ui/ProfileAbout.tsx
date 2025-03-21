@@ -26,13 +26,16 @@ export const ProfileAbout = ({
   <S.ProfileAbout>
     <h2>About Me</h2>
     {!editMode ? (
-      <p>{profile.aboutMe !== '' ? profile.aboutMe : 'Fill in the profile'}</p>
+      isLoading ? (
+        <S.SkeletonName />
+      ) : (
+        <p>{profile.aboutMe ? profile.aboutMe : 'Fill in the profile'}</p>
+      )
     ) : (
       <FormTextArea
         maxLength={300}
         control={control}
         name={'aboutMe'}
-        defaultValue={profile.aboutMe}
         disabled={isLoading}
       />
     )}

@@ -1,3 +1,5 @@
+import Skeleton from 'react-loading-skeleton'
+
 import profileBg from '@/shared/assets/images/profile-bg.webp'
 import styled, { css } from 'styled-components'
 
@@ -102,6 +104,7 @@ const ProfileInfo = styled.div`
   ${profileSectionStyles};
   flex-direction: column;
   justify-content: flex-start;
+  text-align: center;
   height: 100%;
   gap: 20px;
   position: relative;
@@ -186,6 +189,20 @@ const ProfileJobDesc = styled.div`
   margin-top: 10px;
 `
 
+const SkeletonAvatar = styled(Skeleton)`
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  background-color: #cbcbcb;
+`
+
+const SkeletonName = styled(Skeleton)`
+  width: 130px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #cbcbcb;
+`
+
 export const S = {
   Profile,
   ProfileAbout,
@@ -197,4 +214,6 @@ export const S = {
   ProfileSocial,
   ProfileTitleWrap,
   ProfileUploadImg,
+  SkeletonAvatar,
+  SkeletonName,
 }

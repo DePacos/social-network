@@ -16,6 +16,7 @@ import { Upload } from '@/shared/ui/Upload/Upload'
 
 type Props = {
   editMode: boolean
+  isLoading: boolean
   profile: UserProfileResponse & { status: string }
   control: Control<EditProfileFormData>
   handleSetPhoto: (file: File) => void
@@ -25,6 +26,7 @@ export const ProfileInfo = ({
   control,
   editMode,
   handleSetPhoto,
+  isLoading,
   profile,
 }: Props) => {
   return (
@@ -33,12 +35,16 @@ export const ProfileInfo = ({
         <img src={profile.photos.large} alt={'avatar'} />
       ) : (
         <S.ProfileAvatarSvg>
-          <SquareUserRound strokeWidth={1} size={180} viewBox={'2 2 20 20'} />
+          {isLoading ? (
+            <S.SkeletonAvatar />
+          ) : (
+            <SquareUserRound strokeWidth={1} size={180} viewBox={'2 2 20 20'} />
+          )}
         </S.ProfileAvatarSvg>
       )}
       {!editMode ? (
         <>
-          <p>{profile.fullName}</p>
+          {isLoading ? <S.SkeletonName /> : <p>{profile.fullName}</p>}
           <p>
             Looking for a job{' '}
             {profile.lookingForAJob ? (
@@ -47,7 +53,11 @@ export const ProfileInfo = ({
               <CircleX size={28} color={'darkorange'} />
             )}
           </p>
-          <p>{profile.status || 'Set your status'}</p>
+          {isLoading ? (
+            <S.SkeletonName />
+          ) : (
+            <p>{profile.status || 'Set your status'}</p>
+          )}
         </>
       ) : (
         <>
@@ -58,23 +68,12 @@ export const ProfileInfo = ({
               onChange={handleSetPhoto}
             />
           </S.ProfileUploadImg>
-          <FormInput
-            label={'Name'}
-            control={control}
-            name={'fullName'}
-            defaultValue={profile.fullName}
-          />
-          <FormInput
-            label={'Status'}
-            control={control}
-            name={'status'}
-            defaultValue={profile.status}
-          />
+          <FormInput label={'Name'} control={control} name={'fullName'} />
+          <FormInput label={'Status'} control={control} name={'status'} />
           <FormCheckbox
             label={'Looking for a job'}
             name={'lookingForAJob'}
             control={control}
-            defaultChecked={profile.lookingForAJob}
           />
         </>
       )}
