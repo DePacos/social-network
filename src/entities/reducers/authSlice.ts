@@ -19,7 +19,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = true
     })
     builder.addCase(getAvatar.fulfilled, (state, action) => {
-      state.avatar = action.payload.data.photos.small
+      state.avatar = action.payload.photos.small
     })
     builder.addCase(me.fulfilled, (state, action) => {
       state.isLoggedIn = true
@@ -132,7 +132,9 @@ export const getAvatar = createAppAsyncThunk(
   'auth/avatar',
   async (userId: number, { rejectWithValue }) => {
     try {
-      return await profileAPI.fetchUserProfile(userId)
+      const res = await profileAPI.fetchUserProfile(userId)
+
+      return res.data
     } catch (error) {
       return rejectWithValue({ error: error as AxiosError, type: 'catchError' })
     }

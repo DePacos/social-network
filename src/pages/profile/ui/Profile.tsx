@@ -73,7 +73,7 @@ export const Profile = () => {
           isValid={isValid}
         />
       </S.Profile>
-      <Toast notification={notifications.value} />
+      {notifications.value && <Toast notification={notifications.value} />}
     </PageLayout>
   )
 }

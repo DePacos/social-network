@@ -115,11 +115,7 @@ export const ProfileSocial = ({
             </p>
           )
         ) : (
-          <FormInput
-            control={control}
-            defaultValue={profile.lookingForAJobDescription}
-            name={'lookingForAJobDescription'}
-          />
+          <FormInput control={control} name={'lookingForAJobDescription'} />
         )}
       </S.ProfileJobDesc>
     </S.ProfileSocial>

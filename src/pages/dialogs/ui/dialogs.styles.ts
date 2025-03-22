@@ -97,7 +97,7 @@ const ContactList = styled.ul`
     }
   }
 
-  &.active {
+  &в.active {
     box-shadow: 0 0 6px 4px;
     transform: scale(1.02);
   }

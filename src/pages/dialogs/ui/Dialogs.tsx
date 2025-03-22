@@ -23,8 +23,8 @@ export const Dialogs = () => {
 
   const searchItems = () => {
     return searchDialogs
-      .map((dialog, i) => (
-        <li key={i}>
+      .map(dialog => (
+        <li key={dialog.id}>
           <Link
             onClick={() =>
               handleLink({

@@ -7,7 +7,7 @@ import { S } from './search.styles'
 
 type Props = {
   placeholder?: string
-  searchItems: ReactNode[]
+  searchItems?: ReactNode[]
   callback: (value: string) => void
 }
 
@@ -25,12 +25,14 @@ export const Search = ({ callback, placeholder, searchItems }: Props) => {
         onChange={handleSearch}
         placeholder={placeholder}
       />
-      <S.SearchRes
-        onClick={handleSearchResult}
-        searchValue={error ? '' : searchValue}
-      >
-        {searchItems.length > 0 ? searchItems : <li>No found</li>}
-      </S.SearchRes>
+      {searchItems && (
+        <S.SearchRes
+          onClick={handleSearchResult}
+          searchValue={error ? '' : searchValue}
+        >
+          {searchItems.length > 0 ? searchItems : <li>No found</li>}
+        </S.SearchRes>
+      )}
     </S.SearchResWrap>
   )
 }

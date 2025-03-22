@@ -17,7 +17,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>(
     return (
       <S.TextAreaWrap className={className}>
         {label && <label htmlFor={elementId}>{label}</label>}
-        <S.TextArea id={elementId} ref={ref} error={!!error} {...props} />
+        <S.TextArea id={elementId} ref={ref} error={error} {...props} />
         {error && <span>{error}</span>}
       </S.TextAreaWrap>
     )
