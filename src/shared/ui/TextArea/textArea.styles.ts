@@ -23,7 +23,7 @@ const TextAreaWrap = styled.div<{
 `
 
 const TextArea = styled.textarea<{
-  error: boolean
+  error: string | undefined
   textAreaStyles?: { [key: string]: string | number }
 }>`
   resize: none;

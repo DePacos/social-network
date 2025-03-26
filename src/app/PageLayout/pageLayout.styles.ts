@@ -65,6 +65,9 @@ const PageLayoutContentWrap = styled.div`
   top: -90px;
   padding: 0 20px;
   z-index: 5;
+  @media (max-width: 640px) {
+    padding: 5px;
+  }
 `
 const PageLayoutContent = styled.div`
   width: 100%;
@@ -73,6 +76,9 @@ const PageLayoutContent = styled.div`
   background-color: ${({ theme }) => theme.colors.bgPrimary};
   border-radius: 15px;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
+  @media (max-width: 640px) {
+    padding: 10px;
+  }
 `
 
 export const S = {
