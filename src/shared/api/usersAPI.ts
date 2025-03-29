@@ -1,12 +1,11 @@
-import { instance } from "./instance"
-import { UsersResponse } from "@/app/types/types"
+import { UsersResponse } from '@/app/types/types'
 
-export const profileAPI = {
+import { instance } from './instance'
 
-  fetchUsers(pageNumber = 1, countUsersInPage = 10) {
-    return instance.get<UsersResponse>(`users?page=${pageNumber}&count=${countUsersInPage}`)
+export const usersAPI = {
+  fetchUsers(pageNumber: number, countUsersInPage: number, param = '') {
+    return instance.get<UsersResponse>(
+      `users?page=${pageNumber}&count=${countUsersInPage}&term=${param}`,
+    )
   },
-  searchUsers(filter: string) {
-    return instance.get<UsersResponse>(`users?term=${filter}`)
-  }
 }
