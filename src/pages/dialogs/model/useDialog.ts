@@ -15,9 +15,9 @@ import {
   setMessageIsSpam,
 } from '@/entities/reducers/dialogSlice'
 import {
-  createDialogMessageSchema,
-  DialogMessage,
-} from '@/pages/dialogs/schemas/dialogMessage.schema'
+  createSendMessageSchema,
+  SendMessage,
+} from '@/shared/schemas/sendMessage.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useDialog = () => {
@@ -35,17 +35,17 @@ export const useDialog = () => {
     control,
     formState: { isValid },
     handleSubmit,
-  } = useForm<DialogMessage>({
+  } = useForm<SendMessage>({
     defaultValues: {
       message: '',
     },
     mode: 'onChange',
-    resolver: zodResolver(createDialogMessageSchema()),
+    resolver: zodResolver(createSendMessageSchema()),
   })
 
   const bottomRef = useRef<HTMLDivElement>(null)
 
-  const onSubmit = (data: DialogMessage) => {
+  const onSubmit = (data: SendMessage) => {
     dispatch(sendDialogMessage({ data: data.message, userId: Number(paramId) }))
   }
 

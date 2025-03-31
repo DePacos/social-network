@@ -29,11 +29,14 @@ export const Pagination = ({
 
   return (
     <S.Pagination>
-      {generatePagination(currentPage, pageItems, total).map(page =>
+      {generatePagination(currentPage, pageItems, total).map((page, i) =>
         page === '...' ? (
-          <li className={'dots'}>{page}</li>
+          <li key={i} className={'dots'}>
+            {page}
+          </li>
         ) : (
           <li
+            key={i + page}
             className={
               (currentPage === Number(page) ? 'active' : '') + ' number'
             }

@@ -7,6 +7,7 @@ import {
   selectAuthAvatar,
   selectAuthUserId,
 } from '@/entities/reducers/authSlice'
+import { disconnectWebsocket } from '@/entities/reducers/chatSlice'
 import { getNewMessages } from '@/entities/reducers/dialogSlice'
 
 export const useHeader = () => {
@@ -22,6 +23,7 @@ export const useHeader = () => {
 
   const handlerLogout = () => {
     dispatch(logout())
+    dispatch(disconnectWebsocket())
   }
 
   return {

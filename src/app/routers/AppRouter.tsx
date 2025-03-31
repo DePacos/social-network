@@ -2,7 +2,7 @@ import React from 'react'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 
 import { SignIn } from '@/features/auth/ui/SignIn'
-import { Chat } from '@/pages/chat/Chat'
+import { Chat } from '@/pages/chat/ui/Chat'
 import { Dialog } from '@/pages/dialogs/ui/Dialog'
 import { Dialogs } from '@/pages/dialogs/ui/Dialogs'
 import { Error } from '@/pages/error/Error'
