@@ -1,5 +1,6 @@
 import appReducer from '@/entities/reducers/appSlice'
 import authReducer from '@/entities/reducers/authSlice'
+import chatReducer from '@/entities/reducers/chatSlice'
 import dialogsReducer from '@/entities/reducers/dialogSlice'
 import followReducer from '@/entities/reducers/followSlice'
 import profileReducer from '@/entities/reducers/profileSlice'
@@ -10,6 +11,7 @@ export const store = configureStore({
   reducer: {
     app: appReducer,
     auth: authReducer,
+    chat: chatReducer,
     dialogs: dialogsReducer,
     follow: followReducer,
     profile: profileReducer,
