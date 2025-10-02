@@ -4,15 +4,13 @@ import {
   SquareUserRound,
   UserRoundPen,
 } from 'lucide-react'
-import React from 'react'
-import { Control } from 'react-hook-form'
+import { type Control } from 'react-hook-form'
 
-import { UserProfileResponse } from '@/app/types/types'
-import { EditProfileFormData } from '@/pages/profile/schemas/editProfile.schema'
-import { S } from '@/pages/profile/ui/profile.styles'
-import { FormCheckbox } from '@/shared/ui/Checkbox/FormCheckbox'
-import { FormInput } from '@/shared/ui/Input/FormInput'
-import { Upload } from '@/shared/ui/Upload/Upload'
+import { type UserProfileResponse } from '@/app/types'
+import { type EditProfileFormData } from '@/pages/profile/schemas/editProfile.schema'
+import { FormCheckbox, FormInput, Upload } from '@/shared/ui'
+
+import { S } from './Profile.styles.ts'
 
 type Props = {
   editMode: boolean
@@ -32,25 +30,42 @@ export const ProfileInfo = ({
   return (
     <S.ProfileInfo>
       {profile.photos.large ? (
-        <img src={profile.photos.large} alt={'avatar'} />
+        <img src={profile.photos.large} alt="avatar" />
       ) : (
         <S.ProfileAvatarSvg>
           {isLoading ? (
             <S.SkeletonAvatar />
           ) : (
-            <SquareUserRound strokeWidth={1} size={180} viewBox={'2 2 20 20'} />
+            <SquareUserRound strokeWidth={1} size={180} viewBox="2 2 20 20" />
           )}
         </S.ProfileAvatarSvg>
       )}
-      {!editMode ? (
+      {editMode ? (
+        <>
+          <S.ProfileUploadImg>
+            <Upload
+              children={<UserRoundPen size={20} />}
+              variant="icon"
+              onChange={handleSetPhoto}
+            />
+          </S.ProfileUploadImg>
+          <FormInput label="Name" control={control} name="fullName" />
+          <FormInput label="Status" control={control} name="status" />
+          <FormCheckbox
+            label="Looking for a job"
+            name="lookingForAJob"
+            control={control}
+          />
+        </>
+      ) : (
         <>
           {isLoading ? <S.SkeletonName /> : <p>{profile.fullName}</p>}
           <p>
             Looking for a job{' '}
             {profile.lookingForAJob ? (
-              <SquareCheckBig size={28} color={'mediumspringgreen'} />
+              <SquareCheckBig size={28} color="mediumspringgreen" />
             ) : (
-              <CircleX size={28} color={'darkorange'} />
+              <CircleX size={28} color="darkorange" />
             )}
           </p>
           {isLoading ? (
@@ -58,23 +73,6 @@ export const ProfileInfo = ({
           ) : (
             <p>{profile.status || 'Set your status'}</p>
           )}
-        </>
-      ) : (
-        <>
-          <S.ProfileUploadImg>
-            <Upload
-              children={<UserRoundPen size={20} />}
-              variant={'icon'}
-              onChange={handleSetPhoto}
-            />
-          </S.ProfileUploadImg>
-          <FormInput label={'Name'} control={control} name={'fullName'} />
-          <FormInput label={'Status'} control={control} name={'status'} />
-          <FormCheckbox
-            label={'Looking for a job'}
-            name={'lookingForAJob'}
-            control={control}
-          />
         </>
       )}
     </S.ProfileInfo>

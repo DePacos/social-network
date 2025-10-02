@@ -1,11 +1,10 @@
 import { CircleUserRound, RefreshCcw } from 'lucide-react'
-import React from 'react'
 
-import { UserDialog } from '@/app/types/types'
-import { useDialogHeader } from '@/pages/dialogs/model/useDialogHeader'
-import { S } from '@/pages/dialogs/ui/dialog.styles'
-import { Button } from '@/shared/ui/Button/Button'
-import { FormDataPicker } from '@/shared/ui/DatePicker/FormDataPicker'
+import { type UserDialog } from '@/app/types'
+import { Button, FormDataPicker } from '@/shared/ui'
+
+import { useDialogHeader } from '../model'
+import { S } from './Dialog.styles.ts'
 
 type Props = {
   userDialog: UserDialog
@@ -24,9 +23,9 @@ export const DialogHeader = ({ userDialog }: Props) => {
   return (
     <S.DialogHeader>
       {userDialog ? (
-        <div className={'dialog-avatar'}>
+        <div className="dialog-avatar">
           {userDialog.photos?.small ? (
-            <img src={userDialog.photos.small} alt={'user-photo'} />
+            <img src={userDialog.photos.small} alt="user-photo" />
           ) : (
             <CircleUserRound size={60} strokeWidth={1} />
           )}
@@ -41,19 +40,19 @@ export const DialogHeader = ({ userDialog }: Props) => {
       {!isMobile && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormDataPicker
-            defaultValue={'2020-01-01'}
-            name={'date'}
+            defaultValue="2020-01-01"
+            name="date"
             control={control}
-            label={'Filter messages on date'}
+            label="Filter messages on date"
           />
-          <Button variant={'primary'}>
+          <Button variant="primary">
             {onFiltered ? 'Reset filter' : 'Filter'}
           </Button>
         </form>
       )}
-      <div className={'dialog-update'}>
+      <div className="dialog-update">
         {!isMobile && <p>Update dialog</p>}
-        <Button onClick={handleUpdateDialog} variant={'icon'}>
+        <Button onClick={handleUpdateDialog} variant="icon">
           <RefreshCcw />
         </Button>
       </div>

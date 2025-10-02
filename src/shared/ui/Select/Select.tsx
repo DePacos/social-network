@@ -1,9 +1,8 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import React, { ComponentProps } from 'react'
+import { ComponentProps } from 'react'
 
-import { useSelect } from '@/shared/ui/Select/model/useSelect'
-
-import { S } from './select.styles'
+import { useSelect } from './model'
+import { S } from './Select.styles'
 
 type Props = {
   options: { value: string; label: string }[]
@@ -25,7 +24,7 @@ export const Select = ({
     <S.SelectWrap>
       <S.SelectButton
         error={!!error}
-        type={'button'}
+        type="button"
         onClick={handleTrigger}
         {...props}
       >

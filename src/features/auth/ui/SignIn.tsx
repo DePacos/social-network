@@ -1,43 +1,38 @@
 import { Loader, Mail } from 'lucide-react'
-import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
+import { REQUEST_STATUS } from '@/app/constants'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   selectAppIsLoading,
   selectAppNotifications,
-} from '@/entities/reducers/appSlice'
-import {
   selectAuthCaptcha,
-  selectAuthIsLoggedIn,
-} from '@/entities/reducers/authSlice'
-import { useSignIn } from '@/features/auth/model/useSignIn'
+  selectAuthRequest,
+} from '@/entities/selectors'
 import logo from '@/shared/assets/images/logo.webp'
-import { Button } from '@/shared/ui/Button/Button'
-import { FormCheckbox } from '@/shared/ui/Checkbox/FormCheckbox'
-import { FormInput } from '@/shared/ui/Input/FormInput'
-import { Toast } from '@/shared/ui/Toast/Toast'
+import { Button, FormCheckbox, FormInput, Toast } from '@/shared/ui'
 
-import { S } from './signIn.styles'
+import { useSignIn } from '../model/useSignIn'
+import { S } from './SignIn.styles.ts'
 
-export const SignIn = () => {
+const SignIn = () => {
   const isLoading = useAppSelector(selectAppIsLoading)
   const notifications = useAppSelector(selectAppNotifications)
   const captcha = useAppSelector(selectAuthCaptcha)
-  const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
+  const authRequest = useAppSelector(selectAuthRequest)
   const dispatch = useAppDispatch()
 
   const { control, handleSubmit, isValid, onSubmit } = useSignIn(dispatch)
 
-  if (isLoggedIn && !isLoading) {
-    return <Navigate to={'/'} />
+  if (authRequest === REQUEST_STATUS.FULFILLED) {
+    return <Navigate to="/" />
   }
 
   return (
     <S.Container>
       <S.Wrapper>
         <S.Logo>
-          <img src={logo} alt={'logo'} />
+          <img src={logo} alt="logo" />
           <span>SocialNetwork</span>
         </S.Logo>
         <S.Form
@@ -46,32 +41,32 @@ export const SignIn = () => {
         >
           <FormInput
             control={control}
-            iconEnd={<Mail color={'black'} size={20} />}
-            placeholder={'Email*'}
-            name={'email'}
-            type={'email'}
+            iconEnd={<Mail color="black" size={20} />}
+            placeholder="Email*"
+            name="email"
+            type="email"
           />
           <FormInput
             control={control}
-            placeholder={'Password*'}
-            name={'password'}
-            type={'password'}
+            placeholder="Password*"
+            name="password"
+            type="password"
           />
           <S.WrapCheckbox>
             <FormCheckbox
               control={control}
-              id={'remember'}
-              name={'rememberMe'}
-              label={'Remember me'}
+              id="remember"
+              name="rememberMe"
+              label="Remember me"
             />
           </S.WrapCheckbox>
           {captcha && (
             <>
-              <img src={captcha} alt={'captcha'} />
+              <img src={captcha} alt="captcha" />
               <FormInput
                 control={control}
-                placeholder={'enter captcha'}
-                name={'captcha'}
+                placeholder="enter captcha"
+                name="captcha"
               />
             </>
           )}
@@ -79,13 +74,13 @@ export const SignIn = () => {
             style={{ height: '46px' }}
             endIcon={
               isLoading ? (
-                <div className={'loader'}>
+                <div className="loader">
                   <Loader size={18} />
                 </div>
               ) : null
             }
-            variant={'primary'}
-            type={'submit'}
+            variant="primary"
+            type="submit"
             disabled={!isValid}
           >
             {isLoading ? 'Loading... ' : 'Log into your account'}
@@ -98,3 +93,5 @@ export const SignIn = () => {
     </S.Container>
   )
 }
+
+export default SignIn

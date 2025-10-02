@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-import { Button } from '@/shared/ui/Button/Button'
-import { useUpload } from '@/shared/ui/Upload/model/useUpload'
+import { Button } from '@/shared/ui/Button'
+import { useUpload } from '@/shared/ui/Upload/model'
 
-import { S } from './upload.styles'
+import { S } from './Upload.styles.ts'
 
 type Props = {
   onChange: (file: File, fileUrl: string) => void
@@ -21,10 +21,10 @@ export const Upload = ({ children, onChange, variant }: Props) => {
         {children}
       </Button>
       <input
-        accept={'image/png, image/jpeg'}
+        accept="image/png, image/jpeg"
         onChange={handleUploadInput}
         ref={uploadInputRef}
-        type={'file'}
+        type="file"
       />
     </S.UploadWrap>
   )

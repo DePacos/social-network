@@ -1,9 +1,9 @@
 import { Check, CheckCheck, Trash2, Undo2 } from 'lucide-react'
-import React from 'react'
 
-import { Message } from '@/app/types/types'
-import { S } from '@/pages/dialogs/ui/dialog.styles'
-import { Button } from '@/shared/ui/Button/Button'
+import { type Message } from '@/app/types'
+import { Button } from '@/shared/ui'
+
+import { S } from './Dialog.styles.ts'
 
 type Props = {
   messages: Message[]
@@ -30,29 +30,31 @@ export const DialogMessages = ({
           key={message.id}
         >
           {message.senderId === currentUserId ? (
-            <Button variant={'icon'}>
-              {!message?.removed ? (
-                <Trash2
-                  onClick={() => handleModal(message)}
-                  color={'darkorange'}
+            <Button variant="icon">
+              {message?.removed ? (
+                <Undo2
+                  onClick={() => handleRestoreMessage(message.id)}
+                  color="darkorange"
                   strokeWidth={1}
                   size={24}
                 />
               ) : (
-                <Undo2
-                  onClick={() => handleRestoreMessage(message.id)}
-                  color={'darkorange'}
+                <Trash2
+                  onClick={() => handleModal(message)}
+                  color="darkorange"
                   strokeWidth={1}
                   size={24}
                 />
               )}
             </Button>
           ) : (
-            <Button onClick={() => handleSpam(message.id)} variant={'icon'}>
+            <Button onClick={() => handleSpam(message.id)} variant="icon">
               spam
             </Button>
           )}
-          {!message?.removed ? (
+          {message?.removed ? (
+            <p>This message has been deleted</p>
+          ) : (
             <>
               <p>{message.body}</p>
               <S.DialogMessageInfo>
@@ -75,8 +77,6 @@ export const DialogMessages = ({
                 </span>
               </S.DialogMessageInfo>
             </>
-          ) : (
-            <p>This message has been deleted</p>
           )}
         </li>
       ))}

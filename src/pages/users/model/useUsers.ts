@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { useIntersectionObserver } from '@/app/hooks/useIntersectionObserver'
-import { useAppDispatch } from '@/app/hooks/useStateHook'
-import { getUsers, selectUsers } from '@/entities/reducers/usersSlice'
+import { useAppDispatch, useIntersectionObserver } from '@/app/hooks'
+import { getUsers } from '@/entities/actions'
+import { selectUsers } from '@/entities/selectors'
 
 export const useUsers = () => {
   const dispatch = useAppDispatch()
   const users = useSelector(selectUsers)
 
-  const triggerRef = useRef(null)
+  const triggerRef = useRef<HTMLElement>(null)
   const isFetchingRef = useRef(false)
   const usersContainerRef = useRef<HTMLUListElement>(null)
 
   const [term, setTerm] = useState('')
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [pageItems, setPageItems] = useState<number>(25)
+  const pageItems = 25
 
   const observeOnLastItem = (index: number) =>
     Math.ceil(users.totalCount / pageItems) !== currentPage &&

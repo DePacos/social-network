@@ -1,10 +1,11 @@
 import { CircleUserRound, MailPlus } from 'lucide-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { DialogsResponse, User } from '@/app/types/types'
-import { timeAgo } from '@/app/utils/getTimeAgo'
-import { S } from '@/pages/dialogs/ui/dialogs.styles'
+import type { DialogsResponse, User } from '@/app/types'
+
+import { timeAgo } from '@/app/utils'
+
+import { S } from './Dialogs.styles.ts'
 
 type Props = {
   isMobile?: boolean
@@ -16,7 +17,7 @@ type Props = {
 export const DialogList = ({ dialogs, handleLink, id }: Props) => {
   return (
     <>
-      {dialogs.length !== 0
+      {dialogs.length > 0
         ? dialogs.map(dialog => (
             <Link
               onClick={() =>
@@ -37,7 +38,7 @@ export const DialogList = ({ dialogs, handleLink, id }: Props) => {
               >
                 <li>
                   {dialog.photos.small ? (
-                    <img src={dialog.photos.small} alt={'user-photo'} />
+                    <img src={dialog.photos.small} alt="user-photo" />
                   ) : (
                     <CircleUserRound size={70} strokeWidth={1} />
                   )}
@@ -46,7 +47,7 @@ export const DialogList = ({ dialogs, handleLink, id }: Props) => {
                 {dialog.hasNewMessages ? (
                   <S.NewMessages>
                     {dialog.newMessagesCount}
-                    <MailPlus size={18} color={'mediumspringgreen'} />
+                    <MailPlus size={18} color="mediumspringgreen" />
                   </S.NewMessages>
                 ) : null}
                 <S.LastActivity>

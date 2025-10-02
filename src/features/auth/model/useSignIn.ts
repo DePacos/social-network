@@ -1,14 +1,15 @@
 import { useForm } from 'react-hook-form'
 
-import { AppRootState } from '@/app/types/types'
-import { signIn } from '@/entities/reducers/authSlice'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { type UnknownAction } from 'redux'
+import { type ThunkDispatch } from 'redux-thunk'
+
+import { type AppRootState } from '@/app/types'
+import { signIn } from '@/entities/slices/authSlice.ts'
 import {
   createSignInSchema,
-  SignInFormData,
+  type SignInFormData,
 } from '@/features/auth/schemas/sigIn.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { UnknownAction } from 'redux'
-import { ThunkDispatch } from 'redux-thunk'
 
 export const useSignIn = (
   dispatch: ThunkDispatch<AppRootState, undefined, UnknownAction>,

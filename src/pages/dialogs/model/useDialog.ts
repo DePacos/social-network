@@ -2,23 +2,23 @@ import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
-import { Message } from '@/app/types/types'
-import { selectAuthUserId } from '@/entities/reducers/authSlice'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { type Message } from '@/app/types'
 import {
   deleteMessage,
   fetchMessages,
   restoreMessage,
-  selectDialogMessages,
-  selectUserDialog,
   sendDialogMessage,
   setMessageIsSpam,
-} from '@/entities/reducers/dialogSlice'
+} from '@/entities/actions'
+import { selectDialogMessages, selectUserDialog } from '@/entities/selectors'
+import { selectAuthUserId } from '@/entities/slices/authSlice.ts'
 import {
   createSendMessageSchema,
-  SendMessage,
+  type SendMessage,
 } from '@/shared/schemas/sendMessage.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useDialog = () => {
   const currentUserId = useAppSelector(selectAuthUserId)

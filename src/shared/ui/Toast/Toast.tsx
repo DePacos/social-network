@@ -1,8 +1,6 @@
-import React from 'react'
+import { useToast } from '@/shared/ui/Toast/model'
 
-import { useToast } from '@/shared/ui/Toast/model/useToast'
-
-import { S } from './toast.styles'
+import { S } from './Toast.styles.ts'
 
 export const Toast = ({ notification }: { notification: string | null }) => {
   const { isView } = useToast(notification)

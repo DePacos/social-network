@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-import { Input } from '@/shared/ui/Input/Input'
-import { useSearch } from '@/shared/ui/Search/Model/useSearch'
+import { Input } from '@/shared/ui/Input'
+import { useSearch } from '@/shared/ui/Search/Model'
 
-import { S } from './search.styles'
+import { S } from './index'
 
 type Props = {
   placeholder?: string
@@ -21,7 +21,7 @@ export const Search = ({ callback, placeholder, searchItems }: Props) => {
         value={searchValue}
         maxLength={31}
         error={error}
-        type={'search'}
+        type="search"
         onChange={handleSearch}
         placeholder={placeholder}
       />

@@ -1,6 +1,6 @@
-import React, { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react'
+import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react'
 
-import { S } from './button.styles'
+import { S } from './index'
 
 type Props = {
   buttonStyles?: { [key: string]: string | number }

@@ -1,8 +1,13 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { type ChangeEvent, useState } from 'react'
+
+import { useDebounce } from '@/app/hooks'
 
 export const useSearch = (callback: (value: string) => void) => {
   const [searchValue, setSearchValue] = useState('')
   const [error, setError] = useState('')
+  const { debouncedCallback } = useDebounce(searchValue =>
+    callback(searchValue),
+  )
 
   const handleSearchResult = () => {
     callback('')
@@ -13,7 +18,7 @@ export const useSearch = (callback: (value: string) => void) => {
     const eventValue = e.currentTarget.value
 
     setSearchValue(eventValue)
-    callDebounce(eventValue)
+    debouncedCallback(eventValue)
 
     if (eventValue.length > 30) {
       setError('Maximum value of 30 characters')
@@ -21,26 +26,6 @@ export const useSearch = (callback: (value: string) => void) => {
       setError('')
     }
   }
-
-  const debounce = <T extends (...args: any[]) => void>(
-    callBack: T,
-    delay: number = 200,
-  ) => {
-    let timeOut: ReturnType<typeof setTimeout>
-
-    return (...arg: Parameters<T>) => {
-      clearTimeout(timeOut)
-
-      timeOut = setTimeout(() => {
-        callBack(...arg)
-      }, delay)
-    }
-  }
-
-  const callDebounce = useCallback(
-    debounce((searchValue: string) => callback(searchValue)),
-    [],
-  )
 
   return {
     error,

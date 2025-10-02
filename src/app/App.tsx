@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
-import { SkeletonStyled } from '@/app/styles/global.styles'
-import { selectAppIsInitialized } from '@/entities/reducers/appSlice'
-import { me, selectAuthIsLoggedIn } from '@/entities/reducers/authSlice'
-import { Header } from '@/widgets/Header/ui/Header'
+import { REQUEST_STATUS } from '@/app/constants'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { selectAuthRequest } from '@/entities/selectors'
+import { me } from '@/entities/slices/authSlice'
+import { Header } from '@/widgets/header/ui'
 
-export const App = () => {
+const App = () => {
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(selectAuthIsLoggedIn)
-  const isInitialized = useAppSelector(selectAppIsInitialized)
+  const authRequest = useAppSelector(selectAuthRequest)
 
   useEffect(() => {
     dispatch(me())
   }, [])
 
-  if (!isInitialized) {
-    return <SkeletonStyled />
-  }
-
-  if (!isLoggedIn) {
-    return <Navigate to={'/signin'} />
+  if (authRequest === REQUEST_STATUS.REJECTED) {
+    return <Navigate to="/signin" />
   }
 
   return (
@@ -33,3 +28,5 @@ export const App = () => {
     </>
   )
 }
+
+export default App

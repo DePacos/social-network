@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const createDialogFilterSchema = () => {
   return z.object({
     date: z
-      .string()
+      .date()
       .transform(value => new Date(value))
       .refine(date => date.toString() !== 'Invalid Date', {
         message: 'Invalid date format',

@@ -1,18 +1,17 @@
 import { CircleUserRound } from 'lucide-react'
-import React from 'react'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Link } from 'react-router-dom'
 
-import { PageLayout } from '@/app/PageLayout/PageLayout'
-import { User } from '@/app/types/types'
-import { useUsers } from '@/pages/users/model/useUsers'
+import { PageLayout } from '@/app/pageLayout/PageLayout'
+import { type User } from '@/app/types'
 import { Pagination } from '@/pages/users/ui/Pagination'
 import dialogsBg from '@/shared/assets/images/profile-bg.webp'
-import { Search } from '@/shared/ui/Search/Search'
+import { Search } from '@/shared/ui'
 
-import { S } from './users.styles'
+import { useUsers } from '../model'
+import { S } from './Users.styles.ts'
 
-export const Users = () => {
+const Users = () => {
   const {
     currentPage,
     handleScrollToTop,
@@ -27,9 +26,9 @@ export const Users = () => {
   } = useUsers()
 
   return (
-    <PageLayout title={'Users'} image={dialogsBg}>
+    <PageLayout title="Users" image={dialogsBg}>
       <S.UsersContainer>
-        <Search placeholder={'Search users'} callback={handleSearch} />
+        <Search placeholder="Search users" callback={handleSearch} />
         <S.Users ref={usersContainerRef}>
           {users.items.length > 0 ? (
             users.items.map((user: User, i) => (
@@ -39,11 +38,11 @@ export const Users = () => {
               >
                 <Link to={`/profile/${user.id}`}>
                   {user.photos.small ? (
-                    <div className={'wrap-img'}>
-                      <img src={user.photos.large} alt={'user-photo'} />
+                    <div className="wrap-img">
+                      <img src={user.photos.large} alt="user-photo" />
                     </div>
                   ) : (
-                    <div className={'wrap-img'}>
+                    <div className="wrap-img">
                       <CircleUserRound size={120} strokeWidth={1} />
                     </div>
                   )}
@@ -69,3 +68,5 @@ export const Users = () => {
     </PageLayout>
   )
 }
+
+export default Users

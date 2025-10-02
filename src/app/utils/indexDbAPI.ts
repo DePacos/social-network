@@ -1,4 +1,4 @@
-import { Message } from '@/app/types/types'
+import { type Message } from '@/app/types/'
 
 const DB_NAME = 'Messages'
 const STORE_NAME = 'RemovedMessages'

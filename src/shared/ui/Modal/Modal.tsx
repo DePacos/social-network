@@ -1,10 +1,10 @@
 import { X } from 'lucide-react'
-import React, { MouseEvent, ReactNode, useEffect } from 'react'
+import { type MouseEvent, type ReactNode, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
-import { Button } from '@/shared/ui/Button/Button'
+import { Button } from '@/shared/ui/Button'
 
-import { S } from './modal.styles'
+import { S } from './index'
 
 type Props = {
   isOpen: boolean
@@ -24,11 +24,7 @@ export const Modal = ({
   type,
 }: Props) => {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : ''
 
     return () => {
       document.body.style.overflow = ''
@@ -62,10 +58,10 @@ export const Modal = ({
             <S.ModalConfirmation>
               <p>{questionConfirmation}</p>
               <S.ModalBtn>
-                <Button onClick={handleConfirmation} variant={'primary'}>
+                <Button onClick={handleConfirmation} variant="primary">
                   Yes
                 </Button>
-                <Button onClick={handleClose} variant={'secondary'}>
+                <Button onClick={handleClose} variant="secondary">
                   No
                 </Button>
               </S.ModalBtn>

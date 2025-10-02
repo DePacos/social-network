@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-import { Button } from '@/shared/ui/Button/Button'
-import { useDropDown } from '@/shared/ui/DropDown/model/useDropDown'
+import { Button } from '@/shared/ui/Button'
 
-import { S } from './dropDown.styles'
+import { S } from './index'
+import { useDropDown } from './model'
 
 type Props = {
   type?: 'primary' | 'secondary' | 'icon'

@@ -1,6 +1,6 @@
-import { ChangeEvent, ComponentProps, forwardRef, useId } from 'react'
+import { type ChangeEvent, type ComponentProps, forwardRef, useId } from 'react'
 
-import { S } from './datePicker.styles'
+import { S } from './index'
 
 type Props = {
   id?: string
@@ -15,11 +15,11 @@ export const DatePicker = forwardRef<HTMLInputElement, Props>(
 
     return (
       <S.DatePicker>
-        {label && <label htmlFor={id ? id : datePickerId}>{label}</label>}
+        {label && <label htmlFor={id || datePickerId}>{label}</label>}
         <input
-          id={id ? id : datePickerId}
+          id={id || datePickerId}
           ref={ref}
-          type={'date'}
+          type="date"
           onChange={onChange}
           {...props}
         />

@@ -1,6 +1,6 @@
-import { ComponentProps, forwardRef, useId } from 'react'
+import { type ComponentProps, forwardRef, useId } from 'react'
 
-import { S } from './checkbox.styles'
+import { S } from './index'
 
 type Props = {
   error?: string
@@ -14,14 +14,14 @@ export const CheckBox = forwardRef<HTMLInputElement, Props>(
     return (
       <S.CheckboxWrap disabled={disabled}>
         <input
-          type={'checkbox'}
+          type="checkbox"
           ref={ref}
           id={id || checkBoxId}
           disabled={disabled}
           {...props}
         />
         {label && <label htmlFor={id || checkBoxId}>{label}</label>}
-        {error && <span className={'error'}>{error}</span>}
+        {error && <span className="error">{error}</span>}
       </S.CheckboxWrap>
     )
   },

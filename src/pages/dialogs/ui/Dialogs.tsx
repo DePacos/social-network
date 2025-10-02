@@ -1,16 +1,16 @@
 import { ChevronDown } from 'lucide-react'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
-import { PageLayout } from '@/app/PageLayout/PageLayout'
-import { useDialogs } from '@/pages/dialogs/model/useDialogs'
-import { DialogList } from '@/pages/dialogs/ui/DialogList'
+import { PageLayout } from '@/app/pageLayout/PageLayout'
 import dialogsBg from '@/shared/assets/images/profile-bg.webp'
-import { Search } from '@/shared/ui/Search/Search'
+import { Search } from '@/shared/ui'
 
-import { S } from './dialogs.styles'
+import { useDialogs } from '../model'
+import { DialogList } from './DialogList'
+import { S } from './Dialogs.styles.ts'
 
-export const Dialogs = () => {
+const Dialogs = () => {
   const {
     dialogs,
     handleLink,
@@ -59,14 +59,14 @@ export const Dialogs = () => {
 
   const searchComponent = (
     <Search
-      placeholder={'Search users'}
+      placeholder="Search users"
       searchItems={searchItems()}
       callback={handleSearch}
     />
   )
 
   return (
-    <PageLayout title={'Dialogs'} image={dialogsBg}>
+    <PageLayout title="Dialogs" image={dialogsBg}>
       {isMobile && searchComponent}
       <S.DialogsWrap>
         <S.Contacts>
@@ -88,3 +88,5 @@ export const Dialogs = () => {
     </PageLayout>
   )
 }
+
+export default Dialogs

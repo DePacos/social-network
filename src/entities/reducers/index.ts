@@ -1,0 +1,7 @@
+export { appReducer } from '../slices/appSlice'
+export { authReducer } from '../slices/authSlice'
+export { chatReducer } from '../slices/chatSlice'
+export { dialogsReducer } from '../slices/dialogSlice'
+export { followReducer } from '../slices/followSlice'
+export { profileReducer } from '../slices/profileSlice'
+export { usersReducer } from '../slices/usersSlice'

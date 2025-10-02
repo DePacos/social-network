@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react'
+import { type MouseEvent, useState } from 'react'
 
 export const useSelect = (onChange: ((value: string) => void) | undefined) => {
   const [isOpen, setIsOpen] = useState(false)

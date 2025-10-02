@@ -1,44 +1,57 @@
-import {
+import type {
   DialogsResponse,
   Message,
   MessagesResponse,
   Response,
-} from '@/app/types/types'
+} from '@/app/types'
+
+import { API_ENDPOINTS } from '@/app/constants'
 import { instance } from '@/shared/api/instance'
 
 export const dialogsAPI = {
   checkViewMessage(messageId: string) {
-    return instance.get<boolean>(`dialogs/messages/${messageId}/viewed`)
+    return instance.get<boolean>(API_ENDPOINTS.DIALOGS.CHECK_MESSAGE(messageId))
   },
   deleteMessage(messageId: string) {
-    return instance.delete<Response>(`dialogs/messages/${messageId}`)
+    return instance.delete<Response>(
+      API_ENDPOINTS.DIALOGS.DELETE_MESSAGE(messageId),
+    )
   },
   fetchDialog() {
-    return instance.get<DialogsResponse[]>('dialogs')
+    return instance.get<DialogsResponse[]>(API_ENDPOINTS.DIALOGS.FETCH_DIALOGS)
   },
   fetchMessages(userId: number) {
-    return instance.get<MessagesResponse>(`dialogs/${userId}/messages`)
+    return instance.get<MessagesResponse>(
+      API_ENDPOINTS.DIALOGS.FETCH_MESSAGES(userId),
+    )
   },
   fetchMessagesOnDate(userId: number, date: string) {
     return instance.get<Message[]>(
-      `dialogs/${userId}/messages/new?newerThen=${date}`,
+      API_ENDPOINTS.DIALOGS.FETCH_MESSAGES_DATE(userId, date),
     )
   },
   fetchNewMessages() {
-    return instance.get<number>(`dialogs/messages/new/count`)
+    return instance.get<number>(API_ENDPOINTS.DIALOGS.FETCH_NEW_MESSAGES)
   },
-  isSpamMessage(messageId: string) {
-    return instance.post<Response>(`dialogs/messages/${messageId}/spam`)
+  setSpamMessage(messageId: string) {
+    return instance.post<Response>(
+      API_ENDPOINTS.DIALOGS.SPAM_MESSAGE(messageId),
+    )
   },
   refreshDialog(userId: number) {
-    return instance.put<Response>(`dialogs/${userId}`)
+    return instance.put<Response>(API_ENDPOINTS.DIALOGS.REFRESH_DIALOG(userId))
   },
   restoreMessage(messageId: string) {
-    return instance.put<Response>(`dialogs/messages/${messageId}/restore`)
+    return instance.put<Response>(
+      API_ENDPOINTS.DIALOGS.RESTORE_MESSAGE(messageId),
+    )
   },
-  sendDialogMessage(userId: number, data: string) {
-    return instance.post<Response<Message>>(`dialogs/${userId}/messages`, {
-      body: data,
-    })
+  sentDialogMessage(userId: number, data: string) {
+    return instance.post<Response<Message>>(
+      API_ENDPOINTS.DIALOGS.SENT_MESSAGES(userId),
+      {
+        body: data,
+      },
+    )
   },
 }

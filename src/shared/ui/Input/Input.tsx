@@ -1,10 +1,15 @@
 import { Eye, EyeOff, Search } from 'lucide-react'
-import React, { ComponentProps, forwardRef, ReactNode } from 'react'
+import {
+  type ComponentProps,
+  forwardRef,
+  type ReactNode,
+  useId,
+  useState,
+} from 'react'
 
-import { InputTypes } from '@/app/types/types'
-import { useInput } from '@/shared/ui/Input/model/useInput'
+import { type InputTypes } from '@/app/types'
 
-import { S } from './input.styles'
+import { S } from './Input.styles.ts'
 
 type Props = {
   type?: InputTypes
@@ -29,19 +34,25 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     },
     ref,
   ) => {
-    const { handleChangeType, inputId, inputType } = useInput(type)
+    const [inputType, setInputType] = useState<InputTypes>(type)
+    const inputId = useId()
+
+    const handleChangeType = () => {
+      setInputType(prev => (prev === 'text' ? 'password' : 'text'))
+    }
+
     const getIconAfter = () => {
       if (type === 'password') {
         return inputType === 'password' ? (
           <EyeOff
             style={{ cursor: 'pointer' }}
-            color={'black'}
+            color="black"
             onClick={handleChangeType}
           />
         ) : (
           <Eye
             style={{ cursor: 'pointer' }}
-            color={'black'}
+            color="black"
             onClick={handleChangeType}
           />
         )
@@ -51,11 +62,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     const getIconBefore = () => {
-      return type === 'search' ? (
-        <Search size={20} color={'black'} />
-      ) : (
-        iconStart
-      )
+      return type === 'search' ? <Search size={20} color="black" /> : iconStart
     }
 
     return (
@@ -71,7 +78,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           <input type={inputType} ref={ref} id={id || inputId} {...props} />
           {getIconAfter()}
         </S.InputWrap>
-        {!!error && <span className={'error'}>{error}</span>}
+        {!!error && <span className="error">{error}</span>}
       </S.LabelWrap>
     )
   },

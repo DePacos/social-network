@@ -1,5 +1,5 @@
-import { useAppDispatch } from '@/app/hooks/useStateHook'
-import { getUsers } from '@/entities/reducers/usersSlice'
+import { useAppDispatch } from '@/app/hooks'
+import { getUsers } from '@/entities/actions'
 
 type Props = {
   currentPage: number

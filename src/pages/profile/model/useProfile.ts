@@ -2,30 +2,31 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
 import {
   selectAppIsLoading,
   selectAppNotifications,
-} from '@/entities/reducers/appSlice'
-import { selectAuthUserId } from '@/entities/reducers/authSlice'
+} from '@/entities/slices/appSlice.ts'
+import { selectAuthUserId } from '@/entities/slices/authSlice.ts'
 import {
   follow,
   getFollow,
   removeFollow,
   selectFollow,
-} from '@/entities/reducers/followSlice'
+} from '@/entities/slices/followSlice.ts'
 import {
   editUserPhoto,
   editUserProfile,
   editUserStatus,
   getUserProfile,
   selectProfile,
-} from '@/entities/reducers/profileSlice'
+} from '@/entities/slices/profileSlice.ts'
 import {
   createEditProfileSchema,
-  EditProfileFormData,
+  type EditProfileFormData,
 } from '@/pages/profile/schemas/editProfile.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useProfile = () => {
   const [editMode, setEditMode] = useState(false)
@@ -97,7 +98,7 @@ export const useProfile = () => {
   }, [id, profile])
 
   const onSubmit = (data: EditProfileFormData) => {
-    const contacts = [
+    const contacts = new Set([
       'facebook',
       'website',
       'github',
@@ -105,7 +106,7 @@ export const useProfile = () => {
       'vk',
       `twitter`,
       'youtube',
-    ]
+    ])
 
     //TODO fix any
     const dataRequest: any = {
@@ -116,13 +117,13 @@ export const useProfile = () => {
     }
 
     for (const field in data) {
-      if (!contacts.includes(field as keyof EditProfileFormData)) {
-        dataRequest[field] = data[field as keyof EditProfileFormData]
-      } else {
+      if (contacts.has(field as keyof EditProfileFormData)) {
         dataRequest.contacts = {
           ...dataRequest.contacts,
           [field]: data[field as keyof EditProfileFormData] as string,
         }
+      } else {
+        dataRequest[field] = data[field as keyof EditProfileFormData]
       }
     }
 

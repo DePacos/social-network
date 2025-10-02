@@ -9,10 +9,11 @@ export const useDropDown = () => {
   }
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropDownBtnRef.current) {
-      if (!dropDownBtnRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
+    if (
+      dropDownBtnRef.current &&
+      !dropDownBtnRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false)
     }
   }
 

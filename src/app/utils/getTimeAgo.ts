@@ -1,5 +1,5 @@
 export const timeAgo = (date: Date) => {
-  const diff = (new Date().getTime() - date.getTime()) / 1000
+  const diff = (Date.now() - date.getTime()) / 1000
 
   const formatter = new Intl.RelativeTimeFormat('en', {
     numeric: 'auto',
@@ -7,9 +7,9 @@ export const timeAgo = (date: Date) => {
   })
 
   const units: { name: Intl.RelativeTimeFormatUnit; seconds: number }[] = [
-    { name: 'year', seconds: 31536000 },
-    { name: 'month', seconds: 2592000 },
-    { name: 'day', seconds: 86400 },
+    { name: 'year', seconds: 31_536_000 },
+    { name: 'month', seconds: 2_592_000 },
+    { name: 'day', seconds: 86_400 },
     { name: 'hour', seconds: 3600 },
     { name: 'minute', seconds: 60 },
     { name: 'second', seconds: 1 },

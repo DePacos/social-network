@@ -1,8 +1,9 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
-import { FieldValues, useController } from 'react-hook-form'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { type FieldValues, useController } from 'react-hook-form'
 
-import { FormField, InputTypes } from '@/app/types/types'
-import { Input } from '@/shared/ui/Input/Input'
+import type { FormField, InputTypes } from '@/app/types'
+
+import { Input } from '@/shared/ui/Input'
 
 type Props<T extends FieldValues> = {
   type?: InputTypes

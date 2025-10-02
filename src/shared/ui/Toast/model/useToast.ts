@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useAppDispatch } from '@/app/hooks/useStateHook'
-import { setNotifications } from '@/entities/reducers/appSlice'
+import { setNotifications } from '@/entities/slices/appSlice.ts'
 
 export const useToast = (notification: string | null) => {
   const dispatch = useAppDispatch()

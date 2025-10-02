@@ -1,6 +1,6 @@
 import { usePagination } from '@/pages/users/model/usePagination'
 
-import { S } from './pagination.styles'
+import { S } from './Pagination.styles.ts'
 
 type Props = {
   currentPage: number
@@ -31,7 +31,7 @@ export const Pagination = ({
     <S.Pagination>
       {generatePagination(currentPage, pageItems, total).map((page, i) =>
         page === '...' ? (
-          <li key={i} className={'dots'}>
+          <li key={i} className="dots">
             {page}
           </li>
         ) : (

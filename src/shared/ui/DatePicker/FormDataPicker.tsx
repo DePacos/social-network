@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef } from 'react'
-import { FieldValues, useController } from 'react-hook-form'
+import { type ComponentPropsWithoutRef } from 'react'
+import { type FieldValues, useController } from 'react-hook-form'
 
-import { FormField } from '@/app/types/types'
-import { DatePicker } from '@/shared/ui/DatePicker/DatePicker'
+import { type FormField } from '@/app/types'
+import { DatePicker } from '@/shared/ui/DatePicker'
 
 type Props<T extends FieldValues> = {
   error?: string

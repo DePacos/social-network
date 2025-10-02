@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef } from 'react'
-import { FieldValues, useController } from 'react-hook-form'
+import { type ComponentPropsWithoutRef } from 'react'
+import { type FieldValues, useController } from 'react-hook-form'
 
-import { FormField } from '@/app/types/types'
-import { CheckBox } from '@/shared/ui/Checkbox/Checkbox'
+import { type FormField } from '@/app/types'
+import { CheckBox } from '@/shared/ui/Checkbox'
 
 export type Props<T extends FieldValues> = {
   error?: string | undefined
@@ -23,7 +23,7 @@ export const FormCheckbox = <T extends FieldValues>({
   return (
     <CheckBox
       {...field}
-      error={error ?? fieldState.error?.message}
+      error={error || fieldState.error?.message}
       label={label}
       {...props}
     />

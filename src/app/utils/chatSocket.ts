@@ -1,11 +1,8 @@
-const WEB_SOCKET_URL =
-  'wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'
-
 export const connectToSocket = async () => {
-  const socket = new WebSocket(WEB_SOCKET_URL)
+  const socket = new WebSocket(import.meta.env.VITE_SOCKET_URL)
 
-  return await new Promise<WebSocket | string>((resolve, reject) => {
-    socket.onopen = () => resolve(socket)
-    socket.onerror = () => reject('connectionToSocket error')
+  return new Promise<WebSocket>((resolve, reject) => {
+    socket.addEventListener('open', () => resolve(socket))
+    socket.addEventListener('error', () => reject('socket connection failed'))
   })
 }

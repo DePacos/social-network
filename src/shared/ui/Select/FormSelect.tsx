@@ -1,8 +1,9 @@
-import { ComponentPropsWithoutRef } from 'react'
-import { FieldValues, useController } from 'react-hook-form'
+import { type ComponentPropsWithoutRef } from 'react'
+import { type FieldValues, useController } from 'react-hook-form'
 
-import { FormField } from '@/app/types/types'
-import { Select } from '@/shared/ui/Select/Select'
+import { type FormField } from '@/app/types'
+
+import { Select } from './Select'
 
 type Props<T extends FieldValues> = {
   options: { value: string; label: string }[]

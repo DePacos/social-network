@@ -2,18 +2,18 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
-import { useMediaQuery } from '@/app/hooks/useMediaQuery'
-import { useAppDispatch } from '@/app/hooks/useStateHook'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { useAppDispatch, useMediaQuery } from '@/app/hooks'
 import {
   fetchMessages,
   filterDialogMessages,
   refreshDialogs,
-} from '@/entities/reducers/dialogSlice'
+} from '@/entities/actions'
 import {
   createDialogFilterSchema,
-  FilterDialogMessages,
+  type FilterDialogMessages,
 } from '@/pages/dialogs/schemas/dialogFilter.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useDialogHeader = () => {
   const dispatch = useAppDispatch()
@@ -22,11 +22,7 @@ export const useDialogHeader = () => {
 
   const isMobile = useMediaQuery('(max-width: 1024px)')
 
-  const {
-    control,
-    formState: { isValid },
-    handleSubmit,
-  } = useForm<FilterDialogMessages>({
+  const { control, handleSubmit } = useForm<FilterDialogMessages>({
     mode: 'onChange',
     resolver: zodResolver(createDialogFilterSchema()),
   })

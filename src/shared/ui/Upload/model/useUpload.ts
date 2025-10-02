@@ -1,7 +1,8 @@
-import { ChangeEvent, useRef } from 'react'
+import { type ChangeEvent, useRef } from 'react'
 
-import { useAppDispatch } from '@/app/hooks/useStateHook'
-import { setNotifications } from '@/entities/reducers/appSlice'
+import { ERROR_TYPES } from '@/app/constants'
+import { useAppDispatch } from '@/app/hooks'
+import { setNotifications } from '@/entities/slices/appSlice.ts'
 
 export const useUpload = (onChange: (file: File, fileUrl: string) => void) => {
   const dispatch = useAppDispatch()
@@ -26,7 +27,7 @@ export const useUpload = (onChange: (file: File, fileUrl: string) => void) => {
     ) {
       dispatch(
         setNotifications({
-          type: 'appError',
+          type: ERROR_TYPES.APP_ERROR,
           value: 'max file size 1Mb, format - jpeg/png',
         }),
       )

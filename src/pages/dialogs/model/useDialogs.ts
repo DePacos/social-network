@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import type { DialogsResponse, UserDialog } from '@/app/types/app.types.ts'
+
 import { useMediaQuery } from '@/app/hooks/useMediaQuery'
 import { useAppDispatch, useAppSelector } from '@/app/hooks/useStateHook'
 import { store } from '@/app/store'
-import { DialogsResponse, UserDialog } from '@/app/types/types'
 import {
   fetchDialogs,
   selectDialogs,
   setUserDialog,
-} from '@/entities/reducers/dialogSlice'
+} from '@/entities/slices/dialogSlice.ts'
 import {
   clearUsers,
   getUsers,
   selectUsers,
-} from '@/entities/reducers/usersSlice'
+} from '@/entities/slices/usersSlice.ts'
 
 export const useDialogs = () => {
   const dialogs = useAppSelector(selectDialogs)
@@ -28,7 +29,7 @@ export const useDialogs = () => {
 
   let usersDialogsIds: number[] = []
 
-  if (searchDialogs.length !== 0) {
+  if (searchDialogs.length > 0) {
     usersDialogsIds = searchDialogs.map(dialog => dialog.id)
   }
 

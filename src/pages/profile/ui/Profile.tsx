@@ -1,18 +1,14 @@
 import { Settings } from 'lucide-react'
-import React from 'react'
 
-import { PageLayout } from '@/app/PageLayout/PageLayout'
-import { useProfile } from '@/pages/profile/model/useProfile'
-import { ProfileAbout } from '@/pages/profile/ui/ProfileAbout'
-import { ProfileInfo } from '@/pages/profile/ui/ProfileInfo'
-import { ProfileSocial } from '@/pages/profile/ui/ProfileSocial'
+import { PageLayout } from '@/app/pageLayout/PageLayout'
+import { ProfileAbout, ProfileInfo, ProfileSocial } from '@/pages/profile/ui'
 import dialogsBg from '@/shared/assets/images/profile-bg.webp'
-import { Button } from '@/shared/ui/Button/Button'
-import { Toast } from '@/shared/ui/Toast/Toast'
+import { Button, Toast } from '@/shared/ui'
 
-import { S } from './profile.styles'
+import { useProfile } from '../model/useProfile'
+import { S } from './Profile.styles.ts'
 
-export const Profile = () => {
+const Profile = () => {
   const {
     control,
     editMode,
@@ -31,20 +27,20 @@ export const Profile = () => {
 
   return (
     <PageLayout
-      title={'Profile'}
+      title="Profile"
       image={dialogsBg}
       button={
         <S.ProfileBtnSetting>
           {isCurrentUser ? (
             <Button
               onClick={handleEditMode}
-              variant={'primary'}
+              variant="primary"
               endIcon={<Settings />}
             >
               Edit Profile
             </Button>
           ) : (
-            <Button variant={'primary'} onClick={handleFollow}>
+            <Button variant="primary" onClick={handleFollow}>
               {isFollow ? 'Unfollow' : 'Follow'}
             </Button>
           )}
@@ -77,3 +73,5 @@ export const Profile = () => {
     </PageLayout>
   )
 }
+
+export default Profile

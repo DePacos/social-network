@@ -1,6 +1,6 @@
-import { ComponentProps, forwardRef } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 
-import { S } from './textArea.styles'
+import { S } from './TextArea.styles.ts'
 
 export type Props = {
   error?: string
