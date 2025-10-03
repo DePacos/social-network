@@ -1,0 +1,52 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: { }
+
+concurrency:
+  group: social-network-deploy
+  cancel-in-progress: true
+
+env:
+  APP_PATH: "."
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: ${{ env.APP_PATH }}/yarn.lock
+      - run: corepack enable
+
+      - name: Install deps
+        working-directory: ${{ env.APP_PATH }}
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        working-directory: ${{ env.APP_PATH }}
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+          VITE_SOCKET_URL: ${{ secrets.VITE_SOCKET_URL }}
+        run: yarn build
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy via rsync
+        run: |
+          rsync -az --delete \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
+            "${{ env.APP_PATH }}/dist/" \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET }}/"
