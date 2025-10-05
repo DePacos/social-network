@@ -22,7 +22,7 @@ export const AppThemeProvider = ({ children }: PropsWithChildren) => {
 
   const changeTheme = () => {
     const themeModeLocal =
-      themeMode === THEME_MODE.DARK ? THEME_MODE.DARK : THEME_MODE.LIGHT
+      themeMode === THEME_MODE.DARK ? THEME_MODE.LIGHT : THEME_MODE.DARK
 
     setThemeMode(themeModeLocal)
     manageThemeMode.set(themeModeLocal)

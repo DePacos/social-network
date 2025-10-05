@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -12,7 +12,6 @@ import {
 import { selectAuthUserId } from '@/entities/slices/authSlice.ts'
 import {
   follow,
-  getFollow,
   removeFollow,
   selectFollow,
 } from '@/entities/slices/followSlice.ts'
@@ -30,6 +29,7 @@ import {
 
 export const useProfile = () => {
   const [editMode, setEditMode] = useState(false)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isFollow = useAppSelector(selectFollow)
   const profile = useAppSelector(selectProfile)
@@ -69,6 +69,10 @@ export const useProfile = () => {
     dispatch(editUserPhoto(data))
   }
 
+  const handleRouteBack = () => {
+    navigate(-1)
+  }
+
   const resetForm = () => {
     reset({
       aboutMe: profile.aboutMe,
@@ -89,7 +93,6 @@ export const useProfile = () => {
   useEffect(() => {
     if (id && profile.userId !== +id) {
       dispatch(getUserProfile(Number(id)))
-      dispatch(getFollow(Number(id)))
     }
     if (!isCurrentUser) {
       setEditMode(false)
@@ -140,6 +143,7 @@ export const useProfile = () => {
     handleEditMode,
     handleFollow,
     handleSetPhoto,
+    handleRouteBack,
     handleSubmit,
     isCurrentUser,
     isFollow,
