@@ -18,7 +18,12 @@ export const HeaderBtn = () => {
         <Lightbulb />
       </Button>
       <Button variant="icon">
-        <Bell />
+        <S.WrapCountNotifications>
+          <Bell />
+          {newMessages > 0 && (
+            <S.CountNotifications>{newMessages}</S.CountNotifications>
+          )}
+        </S.WrapCountNotifications>
       </Button>
     </S.HeaderBtn>
   )

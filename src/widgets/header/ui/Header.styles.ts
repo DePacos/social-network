@@ -162,6 +162,28 @@ const HeaderDropDown = styled.div`
   }
 `
 
+const WrapCountNotifications = styled.div`
+  position: relative;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
+const CountNotifications = styled.span`
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  background-color: brown;
+  color: white;
+  font-size: 10px;
+  border-radius: 50%;
+`
+
 export const S = {
   Header,
   HeaderBtn,
@@ -170,4 +192,6 @@ export const S = {
   HeaderNav,
   HeaderProfileMenu,
   HeaderWrap,
+  WrapCountNotifications,
+  CountNotifications,
 }

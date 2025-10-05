@@ -9,7 +9,7 @@ export const HeaderNav = () => {
     <S.HeaderNav>
       <ul>
         <li>
-          <Link to={ROUTES.DIALOGS}>Home</Link>
+          <Link to={ROUTES.USERS}>Home</Link>
         </li>
         <li>
           <Link to={ROUTES.DIALOGS}>Dialogs</Link>
