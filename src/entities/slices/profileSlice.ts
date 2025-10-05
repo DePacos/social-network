@@ -4,6 +4,7 @@ import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
 import { API_RESPONSE, ERROR_TYPES, SLICES_NAME } from '@/app/constants'
+import { getFollow } from '@/entities/slices/followSlice.ts'
 import { profileAPI } from '@/shared/api/profileAPI'
 
 const initialState: UserProfileResponse & { status: string } = {
@@ -119,10 +120,11 @@ const profileSlice = createSlice({
         },
       ),
       getUserProfile: creators.asyncThunk(
-        async (userId: number, { rejectWithValue }) => {
+        async (userId: number, { rejectWithValue, dispatch }) => {
           try {
             const resProfile = await profileAPI.fetchUserProfile(userId)
             const resStatus = await profileAPI.fetchUserStatus(userId)
+            await dispatch(getFollow(userId))
 
             return { ...resProfile.data, status: resStatus.data }
           } catch (error) {
@@ -135,6 +137,9 @@ const profileSlice = createSlice({
         {
           fulfilled: (state, action) => {
             Object.assign(state, action.payload)
+          },
+          pending: state => {
+            state.photos.large = ''
           },
         },
       ),

@@ -52,7 +52,8 @@ const ProfileBtnSetting = styled.div`
   position: relative;
   z-index: 2;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  width: 100%;
   margin: 25px 25px 0;
 
   button {
@@ -189,11 +190,22 @@ const ProfileAbout = styled.div`
   }
 `
 
-const ProfileInputWrap = styled.div`
+const ProfileInputsWrap = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 15px;
   align-items: center;
   margin-bottom: 10px;
+
+  & > div {
+    width: 100%;
+  }
+`
+
+const ProfileInputWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
 
   & > div {
     width: 100%;
@@ -225,6 +237,7 @@ export const S = {
   ProfileBtnSetting,
   ProfileInfo,
   ProfileInputWrap,
+  ProfileInputsWrap,
   ProfileJobDesc,
   ProfileSocial,
   ProfileTitleWrap,

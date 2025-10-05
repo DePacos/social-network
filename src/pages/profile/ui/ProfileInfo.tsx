@@ -20,6 +20,15 @@ type Props = {
   handleSetPhoto: (file: File) => void
 }
 
+const RenderUserAvatar = (profile: UserProfileResponse & { status: string }) =>
+  profile.photos.large ? (
+    <img src={profile.photos.large} alt="avatar" />
+  ) : (
+    <S.ProfileAvatarSvg>
+      <SquareUserRound strokeWidth={1} size={180} viewBox="2 2 20 20" />
+    </S.ProfileAvatarSvg>
+  )
+
 export const ProfileInfo = ({
   control,
   editMode,
@@ -29,17 +38,7 @@ export const ProfileInfo = ({
 }: Props) => {
   return (
     <S.ProfileInfo>
-      {profile.photos.large ? (
-        <img src={profile.photos.large} alt="avatar" />
-      ) : (
-        <S.ProfileAvatarSvg>
-          {isLoading ? (
-            <S.SkeletonAvatar />
-          ) : (
-            <SquareUserRound strokeWidth={1} size={180} viewBox="2 2 20 20" />
-          )}
-        </S.ProfileAvatarSvg>
-      )}
+      {isLoading ? <S.SkeletonAvatar /> : RenderUserAvatar(profile)}
       {editMode ? (
         <>
           <S.ProfileUploadImg>

@@ -1,4 +1,4 @@
-import { Settings } from 'lucide-react'
+import { ArrowBigLeft, Settings } from 'lucide-react'
 
 import { PageLayout } from '@/app/pageLayout/PageLayout'
 import { ProfileAbout, ProfileInfo, ProfileSocial } from '@/pages/profile/ui'
@@ -15,6 +15,7 @@ const Profile = () => {
     handleEditMode,
     handleFollow,
     handleSetPhoto,
+    handleRouteBack,
     handleSubmit,
     isCurrentUser,
     isFollow,
@@ -31,6 +32,9 @@ const Profile = () => {
       image={dialogsBg}
       button={
         <S.ProfileBtnSetting>
+          <Button onClick={handleRouteBack} variant="primary">
+            <ArrowBigLeft />
+          </Button>
           {isCurrentUser ? (
             <Button
               onClick={handleEditMode}
