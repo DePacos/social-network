@@ -20,14 +20,17 @@ const Users = styled.ul`
 `
 
 const UserItem = styled.li`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 200px;
-  height: 300px;
-  padding: 15px;
+  height: 220px;
+  padding: 12px 16px;
   border: 1px solid;
   border-radius: 15px;
   overflow: hidden;
+  transition: 0.3s;
+
   a {
     display: flex;
     flex-direction: column;
@@ -36,24 +39,57 @@ const UserItem = styled.li`
     gap: 8px;
     height: 100%;
   }
+
   .wrap-img {
     flex-grow: 1;
   }
+
   svg,
   img {
-    margin-bottom: 20px;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
   }
+
   span {
     display: block;
   }
+
   img {
-    width: 160px;
     border-radius: 15px;
   }
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 3px 2px;
+  }
+`
+
+const UserStatus = styled.span`
+  word-break: break-all;
+  overflow: hidden;
+`
+
+const UserName = styled.span`
+  font-weight: bold;
+`
+
+const UserFollow = styled.span`
+  display: inline-block;
+  position: absolute;
+  top: 7px;
+  right: 5px;
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.body};
 `
 
 export const S = {
   UserItem,
   Users,
   UsersContainer,
+  UserStatus,
+  UserName,
+  UserFollow,
 }

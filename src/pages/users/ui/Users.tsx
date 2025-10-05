@@ -37,18 +37,19 @@ const Users = () => {
                 ref={observeOnLastItem(i) ? triggerRef : null}
               >
                 <Link to={`/profile/${user.id}`}>
+                  {user.followed && <S.UserFollow>followed</S.UserFollow>}
                   {user.photos.small ? (
                     <div className="wrap-img">
                       <img src={user.photos.large} alt="user-photo" />
+                      <S.UserName>{user.name}</S.UserName>
                     </div>
                   ) : (
                     <div className="wrap-img">
                       <CircleUserRound size={120} strokeWidth={1} />
+                      <S.UserName>{user.name}</S.UserName>
                     </div>
                   )}
-                  <span>{user.name}</span>
-                  <span>{user.followed ? 'followed' : 'no followed'}</span>
-                  <span>{user.status}</span>
+                  <S.UserStatus>{user.status}</S.UserStatus>
                 </Link>
               </S.UserItem>
             ))
