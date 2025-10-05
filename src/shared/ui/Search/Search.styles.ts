@@ -25,7 +25,6 @@ const Search = styled.div`
 
 const SearchResWrap = styled.div`
   position: relative;
-  margin-bottom: 10px;
 `
 const SearchRes = styled.ul.withConfig({
   shouldForwardProp: prop => prop !== 'searchValue',
@@ -55,15 +54,16 @@ const SearchRes = styled.ul.withConfig({
       transform: translateY(-10px);
     `}
   `}
-
   li a {
     display: flex;
     font-size: 14px;
     padding: 6px;
   }
+
   li + li {
     border-top: 1px solid #444;
   }
+
   & li:hover {
     box-shadow: 0 1px 3px 1px;
   }
@@ -78,9 +78,11 @@ const SearchResItem = styled.ul`
     font-size: 14px;
     padding: 6px;
   }
+
   li + li {
     border-top: 1px solid #444;
   }
+
   & li:hover {
     box-shadow: 0 1px 3px 1px;
   }

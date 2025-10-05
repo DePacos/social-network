@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const DialogsWrap = styled.div`
   display: flex;
   gap: 60px;
-  min-height: 520px;
+  min-height: 615px;
   @media (max-width: 1200px) {
     gap: 20px;
   }
@@ -17,22 +17,23 @@ const Contacts = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-height: 515px;
-  padding: 7px;
-  overflow-y: auto;
+  max-width: 350px;
 
   a {
     margin-right: 12px;
   }
+
   img {
     width: 70px;
     border-radius: 50%;
   }
+
   @media (max-width: 1024px) {
     a img,
     a svg {
       width: 50px;
     }
+
     a svg {
       height: 50px;
     }
@@ -42,6 +43,7 @@ const Contacts = styled.div`
     a svg {
       width: 30px;
     }
+
     a svg {
       height: 30px;
     }
@@ -69,9 +71,11 @@ const ContactList = styled.ul`
     li:first-child {
       grid-row: 1/3;
     }
+
     li:nth-child(2) {
       grid-column: 2/4;
     }
+
     li:last-child {
       grid-row: 2/3;
       text-align: left;
@@ -83,9 +87,11 @@ const ContactList = styled.ul`
       display: block;
       padding: 5px;
     }
+
     li:nth-child(2) {
       display: none;
     }
+
     li:last-child {
       display: none;
     }
@@ -97,7 +103,7 @@ const ContactList = styled.ul`
     }
   }
 
-  &в.active {
+  &.active {
     box-shadow: 0 0 6px 4px;
     transform: scale(1.02);
   }
@@ -141,9 +147,18 @@ const SearchSeparator = styled.li`
   align-items: center;
   gap: 5px;
   padding: 5px 0;
+
   &:hover {
     box-shadow: none !important;
   }
+`
+
+const WrapContactList = styled.div`
+  max-height: 560px;
+  width: 100%;
+  padding: 5px 15px;
+  overflow-y: auto;
+  margin: 0 auto;
 `
 
 export const S = {
@@ -154,4 +169,5 @@ export const S = {
   NewMessages,
   NoDialogMessage,
   SearchSeparator,
+  WrapContactList,
 }

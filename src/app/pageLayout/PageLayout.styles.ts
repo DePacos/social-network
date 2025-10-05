@@ -38,6 +38,7 @@ const PageLayoutTitle = styled.div.withConfig({
     h1 {
       padding-top: 90px;
     }
+
     img {
       height: 100%;
     }
@@ -50,6 +51,7 @@ const PageLayoutBtn = styled.div`
   display: flex;
   justify-content: end;
   margin: 25px 25px 0;
+
   button {
     padding: 10px;
     font-size: 16px;
@@ -62,7 +64,7 @@ const PageLayoutBtn = styled.div`
 
 const PageLayoutContentWrap = styled.div`
   position: relative;
-  top: -90px;
+  margin-top: -130px;
   padding: 0 20px;
   z-index: 5;
   @media (max-width: 640px) {

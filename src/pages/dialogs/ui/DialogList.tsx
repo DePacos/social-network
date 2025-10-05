@@ -16,7 +16,7 @@ type Props = {
 
 export const DialogList = ({ dialogs, handleLink, id }: Props) => {
   return (
-    <>
+    <S.WrapContactList>
       {dialogs.length > 0
         ? dialogs.map(dialog => (
             <Link
@@ -59,6 +59,6 @@ export const DialogList = ({ dialogs, handleLink, id }: Props) => {
             </Link>
           ))
         : 'no dialogs'}
-    </>
+    </S.WrapContactList>
   )
 }
