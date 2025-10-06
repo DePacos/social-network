@@ -11,7 +11,6 @@ import { REQUEST_STATUS, SLICES_NAME } from '@/app/constants'
 import { handlerErrors } from '@/app/utils'
 
 const initialState: AppInitialState = {
-  isInitialized: true,
   isLoading: false,
   appNotifications: { type: null, value: null },
 }
@@ -20,25 +19,20 @@ const appSlice = createSlice({
   extraReducers: builder => {
     builder.addMatcher(
       action => action.type.endsWith('/' + REQUEST_STATUS.PENDING),
-      (state, action) => {
+      state => {
         state.isLoading = true
-        if (action.type === 'auth/me/' + REQUEST_STATUS.PENDING) {
-          state.isInitialized = false
-        }
       },
     )
     builder.addMatcher(
       action => action.type.endsWith('/' + REQUEST_STATUS.FULFILLED),
       state => {
         state.isLoading = false
-        state.isInitialized = true
       },
     )
     builder.addMatcher(
       action => action.type.endsWith('/' + REQUEST_STATUS.REJECTED),
       (state, action: PayloadAction<RejectAppError | RejectCatchError>) => {
         state.isLoading = false
-        state.isInitialized = true
         state.appNotifications = handlerErrors(action.payload)
       },
     )
@@ -51,7 +45,6 @@ const appSlice = createSlice({
     },
   },
   selectors: {
-    selectAppIsInitialized: state => state.isInitialized,
     selectAppIsLoading: state => state.isLoading,
     selectAppNotifications: state => state.appNotifications,
   },
@@ -59,10 +52,6 @@ const appSlice = createSlice({
 
 export const { setNotifications } = appSlice.actions
 
-export const {
-  selectAppIsInitialized,
-  selectAppIsLoading,
-  selectAppNotifications,
-} = appSlice.selectors
+export const { selectAppIsLoading, selectAppNotifications } = appSlice.selectors
 
 export const appReducer = appSlice.reducer

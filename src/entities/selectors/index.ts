@@ -1,7 +1,6 @@
 export {
   selectAppIsLoading,
   selectAppNotifications,
-  selectAppIsInitialized,
   setNotifications,
 } from '../slices/appSlice'
 

@@ -23,7 +23,6 @@ export type AppNotification = {
 type ErrorType = (typeof ERROR_TYPES)[keyof typeof ERROR_TYPES] | null
 
 export type AppInitialState = {
-  isInitialized: boolean
   isLoading: boolean
   appNotifications: AppNotification
 }
