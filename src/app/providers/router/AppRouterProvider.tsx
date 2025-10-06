@@ -4,8 +4,8 @@ import { ROUTES } from '@/app/constants'
 import { Error } from '@/pages/error/Error'
 
 import {
-  App,
   Chat,
+  DefaultLayout,
   Dialog,
   Dialogs,
   Profile,
@@ -17,10 +17,9 @@ export const AppRouterProvider = () => {
   const router = createBrowserRouter([
     {
       path: ROUTES.HOME,
-      element: <App />,
+      element: <DefaultLayout />,
       errorElement: <Error title="Something went wrong" />,
       children: [
-        { index: true, element: <Users /> },
         { path: ROUTES.USERS, element: <Users /> },
         { path: ROUTES.PROFILE + '/:id', element: <Profile /> },
         { path: ROUTES.CHAT, element: <Chat /> },
