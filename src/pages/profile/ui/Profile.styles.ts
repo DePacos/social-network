@@ -73,6 +73,7 @@ const Profile = styled.form`
   gap: 50px;
   width: 100%;
   max-width: 1400px;
+  min-height: 410px;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
   border-radius: 15px;
