@@ -9,10 +9,10 @@ import { AppThemeProvider } from '@/app/providers/theme'
 
 export const PROVIDERS = [
   StrictMode,
-  ErrorBoundaryProvider,
-  SuspenseProvider,
   AppThemeProvider,
   SkeletonProvider,
+  ErrorBoundaryProvider,
+  SuspenseProvider,
   StoreProvider,
   AppRouterProvider,
 ]
