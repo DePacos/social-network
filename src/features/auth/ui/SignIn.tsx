@@ -1,7 +1,7 @@
 import { Loader, Mail } from 'lucide-react'
 import { Navigate } from 'react-router-dom'
 
-import { REQUEST_STATUS } from '@/app/constants'
+import { REQUEST_STATUS, ROUTES } from '@/app/constants'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   selectAppIsLoading,
@@ -24,8 +24,14 @@ const SignIn = () => {
 
   const { control, handleSubmit, isValid, onSubmit } = useSignIn(dispatch)
 
+  const error =
+    notifications.type === 'appError' &&
+    notifications.value !== 'You are not authorized'
+      ? notifications.value
+      : null
+
   if (authRequest === REQUEST_STATUS.FULFILLED) {
-    return <Navigate to="/" />
+    return <Navigate to={ROUTES.USERS} />
   }
 
   return (
@@ -35,10 +41,7 @@ const SignIn = () => {
           <img src={logo} alt="logo" />
           <span>SocialNetwork</span>
         </S.Logo>
-        <S.Form
-          error={notifications.type === 'appError' ? notifications.value : null}
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <S.Form error={error} onSubmit={handleSubmit(onSubmit)}>
           <FormInput
             control={control}
             iconEnd={<Mail color="black" size={20} />}
