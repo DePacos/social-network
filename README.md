@@ -24,40 +24,29 @@
 
 ## Функции
 
-* **Состояние:** классический **Redux + Redux Toolkit (в т.ч. RTK 2.0 API)**
-* **Маршрутизация:** **React Router DOM**
-* **Тема:** контекст для переключения светлой/тёмной темы
-* **Паттерны UI:** переиспользуемый **Layout**
-* **Надёжность:** **Error Boundary** для отлова ошибок
-* **Производительность:** **React.lazy** , **Suspense**, **debounce**, **Intersection Observer** (ленивая
-  подгрузка/инфинит‑скролл/поиск)
-* **Инфраструктура UI:** **React Portal** (модалки/оверлеи)
-* **Онлайн‑функции:** **WebSocket** (чат/уведомления)
-* **Хранилища:** **LocalStorage** (настройки/сессии) и **IndexedDB** (офлайн‑данные)
-* **Валидация:** **Zod** для схем форм
-* **REST‑клиент:** работа с REST‑эндпоинтами (CRUD‑операции, авторизация)
+* **Авторизация пользователя**
+* **Переключение светлой/тёмной темы**
+* **Редактирование профиля пользователя**
+* **Подписка/отписка пользователей**
+* **Диалоги с пользователями - отправка личных сообщений** 
+* **Поиск и сортировка диалогов**
+* **Возможность восстанавливать (свои) удаленные сообщеня**
+* **Поиск и сортировка пользователей**
+* **Чат**
 
 ---
 
 ## Стек
 
-* **Ядро:** React
-* **Состояние:** Redux, Redux Toolkit (RTK 2.0)
-* **Маршрутизация:** React Router DOM
-* **Валидация:** Zod
-* **WS/Сеть:** WebSocket API, AXIOS
-* **Браузерные API:** matchMedia, Intersection Observer, LocalStorage, IndexedDB
+* **React + TypeScript**
+* **Redux/Redux Toolkit (RTK 2.0)/Axios**
+* **React.lazy/Suspense**
+* **Error Boundary**
+* **React Router DOM**
+* **React‑hook‑form + Zod**
+* **Intersection Observer/Debounce**
+* **React Portal/React Context**
+* **LocalStorage/IndexedDB**
+* **WebSocket**
 
 ---
-
-## Архитектура
-
-* **Provider Composer**: группирует ThemeProvider, ErrorBoundaryProvider, SuspenseProvider, SkeletonProvider,
-  AppRouterProvider, StoreProvider, .
-* **Theme Context**: переключение темы
-* **Store**: классический Redux + слайсы RTK 2.0
-* **Error Boundary**: изоляция сбоев рендера
-* **Lazy + Suspense**: ленивые страницы/виджеты
-* **WebSocket**: подключение и подписки (чат/статусы)
-* **Persistence**: LocalStorage (настройки), IndexedDB (удаленные данные)
-* **Validation**: схемы Zod на вход/выход
